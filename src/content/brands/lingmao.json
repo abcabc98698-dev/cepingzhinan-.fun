@@ -1,0 +1,147 @@
+{
+  "id": "lingmao",
+  "name": "灵猫网络",
+  "slug": "lingmao",
+  "rank": 13,
+  "tagline": "灵猫网络 稳定加速与高性价比选型推荐",
+  "description": "灵猫走的是中转优化线路，7.1 元/月起，主打 1 倍流量、不限速、不限设备，这一点对家里多台设备同时用的人比较实用。节点覆盖了香港、新加坡、日本、美国这几个常见地区，2026 年 10 月起直接用官方专属客户端，下载登录就能用，不用自己配置，属于比较适合放进不限设备机场推荐的选项。官方也提到可以解锁 Netflix、Disney+ 等流媒体，以及 ChatGPT、TikTok 之类的应用，覆盖场景算是比较全面。不过具体解锁效果和线路参数会因账号和时段有差异，建议先用月付套餐测一测晚高峰体验，而不是直接冲年付套餐。  ---",
+  "rating": 4.7,
+  "tier": "大流量主力",
+  "established": "2025年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 62,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 492,
+    "peakDownloadMbps": 615,
+    "avgLatencyMs": 22,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/灵猫网络-节点测速实测.png",
+  "minPriceMonthly": 19,
+  "plans": [
+    {
+      "name": "灵猫·年付小包",
+      "billingCycle": "年付",
+      "price": 85,
+      "traffic": "45GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "灵猫·年付Small",
+      "billingCycle": "年付",
+      "price": 195,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "灵猫·年付Big",
+      "billingCycle": "年付",
+      "price": 295,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "灵猫·季付Big",
+      "billingCycle": "季付",
+      "price": 125,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "灵猫·月付Small",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "灵猫·月付Big",
+      "billingCycle": "月付",
+      "price": 45,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "lmao888",
+      "discount": "立减/折扣",
+      "desc": "灵猫网络 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://vip01.civetnet.com/",
+  "affUrl": "https://vip01.civetnet.com/#/?code=8MIAyxak",
+  "lastVerified": "2026-10-19"
+}

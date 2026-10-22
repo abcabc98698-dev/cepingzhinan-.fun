@@ -1,0 +1,134 @@
+{
+  "id": "shanshuiyun",
+  "name": "山水云",
+  "slug": "shanshuiyun",
+  "rank": 37,
+  "tagline": "山水云 官方测速数据与资费套餐档案",
+  "description": "山水云 拥有丰富节点网络分布，支持主流协议与多地区流媒体解锁，经实测在亚太常用地区具备良好的可用性。",
+  "rating": 4.6,
+  "tier": "高性价比",
+  "established": "2022年",
+  "lineTypes": [
+    "BGP多线入口",
+    "IEPL内网专线"
+  ],
+  "protocols": [
+    "尚未核实"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "日本",
+    "新加坡",
+    "美国",
+    "台湾",
+    "越南",
+    "泰国",
+    "英国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 153,
+    "peakDownloadMbps": 184,
+    "avgLatencyMs": 151,
+    "packetLossRate": "0.2%",
+    "testDate": "2026-08-24",
+    "telecomGrade": "电信: A",
+    "unicomGrade": "联通: A",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 7,
+  "plans": [
+    {
+      "name": "64G/轻量套餐",
+      "billingCycle": "年付",
+      "price": 88,
+      "traffic": "64GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "128G/轻量套餐",
+      "billingCycle": "半年付",
+      "price": 88,
+      "traffic": "128GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "256G/轻量套餐",
+      "billingCycle": "季付",
+      "price": 75,
+      "traffic": "256GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "100G/月-琴",
+      "billingCycle": "月付",
+      "price": 15,
+      "traffic": "100GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "200G/月-棋",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "200GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "500G/月-书",
+      "billingCycle": "月付",
+      "price": 50,
+      "traffic": "500GB/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "历史节点测速覆盖广，连接成功率高",
+    "支持多协议灵活适配不同客户端"
+  ],
+  "cons": [
+    "部分冷门套餐无月付选项需季付起购",
+    "高峰期建议优选延迟较低的香港与日本节点"
+  ],
+  "bestFor": "中重度流媒体用户与有多地区 IP 落地需求的用户",
+  "officialUrl": "https://sldm1.ssyylf.com/",
+  "affUrl": "https://sldm1.ssyylf.com/#/register?code=YD5iQ888",
+  "lastVerified": "2026-08-24"
+}

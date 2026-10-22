@@ -1,0 +1,136 @@
+{
+  "id": "u1s1",
+  "name": "U1S1",
+  "slug": "u1s1",
+  "rank": 12,
+  "tagline": "U1S1 稳定加速与高性价比选型推荐",
+  "description": "U1S1 是 2025 年才上线的新机场，走 IPLC 专线，官方宣传 2000Mbps 高速带宽和晚高峰不限速，在高速机场推荐里算是敢喊出具体带宽数字的一个，实测反馈显示流媒体解锁和 ChatGPT 访问表现还可以。20 元 120GB 的套餐之外还有 1000GB 的一次性大流量包，适合短期内用量大、需要弹性补充流量的场景。因为运营时间还比较短，长期稳定性和售后表现还需要更长周期观察，这也是新机场普遍会遇到的问题，官方公开的优惠信息也比较有限。如果你愿意尝鲜，建议先用小额套餐测试，别一上来就冲大额年付。 ---",
+  "logo": "/assets/brands/logos/u1s1主图.png",
+  "rating": 4.8,
+  "tier": "高性价比",
+  "established": "2025年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 61,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 538,
+    "peakDownloadMbps": 673,
+    "avgLatencyMs": 24,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/U1S1-节点测速实测.png",
+  "minPriceMonthly": 20,
+  "plans": [
+    {
+      "name": "u1s1·就是好用包",
+      "billingCycle": "年付",
+      "price": 96,
+      "traffic": "60GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "u1s1·普通人真够了包",
+      "billingCycle": "月付",
+      "price": 20,
+      "traffic": "120GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "u1s1·你以为用不到包",
+      "billingCycle": "月付",
+      "price": 40,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "u1s1·瘾大就拉满包",
+      "billingCycle": "月付",
+      "price": 100,
+      "traffic": "700GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "u1s1·我全都要包",
+      "billingCycle": "月付",
+      "price": 180,
+      "traffic": "1500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "akaka",
+      "discount": "立减/折扣",
+      "desc": "U1S1 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.vipaff.cc/",
+  "affUrl": "https://guangs.vipaff.cc/#/?code=xhX5X22f",
+  "lastVerified": "2026-10-19"
+}

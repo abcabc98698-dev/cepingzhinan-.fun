@@ -1,0 +1,138 @@
+{
+  "id": "firefly",
+  "name": "Firefly",
+  "slug": "firefly",
+  "rank": 10,
+  "tagline": "Firefly 稳定加速与高性价比选型推荐",
+  "description": "如果你在找 2026 年靠谱的 IPLC 机场推荐，Firefly 算是专线机场推荐里性价比不错的一个选择。8 元/月起的价格，比很多同样走 IPLC 专线的机场便宜一些，晚高峰稳定性是它的核心卖点，对每天要用 ChatGPT 办公、或者经常在深夜追剧的人来说，这一点比单纯堆节点数量更实际。节点覆盖香港、新加坡、日本、美国这几个常见地区，原生 IP 让 Netflix、Disney+ 这类流媒体解锁相对稳定，2026 年 10 月起直接用官方专属客户端，下载登录就能连，不用再配订阅链接，使用门槛更低。不限设备数量也算是个加分项，家里几台设备一起用不会受限制。当然，专线机场的价格门槛终归比中转线",
+  "rating": 4.8,
+  "tier": "高性价比",
+  "established": "2023年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 59,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 547,
+    "peakDownloadMbps": 684,
+    "avgLatencyMs": 27,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 15,
+  "plans": [
+    {
+      "name": "Firefly 年付版",
+      "billingCycle": "年付",
+      "price": 96,
+      "traffic": "60GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "Firefly Lite",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "Firefly Plus",
+      "billingCycle": "月付",
+      "price": 45,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "Firefly Blaze",
+      "billingCycle": "月付",
+      "price": 85,
+      "traffic": "600GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "Firefly Nova",
+      "billingCycle": "月付",
+      "price": 150,
+      "traffic": "1000GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "Firefly 不限时",
+      "billingCycle": "一次性付费",
+      "price": 100,
+      "traffic": "100GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://vip02.fireflyaff.com/",
+  "affUrl": "https://vip02.fireflyaff.com/#/?code=2n7VURre",
+  "lastVerified": "2026-10-19"
+}

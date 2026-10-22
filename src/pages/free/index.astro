@@ -1,0 +1,249 @@
+---
+const freeArticles = [
+  {
+    "title": "免费机场与公益节点终极生存现状实录：抓取 200+ 免费节点晚高峰丢包与真实可用率深度检测报告",
+    "url": "/blog/truth-behind-free-clash-nodes-and-public-proxies",
+    "description": "耗时两周抓取全网公开分享的数百个免费 Clash 节点与公益订阅池，实测晚高峰平均丢包率超 48%，揭露背后的真实生态与避坑方法。",
+    "readTime": "15 分钟",
+    "tag": "免费资源盘点"
+  },
+  {
+    "title": "免绑卡免费试用机场深度挖掘：小时级体验、签到领流量与防薅羊毛风控机制全解析",
+    "url": "/blog/free-trial-airports-no-credit-card-limits",
+    "description": "全面梳理支持免信用卡试用的正规商业机场，深度剖析其试用时长、带宽限制以及背后的 IP 注册风控机制。",
+    "readTime": "13 分钟",
+    "tag": "免费试用机制"
+  },
+  {
+    "title": "免费节点与公开订阅池安全解剖：从明文抓包、中间人窃听到 Token 泄露的真实隐患",
+    "url": "/blog/free-proxy-security-risks",
+    "description": "互联网上大量免费 Telegram 频道分享的订阅池靠什么盈利？真实网络实验室抓包实测，揭秘注入恶意脚本、劫持证书与账号被盗内幕。",
+    "readTime": "12 分钟",
+    "tag": "安全边界警示"
+  },
+  {
+    "title": "月付 3 到 10 元极低预算机场实测：学生党过渡期的中继隧道与廉价专线真实避坑算账",
+    "url": "/blog/budget-friendly-cheap-airports-under-10-yuan",
+    "description": "针对预算极其有限的学生群体与轻度冲浪者，全维实测月付 3-10 元低价机场的真实性能、虚标倍率防坑与使用寿命。",
+    "readTime": "14 分钟",
+    "tag": "低价平替方案"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Badge from "@/components/ui/Badge.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import AffiliateDisclosure from "@/components/widgets/AffiliateDisclosure.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  ShieldAlert, Sparkles, AlertTriangle, ExternalLink, 
+  Terminal, ShieldCheck, HeartHandshake, Check, X
+} from "@lucide/astro";
+
+// SSOT: 拉取免费与入门级品牌
+const allBrands = await getCollection("brands");
+const budgetBrands = allBrands.filter(b => b.data.minPriceMonthly <= 20);
+
+const faqs = [
+  {
+    question: "互联网上公开分享的「免费Clash/V2Ray订阅池」安全吗？",
+    answer: "存在极其严重的安全隐患。大量爬虫抓取的公开免费节点实际上是由恶意第三方搭建的蜜罐服务器（Honeypot）。攻击者可通过中间人解密（MITM）分析未加密流量、盗取明文 Cookie 与密码，或注入恶意广告代码。强烈建议仅使用具备信誉的官方公益签到平台，绝不用于敏感账号登录。"
+  },
+  {
+    question: "免费机场和收费机场在底层网络上有何本质差距？",
+    answer: "免费机场普遍采用廉价云厂商直连线路或 Cloudflare CDN 免费穿透，多用户争抢极窄带宽，晚高峰丢包率通常高达 30%~70%；而收费机场部署企业级 BGP 入口与专线传输，带宽充足，由专职团队维护并清洗原生 IP 解锁库。"
+  },
+  {
+    question: "如何利用品牌官方的免费试用机制降低选型试错成本？",
+    answer: "多数中高端机场在注册后提供 1 小时至 3 天的有限体验额度（或以 1 元防滥用门槛发放测试包）。建议在晚高峰 20:30~22:30 针对经常使用的服务（如 YouTube 4K、ChatGPT、GitHub）进行压力测速，验证本地运营商连接质量后再决定是否订阅。"
+  },
+  {
+    question: "如果每个月只有几块钱预算，有什么靠谱的替代选择？",
+    answer: "可以选择支持月付的超大流量中继机场（例如速鹰 666，9.9 元/月提供 100GB 流量），每 GB 成本仅几分钱，其稳定性和速度远超任何免费公共节点，试错风险极低。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/free/#webpage`,
+      "url": `${siteConfig.url}/free/`,
+      "name": `2026 免费机场与低门槛试用资源合集 — ${siteConfig.title}`,
+      "description": "客观盘点正规免费签到机场、官方试用通道与低价平替方案，深度揭秘公开节点安全风险。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/free/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`免费机场与试用资源合集 (2026 安全防坑指北) — ${siteConfig.title}`}
+  description="客观中立整理 2026 靠谱免费签到机场、品牌试用通道及低价平替推荐；深度剖析免费节点的安全风险与中间人窃听陷阱，提供应急防失联最佳实践。"
+  keywords="免费机场, 免费节点, 免费试用机场, 永久免费机场, 白嫖机场, Clash免费订阅, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="免费机场、品牌试用通道与低价平替避坑指南"
+      description="拒绝虚假宣传。测评指南为您客观甄别真正可用的官方公益节点与试用渠道，揭开公共免费订阅池背后的安全黑产与隐私风险。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 推广合规与透明披露 -->
+    <AffiliateDisclosure />
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心结论速查 (免费资源使用法则)</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        <strong>天下没有完全免费且无限高速的物理专线带宽。</strong>若仅用于学术论文查阅、技术文档搜索或防失联备用，推荐使用提供<strong>新手试用体验或低门槛月付</strong>的正规平台；严禁使用 TG 群或 GitHub 公开分享的抓取公共节点池（存在严重中间人流量窃听风险）。如需流畅观看 1080P/4K 或稳定使用 ChatGPT，建议选用月均折算低至十元以内的<strong>优质专线平替</strong>（如光速云轻量套餐、极联或闪电树），体验提升数倍且无隐私泄露隐患。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 决策树 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          免费与试用需求评估决策树 (ASCII Decision Tree)
+        </span>
+        <span class="text-xs">更新日期: 2026-10</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+[免费与极低预算诉求]
+  │
+  ├── 场景 1: 偶尔查 Google 学术 / 查 Github 代码 / 应急失联
+  │     └── 最佳路径: 【官方新手体验包】(无资金沉没风险 / 低门槛试用)
+  │
+  ├── 场景 2: 准备长期使用，但担心本地网络与运营商不兼容
+  │     └── 最佳路径: 【官方月付试用】(利用首月小额月付在晚高峰 21点实测)
+  │
+  ├── 场景 3: 频繁追剧 / 日常刷视频 / ChatGPT 高频对话
+  │     ├── 错误路径: ❌ 网上搜索免费共享节点 (速度慢 / 频繁断线 / 蜜罐窃密)
+  │     └── 正确路径: ✔ 选用月均低至 8~15 元平替 (光速云轻量版 / 极联 / 闪电树)
+  │
+  └── 场景 4: 涉及金融加密货币交易 / 跨境支付 / 商业账号
+        └── 绝对禁区: 严禁使用任何免费共享节点！必须采用私有原生专线！
+      </pre>
+    </section>
+
+    <!-- 4. 四类免费模式安全与性能全景对比表 -->
+    <section id="daily-free" class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          四类“免费翻墙”模式安全度与可用性对比大表
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          客观对比其真实带宽成本、隐私安全风险与流媒体解锁能力。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
+        <table class="w-full text-left text-xs md:text-sm border-collapse bg-white dark:bg-bg-primary-dark">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold">获取方式</th>
+              <th class="p-3.5 font-semibold">资金成本</th>
+              <th class="p-3.5 font-semibold">晚高峰体验</th>
+              <th class="p-3.5 font-semibold">流媒体 & AI解锁</th>
+              <th class="p-3.5 font-semibold">隐私安全等级</th>
+              <th class="p-3.5 font-semibold">推荐使用场景</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">老牌公益每日签到 (如 iKuuu)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">¥ 0 元</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">限速 30~50Mbps，轻度拥挤</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">支持 1080P，AI解锁视批次</td>
+              <td class="p-3.5 text-emerald-600 font-semibold">安全 (正规机场维护)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">查学术资料、防失联应急备用</td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">品牌官方限时试用通道</td>
+              <td class="p-3.5 text-neutral-600 font-bold">0~1 元</td>
+              <td class="p-3.5 text-emerald-600 font-bold">极速 300~800Mbps 专线体验</td>
+              <td class="p-3.5 text-emerald-600 font-bold">全解锁 4K / ChatGPT 4o</td>
+              <td class="p-3.5 text-emerald-600 font-semibold">极高 (商业企业防护)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">付费前测试本地运营商兼容性</td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">9.9~18元 低价平替主力包</td>
+              <td class="p-3.5 text-primary font-bold">¥ 9.9 起/月</td>
+              <td class="p-3.5 text-emerald-600 font-bold">稳定 200~500Mbps 极低抖动</td>
+              <td class="p-3.5 text-emerald-600 font-semibold">大部分 4K 原生解锁</td>
+              <td class="p-3.5 text-emerald-600 font-semibold">极高 (独立独占隧道)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">学生党、大流量刷剧、高频日常</td>
+            </tr>
+            <tr class="bg-red-50/50 dark:bg-red-950/20 hover:bg-red-100/50 transition-colors">
+              <td class="p-3.5 font-bold text-red-600 dark:text-red-400">公开爬取免费节点池 / 抓包源</td>
+              <td class="p-3.5 text-neutral-500">¥ 0 元</td>
+              <td class="p-3.5 text-red-600 font-semibold">极高丢包率 (50%+)，频繁断流</td>
+              <td class="p-3.5 text-red-600 font-semibold">基本无法解锁 / IP 被拉黑</td>
+              <td class="p-3.5 text-red-600 font-bold">高危 (黑产蜜罐、窃听风险)</td>
+              <td class="p-3.5 text-red-600">强烈不建议使用</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={freeArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="clients" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        免费机场使用常见问题解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/free" class="font-bold text-primary">免费机场</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

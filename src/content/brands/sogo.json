@@ -1,0 +1,175 @@
+{
+  "id": "sogo",
+  "name": "SOGO 云",
+  "slug": "sogo",
+  "rank": 17,
+  "tagline": "SOGO 云 稳定加速与高性价比选型推荐",
+  "description": "Sogo 云由海外团队运营，全线 IEPL 专线接入并做了三网 BGP 优化，协议用 VLESS，不限速也不限设备数量。节点覆盖香港、台湾、日本、新加坡、美国、韩国等 15 个国家和地区，是本站收录里覆盖面最广的一家。需要留意的是它不提供订阅链接，只能通过自研客户端使用，Clash、Shadowrocket 这类第三方客户端用不了。年付小包 98 元一年、每月 60GB，折合每月约 8.2 元；月付从 25 元 150GB 起。优惠码 SOGO10000 可打 9 折。官方没有提供试用。  ---",
+  "logo": "/assets/brands/logos/sogo.webp",
+  "rating": 4.7,
+  "tier": "大流量主力",
+  "established": "2023年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 66,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 488,
+    "peakDownloadMbps": 610,
+    "avgLatencyMs": 26,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 15,
+  "plans": [
+    {
+      "name": "小包-年付版",
+      "billingCycle": "年付",
+      "price": 98,
+      "traffic": "60GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "基础版",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "优选版",
+      "billingCycle": "月付",
+      "price": 45,
+      "traffic": "350GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "强化版",
+      "billingCycle": "月付",
+      "price": 80,
+      "traffic": "550GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "顶配版",
+      "billingCycle": "月付",
+      "price": 150,
+      "traffic": "1.1TB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "SOGO基础餐不限时版",
+      "billingCycle": "一次性付费",
+      "price": 120,
+      "traffic": "120GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "SOGO优选餐不限时版",
+      "billingCycle": "一次性付费",
+      "price": 220,
+      "traffic": "250GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "SOGO强化餐不限时版",
+      "billingCycle": "一次性付费",
+      "price": 450,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "SOGO至尊餐不限时版",
+      "billingCycle": "一次性付费",
+      "price": 850,
+      "traffic": "1.0TB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.sogoyunaff.cc/",
+  "affUrl": "https://guangs.sogoyunaff.cc/#/?code=327Vs0w7",
+  "lastVerified": "2026-10-19"
+}

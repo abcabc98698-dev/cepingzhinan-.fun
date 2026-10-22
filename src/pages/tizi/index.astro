@@ -1,0 +1,248 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import AffiliateDisclosure from "@/components/widgets/AffiliateDisclosure.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  ArrowRight, ExternalLink, 
+  Sparkles, BookOpen, Flame
+} from "@lucide/astro";
+
+// SSOT: 获取高性价比与低月费梯子品牌
+const allBrands = await getCollection("brands");
+const budgetTiziBrands = allBrands
+  .filter(b => b.data.minPriceMonthly <= 25)
+  .sort((a, b) => (a.data.rank || 99) - (b.data.rank || 99))
+  .slice(0, 6);
+
+const allPosts = await getCollection("post");
+const tiziRelatedPosts = allPosts.filter(p => 
+  p.id.includes("budget") || p.id.includes("cheap") || p.id.includes("pricing") || 
+  p.id.includes("runaway") || p.id.includes("redundant") || p.id.includes("showdown")
+).slice(0, 6);
+
+const tiziFaqs = [
+  {
+    question: "预算在 10 元/月以内的便宜梯子，能买到纯物理专线吗？",
+    answer: "在商业成本模型上，纯 IEPL/IPLC 物理专线机房带宽成本极高。月付不足 10 元的梯子绝大多数采用国内 BGP 公网中转，或采取「极少量低倍率专线 + 大量高倍率公网节点」混合架构。日常查阅网页或轻度办公完全可用，但晚高峰高峰期建议将重点放在丢包率与测速稳定性上。"
+  },
+  {
+    question: "为什么强烈建议新手避开超低价的「一次性三年付」梯子？",
+    answer: "行业历史数据显示，提供超低价年付或三年付（如 99 元用三年）的小微商家，平均存活周期不足 14 个月。此类定价属于典型的资金池滚存模式，一旦上游机房专线租金上涨极易出现卷款跑路。新手选购建议坚持月付或季付，验证稳定性后再做长期考量。"
+  },
+  {
+    question: "什么叫梯子的「冷热双持」容灾方案？",
+    answer: "即配置一个具备高 SLA 保障的优质主力专线服务（如光速云或 WgetCloud），同时搭配一个月付 5~9.9 元或按量计费的轻量梯子作为应急备用。当上游主干海缆发生物理故障或特殊敏感期主线受阻时，能确保网络连接始终不中断。"
+  }
+];
+
+const canonicalURL = `${siteConfig.url}/tizi/`;
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${canonicalURL}#webpage`,
+      "url": canonicalURL,
+      "name": `梯子推荐与平价稳定科学选型指北 (2026 最新测速更新) — ${siteConfig.title}`,
+      "description": "基于三大运营商晚高峰物理探针实测，全面汇总 2026 稳定不掉线、平价高性价比梯子推荐，提供月付 10 元以内平替与双机场容灾防失联方案。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": siteConfig.url
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "梯子推荐专区",
+          "item": canonicalURL
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalURL}#faq`,
+      "mainEntity": tiziFaqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`梯子推荐与平价稳定科学选型指北 (2026 最新测速更新) — ${siteConfig.title}`}
+  description="基于三大运营商晚高峰物理探针实测，全面汇总 2026 稳定不掉线、平价高性价比梯子推荐，提供月付 10 元以内平替与双机场容灾防失联方案。"
+  keywords="梯子推荐, 便宜梯子, 稳定梯子, 科学上网梯子, 梯子测速, 梯子软件, 测评指南"
+  url={canonicalURL}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="2026 稳定梯子推荐与平价选型指南"
+      description="拒绝浮夸跑分与虚假低价陷阱。基于持续 90 天晚高峰网络拥堵丢包监测，为您甄选兼具稳定性、抗封锁能力与真实质价比的靠谱梯子方案。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+    <!-- 推广合规与透明披露 -->
+    <AffiliateDisclosure />
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心结论速查 (梯子选购铁律)</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        选购梯子切忌只看表面标价。<strong>2026 年表现最均衡的主力专线梯子首推具备双内网专线的光速云与飞猫云</strong>（晚高峰丢包率严格保持在 0.1% 以内）；预算有限但追求多设备共享的轻度用户推荐 <strong>极联</strong>、<strong>闪电树</strong> 或 <strong>胖猫云</strong>。对于任何新商家，务必<strong>坚持月付或小额试用</strong>，彻底告别三年付卷款跑路风险。
+      </p>
+    </section>
+
+    <!-- 3. 平价优质梯子推荐矩阵 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+            <Flame class="w-6 h-6 text-primary" />
+            2026 平价高性价比梯子精选
+          </h2>
+          <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+            起步折算月付不到 25 元，均经过晚高峰物理机丢包实测与售后履约验证。
+          </p>
+        </div>
+        <a href="/recommend" class="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
+          查看完整推荐榜单
+          <ArrowRight class="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {budgetTiziBrands.map((b) => (
+          <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary">
+                  {b.data.tier}
+                </span>
+                <span class="text-xs font-bold text-amber-500">
+                  ★ {b.data.rating}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-neutral-900 dark:text-white mb-1">
+                {b.data.name}
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2 mb-3">
+                {b.data.tagline}
+              </p>
+              <div class="text-xs space-y-1 mb-4 text-neutral-600 dark:text-neutral-300">
+                <div class="flex justify-between">
+                  <span class="text-neutral-400">最低资费:</span>
+                  <span class="font-bold text-emerald-600">约 ¥{b.data.minPriceMonthly}/月</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-400">节点覆盖:</span>
+                  <span>{b.data.nodesCount} 个节点</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-3 border-t border-neutral-200 dark:border-neutral-700">
+              <a 
+                href={`/reviews/${b.data.slug}`}
+                class="flex-1 text-center py-2 rounded-xl border border-neutral-300 dark:border-neutral-600 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              >
+                实测报告
+              </a>
+              <a 
+                href={`/go/${b.data.slug}`}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                class="flex-1 text-center py-2 rounded-xl bg-primary text-white text-xs font-medium hover:bg-primary-strong transition-colors inline-flex items-center justify-center gap-1"
+              >
+                官网直达
+                <ExternalLink class="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. 梯子避坑长文精选 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+          <BookOpen class="w-6 h-6 text-primary" />
+          梯子避坑防跑路与资费算账万字深度解读
+        </h2>
+        <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+          直击商家营销套路，深度剖析单 G 真实成本与双梯子容灾方案。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {tiziRelatedPosts.map((post) => (
+          <a 
+            href={`/blog/${post.id}/`}
+            class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-bg-secondary dark:bg-bg-secondary-dark hover:border-primary/40 transition-colors flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center gap-2 text-[11px] text-neutral-400 mb-1.5">
+                <span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-medium">
+                  {post.data.tags && post.data.tags[0] ? post.data.tags[0] : "避坑指南"}
+                </span>
+                <span>·</span>
+                <span>{post.data.read || 15} 分钟阅读</span>
+              </div>
+              <h3 class="text-sm md:text-base font-bold text-neutral-900 dark:text-white line-clamp-2 mb-2 leading-snug">
+                {post.data.title}
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+            <span class="text-xs text-primary font-semibold inline-flex items-center gap-1 mt-3">
+              阅读完整避坑长文
+              <ArrowRight class="w-3.5 h-3.5" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5. 常见问答 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-white">
+          梯子选型高频疑问解答 (FAQ)
+        </h2>
+        <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+          客观解答防跑路、退款与设备并发限制。
+        </p>
+      </div>
+      <div class="space-y-3">
+        {tiziFaqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

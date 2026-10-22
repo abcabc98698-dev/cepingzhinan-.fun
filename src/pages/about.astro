@@ -1,47 +1,83 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
-import Button from "@/components/ui/Button.astro";
 import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
 import { siteConfig } from "@/config/site";
-import { ArrowRight, Heart, Code, Users, GitBranch, GitFork } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight, Activity, Compass, ShieldCheck, Database, Award } from "@lucide/astro";
 
 const timeline = [
-  {
-    version: "v0.1",
-    date: "May 2026",
-    title: "First sketches",
-    desc: "Started as a side project — a designer-built SaaS template that didn't look like a template. Hero, three feature cards, a pricing page. ",
-  },
-  {
-    version: "v0.2",
-    date: "May 2026",
-    title: "Initial public release",
-    desc: "Nine pages, fifteen sections, dark mode, MDX blog and changelog. Released on GitHub under MIT. First wave of forks and bug reports — most of them turned into v1.1 features.",
-  },
-  {
-    version: "v0.3",
-    date: "May 2026",
-    title: "Content layer + polish",
-    desc: "Migrated to Astro Content Layer API. Tightened dark mode contrast, cut cold-build time by 30%, added the BrowserFrame reusable component. See the launch post for details.",
-  },
-  {
-    version: "v1.0",
-    date: "May 2026",
-    title: "Story-first refresh",
-    desc: "Refocused around a coherent virtual brand to make the demo feel like a real product. Cleaned portfolio leftovers, rewrote section copy, upgraded every visual placeholder.",
-  },
+	{
+		version: "v0.1",
+		date: "2026 年初",
+		title: "评测标准确立与分布式物理探针立项",
+		desc: "确立单线程带宽、晚高峰丢包率、流媒体及ChatGPT原生解锁、DNS泄漏防护四大硬性考核指标，在上海电信、广州联通、北京移动部署测试环境。",
+	},
+	{
+		version: "v0.2",
+		date: "2026 年中",
+		title: "SSOT 品牌资料库与晚高峰测速实验室",
+		desc: "构建单一事实来源（SSOT）品牌数据架构，所有专题页面从同一份强类型数据源读取资费与测速数据，杜绝前后矛盾。",
+	},
+	{
+		version: "v0.3",
+		date: "2026 年秋",
+		title: "八大一级专题图谱与 1v1 深度横评上线",
+		desc: "围绕机场推荐、免费机场、深度评测、测速实验室、机场对比、品牌百科、选购教程、优惠码构建多维选型矩阵。",
+	},
+	{
+		version: "v1.0",
+		date: "2026 年冬",
+		title: "测评指南选购证据库正式发布",
+		desc: "全站实现原创与自主架构优化，以客观透明可追溯的评测数据，帮助跨国科研人员、远程办公工程师与内容创作者做出理性决策。",
+	},
 ];
+
+const aboutSchema = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "AboutPage",
+			"@id": `${siteConfig.url}/about/#webpage`,
+			url: `${siteConfig.url}/about/`,
+			name: `关于我们 — ${siteConfig.title}`,
+			description:
+				"了解测评指南（cepingzhinan.fun）：用单品牌资料库、全维套餐对比、晚高峰多探针实测记录和品牌历史更新构建的客观选购证据库。",
+			isPartOf: { "@id": `${siteConfig.url}/#website` },
+		},
+		{
+			"@type": "BreadcrumbList",
+			"@id": `${siteConfig.url}/about/#breadcrumb`,
+			itemListElement: [
+				{
+					"@type": "ListItem",
+					position: 1,
+					name: "首页",
+					item: siteConfig.url,
+				},
+				{
+					"@type": "ListItem",
+					position: 2,
+					name: "关于我们",
+					item: `${siteConfig.url}/about/`,
+				},
+			],
+		},
+	],
+};
 ---
 
 <Layout
-  title="About — RicoFast"
-  description="Learn about RicoFast, a design-led SaaS template built with Astro and Tailwind CSS."
+  title={`关于我们 — ${siteConfig.title}`}
+  description="了解测评指南（cepingzhinan.fun）：用单品牌资料库、全维套餐对比、晚高峰多探针实测记录和品牌历史更新构建的客观选购证据库。"
 >
+  <!-- SEO 结构化数据 -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+
   <section class="site-container my-12">
     <PageHeader
-      title="A template that doesn't feel like one"
-      description="Built for makers who care about how their product is presented. Open-source under MIT — fork it, ship with it, sell what you build on top."
+      title="专业、中立、客观的机场选购证据库"
+      description="测评指南（cepingzhinan.fun）致力于用单品牌资料库、套餐对比、晚高峰实测记录和品牌历史档案，为用户提供科学透明的网络选型依据。"
     />
   </section>
 
@@ -50,16 +86,16 @@ const timeline = [
 
       <!-- Why we built it -->
       <div data-aos="fade-up-xs" data-aos-once="true">
-        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-4">Why we built RicoFast</h2>
+        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-4">为什么创办测评指南</h2>
         <div class="space-y-4 text-neutral-600 dark:text-neutral-300 leading-relaxed">
           <p>
-            Most open-source SaaS templates fall into one of two camps. Some are bare-bones starters — a hero, three feature cards, a pricing page — and you spend the next two weeks rebuilding everything else. Others are maximalist bundles with eighty sections you'll never use, four color themes you'll never pick, and a build pipeline you don't fully understand.
+            在跨境网络加速与机场服务市场，用户长期面临严重的信息不对称：商业推广博客充斥虚假测速图，大量商家将普通直连中继包装成 IPLC 专线，跑路与恶性断连事件频发；零散的用户评价主观性过强，缺乏统一的基准测试。
           </p>
           <p>
-            RicoFast is made for founders & startups. Nine pages that cover what a real SaaS site actually needs. Fifteen-plus section components you mix and match. A documented design system that holds together even after you swap the content. Restraint over bloat.
+            <strong>测评指南（cepingzhinan.fun）</strong> 应运而生。我们坚持以真实的晚高峰物理机压测为基准，对收录的每一款品牌建立独立档案，持续追踪其带宽承载、流媒体解锁稳定性、丢包抖动及售后履约情况。
           </p>
           <p>
-            We picked Astro because zero JavaScript by default keeps marketing sites fast, even as you add sections. We picked Tailwind v4 because the new <code class="text-primary">@theme</code> token system makes rebranding a one-file edit. We picked Instrument Serif + Inter because the pairing gives the template editorial weight without being precious about it.
+            我们相信，选购稳定网络服务的第一步，不是相信夸张的宣传口号，而是查阅中立、严谨、多维度的可验证实测数据。
           </p>
         </div>
       </div>
@@ -68,27 +104,27 @@ const timeline = [
 
       <!-- Values -->
       <div data-aos="fade-up-xs" data-aos-delay="100" data-aos-once="true">
-        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-6">What we care about</h2>
+        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-6">我们的评测核心原则</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-            <Code class="w-5 h-5 text-primary mb-3" />
-            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">Clean code</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">Readable, maintainable, and well-structured. Every component follows the same conventions.</p>
+            <ShieldCheck class="w-5 h-5 text-primary mb-3" />
+            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">独立中立立场</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">所有品牌优缺点据实记录，严禁因为商业赞助篡改实测丢包率与测速数据。</p>
           </div>
           <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-            <Users class="w-5 h-5 text-primary mb-3" />
-            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">User-first design</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">Accessibility and usability are non-negotiable. Every component is tested in both light and dark mode.</p>
+            <Activity class="w-5 h-5 text-primary mb-3" />
+            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">晚高峰多探针实测</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">聚焦 20:30~22:30 网络高峰期，跨三大运营商多物理机采集单线程速率与抖动。</p>
           </div>
           <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-            <Heart class="w-5 h-5 text-primary mb-3" />
-            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">Thoughtful craft</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">Spacing, typography, and motion are deliberate, not default. The details add up.</p>
+            <Database class="w-5 h-5 text-primary mb-3" />
+            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">SSOT 单一事实源</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">全站所有页面从统一数据源读取套餐与价格，彻底消除信息脱节与页面互相矛盾。</p>
           </div>
           <div class="p-5 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700">
-            <GitBranch class="w-5 h-5 text-primary mb-3" />
-            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">Open by default</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400">MIT-licensed, no vendor lock-in, no attribution required. Roadmap shaped by what people actually build.</p>
+            <Award class="w-5 h-5 text-primary mb-3" />
+            <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-1">历史档案可追溯</h3>
+            <p class="text-sm text-neutral-500 dark:text-neutral-400">长期追踪品牌调价记录、线路迁移与运维历史，为长期选型提供可靠决策支撑。</p>
           </div>
         </div>
       </div>
@@ -97,7 +133,7 @@ const timeline = [
 
       <!-- Timeline -->
       <div data-aos="fade-up-xs" data-aos-delay="100" data-aos-once="true">
-        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-6">How we got here</h2>
+        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-6">平台演进历程</h2>
         <div class="relative">
           <div class="absolute left-3 md:left-4 top-1.5 bottom-1.5 w-px bg-neutral-200 dark:bg-neutral-700"></div>
           <ol class="space-y-8">
@@ -118,20 +154,20 @@ const timeline = [
 
       <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700"></div>
 
-      <!-- Open source -->
+      <!-- Contact & Action -->
       <div data-aos="fade-up-xs" data-aos-delay="100" data-aos-once="true">
-        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-4">Open source</h2>
+        <h2 class="text-2xl font-brand text-neutral-800 dark:text-neutral-100 mb-4">联系我们与品牌收录</h2>
         <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
-          RicoFast is MIT-licensed on GitHub. Open issues, send PRs, suggest features. The roadmap is steered by what people are actually trying to ship.
+          如果您是机场运营方并希望申请加入测速实验室压测，或者发现了数据有偏差需要纠错，欢迎随时与我们联系。
         </p>
       </div>
 
       <div class="flex flex-wrap gap-4" data-aos="fade-up-xs" data-aos-delay="200" data-aos-once="true">
-        <Button url={siteConfig.social.github} type="fill" target="_blank">
-          <GitFork size={16} /> Star on GitHub <ArrowRight size={16} />
+        <Button url="/contact" type="fill">
+          联系我们 <ArrowRight size={16} />
         </Button>
-        <Button url="/changelog">
-          View Changelog
+        <Button url="/recommend">
+          查看 2026 推荐榜单
         </Button>
       </div>
     </article>

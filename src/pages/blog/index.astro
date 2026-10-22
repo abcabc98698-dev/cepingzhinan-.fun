@@ -1,17 +1,21 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import PageHeader from "@/components/elements/PageHeader.astro";
 import BlogSection from "@/components/sections/BlogSection.astro";
+import { siteConfig } from "@/config/site.js";
+import Layout from "@/layouts/Layout.astro";
 
 const POSTS_PER_PAGE = 6;
 const currentPage = 1;
 ---
 
-<Layout title="Blog — RicoFast" description="Latest articles, updates, and insights from the RicoFast team.">
+<Layout 
+  title={`深度评测与选型专栏 — ${siteConfig.title}`} 
+  description="汇集主流机场品牌的深度实测档案、晚高峰多探针测速分析、协议技术原理解析与防坑选购实操指南。"
+>
   <section class="relative z-20 container mx-auto my-12 px-7 lg:px-0">
     <PageHeader
-      title="Blog"
-      description="Latest articles, updates, and insights."
+      title="深度评测专栏"
+      description="基于三大运营商晚高峰物理机实测、流媒体与 ChatGPT 原生解锁验证的深度专栏与选购指南。"
     />
   </section>
   <section class="relative z-20 mx-auto my-12 lg:px-0">

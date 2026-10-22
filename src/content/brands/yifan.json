@@ -1,0 +1,172 @@
+{
+  "id": "yifan",
+  "name": "一翻云",
+  "slug": "yifan",
+  "rank": 16,
+  "tagline": "一翻云 稳定加速与高性价比选型推荐",
+  "description": "一翻云全节点走 IEPL 物理专线，搭配原生住宅 IP，官方称晚高峰 0 丢包、单节点 2Gbps 带宽。协议给了 Hysteria 2、VLESS-Reality 和 Shadowsocks 三种，客户端选择比较宽松。节点覆盖香港、日本、美国、新加坡、台湾五地，比不少同价位机场多了台湾这一站。不限速也不限设备数量，另外提供永久不过期的一次性流量包，适合用量不固定、不想按月续费的人。年付小包 98 元一年、每月 60GB，折合每月约 8.2 元；想要更多流量可以看月付档，轻享版 20 元给到 150GB。优惠码 1FLYYUN 可以再打 9 折。官方没有提供试用，想先验证线路没有零成本的办法。",
+  "logo": "/assets/brands/logos/1fly_logo.webp",
+  "rating": 4.7,
+  "tier": "大流量主力",
+  "established": "2025年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 477,
+    "peakDownloadMbps": 596,
+    "avgLatencyMs": 23,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/一翻云-节点测速实测.png",
+  "minPriceMonthly": 20,
+  "plans": [
+    {
+      "name": "轻享版",
+      "billingCycle": "月付",
+      "price": 20,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "舒享版",
+      "billingCycle": "月付",
+      "price": 35,
+      "traffic": "350GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "尊享版",
+      "billingCycle": "月付",
+      "price": 55,
+      "traffic": "600GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "极致版",
+      "billingCycle": "月付",
+      "price": 95,
+      "traffic": "1.2TB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "98¥·年付小包",
+      "billingCycle": "年付",
+      "price": 98,
+      "traffic": "60GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "轻享版·不限时包",
+      "billingCycle": "一次性付费",
+      "price": 100,
+      "traffic": "100GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "舒享版·不限时包",
+      "billingCycle": "一次性付费",
+      "price": 200,
+      "traffic": "250GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "尊享版·不限时包",
+      "billingCycle": "一次性付费",
+      "price": 400,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "yfy6666",
+      "discount": "立减/折扣",
+      "desc": "一翻云 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.1flyunaff.cc/",
+  "affUrl": "https://guangs.1flyunaff.cc/#/register?code=Yr7FhB7r",
+  "lastVerified": "2026-10-19"
+}

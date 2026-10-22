@@ -1,31 +1,32 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import PageHeader from "@/components/elements/PageHeader.astro";
 import { getCollection } from "astro:content";
+import PageHeader from "@/components/elements/PageHeader.astro";
 import Badge from "@/components/ui/Badge.astro";
+import { siteConfig } from "@/config/site.js";
+import Layout from "@/layouts/Layout.astro";
 
 const allEntries = await getCollection("changelog");
 const entries = allEntries.sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
 );
 
 function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+	return date.toLocaleDateString("zh-CN", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
 }
 ---
 
 <Layout
-  title="Changelog — RicoFast"
-  description="Track improvements, new releases, and updates."
+  title={`更新日志 — ${siteConfig.title}`}
+  description="实时跟踪测评指南平台的功能迭代、评测知识库更新与模型升级日志。"
 >
   <section class="site-container my-12">
     <PageHeader
-      title="Changelog"
-      description="Track improvements and new releases."
+      title="更新日志"
+      description="实时记录测评指南平台的功能升级、评测知识库扩充与评测模型演进。"
     />
   </section>
 

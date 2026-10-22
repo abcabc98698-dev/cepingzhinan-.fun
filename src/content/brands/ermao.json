@@ -1,0 +1,148 @@
+{
+  "id": "ermao",
+  "name": "二猫云",
+  "slug": "ermao",
+  "rank": 7,
+  "tagline": "二猫云 稳定加速与高性价比选型推荐",
+  "description": "二猫云走 IEPL 专线，VLESS 协议，20 元/月起，130GB 流量。官方强调自己不做低价跑路盘那一套，主打长期稳定，还配了一套独家定制客户端。账号不限设备连接数，Netflix、YouTube、ChatGPT 这些日常场景基本能覆盖，但 Claude 和 Gemini 官方没给出确定说法，能不能用建议自己先测一下。节点覆盖香港、日本、美国，比不少同类机场少了新加坡这一站。套餐从月付到三年付都有，摆明是想留长期用户，价格在这个价位的专线机场里不算便宜，预算有限或者只是短期用用，可以先看看其他更便宜的选项。",
+  "logo": "/assets/brands/logos/2mao_logo.webp",
+  "rating": 4.8,
+  "tier": "高性价比",
+  "established": "2023年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 56,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 481,
+    "peakDownloadMbps": 601,
+    "avgLatencyMs": 22,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/二猫云-节点测速实测.png",
+  "minPriceMonthly": 20,
+  "plans": [
+    {
+      "name": "二猫云·不限时套餐",
+      "billingCycle": "一次性付费",
+      "price": 99,
+      "traffic": "100GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "二猫年付小包",
+      "billingCycle": "年付",
+      "price": 89,
+      "traffic": "60GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "二猫云·白猫套餐",
+      "billingCycle": "月付",
+      "price": 20,
+      "traffic": "130GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "二猫云·橘猫畅玩版",
+      "billingCycle": "月付",
+      "price": 40,
+      "traffic": "230GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "二猫云·牛奶猫尊享版",
+      "billingCycle": "月付",
+      "price": 80,
+      "traffic": "430GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "二猫云·黑猫重度用户版",
+      "billingCycle": "月付",
+      "price": 160,
+      "traffic": "850GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "ermao5555",
+      "discount": "立减/折扣",
+      "desc": "二猫云 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.2maoyunaff.cc/",
+  "affUrl": "https://guangs.2maoyunaff.cc/#/?code=7mjvgGbW",
+  "lastVerified": "2026-10-19"
+}

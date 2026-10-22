@@ -1,0 +1,151 @@
+{
+  "id": "guangsu",
+  "name": "光速云",
+  "slug": "guangsu",
+  "rank": 1,
+  "tagline": "2026 编辑部年度力荐·IEPL与企业专线双架构·致敬斯诺克147不限时",
+  "description": "光速云在便宜机场推荐里属于价格有优势的一类，99 元/年左右的最低套餐，换算下来每月成本不高，在高性价比机场推荐里比较有竞争力。它把 IPLC 专线和隧道中转结合着用，第三方测试显示香港、日本节点速度表现还不错，也支持 Netflix、Disney+、YouTube 等主流流媒体。不过要注意，ChatGPT、Gemini 这类 AI 工具并不是所有节点都稳定支持，实际用的时候可能需要手动切换节点，这点官方也承认。套餐里特殊商品不支持退款，所以更建议先买月付或者小额套餐，实测晚高峰速度和稳定性之后，再考虑要不要长期用。   ---",
+  "logo": "/assets/brands/logos/光速云主图.png",
+  "rating": 4.95,
+  "tier": "旗舰专线",
+  "established": "2020年",
+  "lineTypes": [
+    "IEPL内网专线",
+    "企业级专线",
+    "BGP优质入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks",
+    "Trojan"
+  ],
+  "nodesCount": 88,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 529,
+    "peakDownloadMbps": 661,
+    "avgLatencyMs": 22,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/光速云-节点测速实测.png",
+  "unlockImage": "/assets/brands/unlocks/guangsu_photo_2026-08-19_12-13-01.jpg",
+  "minPriceMonthly": 25,
+  "plans": [
+    {
+      "name": "光速云·轻量版",
+      "billingCycle": "年付",
+      "price": 99,
+      "traffic": "69GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "光速云·极速版",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "168GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "光速云·流光版",
+      "billingCycle": "月付",
+      "price": 34,
+      "traffic": "238GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "光速云·量子版",
+      "billingCycle": "月付",
+      "price": 68,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "光速云·无界版",
+      "billingCycle": "月付",
+      "price": 138,
+      "traffic": "900GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "光速云·定制套餐",
+      "billingCycle": "月付",
+      "price": 680,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "AMM",
+      "discount": "立减/折扣",
+      "desc": "光速云 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "IEPL+企业内网双专线架构，晚高峰丢包率极低",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "高配定制套餐单价较高",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "追求极致稳定防断连的远程办公、4K/8K视频创作者与外贸业务",
+  "officialUrl": "https://sahude.gsyvipaff.com/",
+  "affUrl": "https://sahude.gsyvipaff.com/#/?code=keqgvT5Y",
+  "lastVerified": "2026-10-19"
+}

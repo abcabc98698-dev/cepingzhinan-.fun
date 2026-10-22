@@ -1,0 +1,728 @@
+---
+const tutorialArticles = [
+  {
+    "title": "科学评价机场的五维黄金标准：抛开主观吹捧，用量化指标建立不可篡改的选型证据链",
+    "url": "/blog/airport-evaluation-methodology",
+    "description": "晚高峰测速、物理专线真实性、IP 纯净度、客户端生态与售后响应，建立属于普通用户的科学评价体系。",
+    "readTime": "15 分钟",
+    "tag": "评价标准体系"
+  },
+  {
+    "title": "如何识破虚假测速图：从单线程握手时延、晚高峰丢包率到多线程跑分的防坑指南",
+    "url": "/blog/how-to-read-speedtest-charts",
+    "description": "为什么白天跑满千兆的节点晚上看视频依然卡顿？深度剖析 Speedtest 多线程与真实 TCP 单线程差异，手把手教你读懂节点真实承载力。",
+    "readTime": "14 分钟",
+    "tag": "识破虚假跑分"
+  },
+  {
+    "title": "商家线路宣传黑话大揭秘：真假 IPLC、公网中继伪装内网专线与单点故障的识别秘籍",
+    "url": "/blog/iplc-iepl-transit-marketing-gimmicks-debunked",
+    "description": "深度拆解机场商家的常见宣传话术套路，教你用简单网络诊断命令一眼识破假专线、虚假 BGP 入口与超售陷阱。",
+    "readTime": "15 分钟",
+    "tag": "线路黑话解密"
+  },
+  {
+    "title": "全平台代理客户端终极配置实战手册：Windows、macOS、iOS、Android 与软路由 TUN 模式防 DNS 泄露全攻略",
+    "url": "/blog/clash-verge-rev-sing-box-full-configuration-manual",
+    "description": "手把手实操全平台代理客户端最佳配置指南，彻底解决 TUN 虚拟网卡冲突、本地 DNS 污染泄露与规则分流失效难题。",
+    "readTime": "17 分钟",
+    "tag": "全平台配置实操"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Sparkles, Terminal, Cpu, Network, ExternalLink
+} from "@lucide/astro";
+
+const faqs = [
+  {
+    question: "普通人最容易踩坑的「假专线」套路有哪些？",
+    answer: "两大典型套路：①「挂羊头卖狗肉」：在节点名称上人工标注「IPLC专线」，但实际通过路由追踪（Traceroute）发现依然经过公网 163 骨干网出国；②「入口假专线」：只有大陆入口服务器之间做了国内公网转发，过境依然走普通国际公网出口，晚高峰直接原形毕露。"
+  },
+  {
+    question: "Shadowsocks、Trojan、V2Ray 与 Hysteria 2 协议到底有何技术优劣？",
+    answer: "Shadowsocks 协议开销最小、客户端最省电，适合搭建在纯专线内网中（因为专线无需高强度伪装）；Trojan 采用标准 HTTPS TLS 伪装，过公网更安全；Hysteria 2 基于 UDP (QUIC) 协议，具备主动拥塞控制算法，在丢包率 20% 以上的恶劣弱网下依然能跑满带宽，是目前公网抗丢包最强协议。"
+  },
+  {
+    question: "为什么说千万不要买不知名机场的「三年付」甚至「永久传家宝套餐」？",
+    answer: "正规专线机房的带宽租金是按月或按年向电信运营商结算的硬成本。声称提供「永久使用」或超低价三年付的机场，其商业本质是庞氏模式（用新用户的本金填补前期带宽成本），一旦新用户增长放缓，上游欠费断网，必定瞬间跑路。"
+  },
+  {
+    question: "如何快速在本地用命令行验证一个节点是否真的不过公网？",
+    answer: "在开启系统代理或 TUN 模式下，使用 BestTrace 或 nexttrace 工具对海外落地 IP 进行路由追踪。如果中间跳数极少（通常 3-5 跳），且中途没有出现中国电信 202.97.*.* 或联通 219.158.*.* 等公网骨干网出口跳，直接跳入香港/日本内网 IP，即为真实的内网专线。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/tutorials/#webpage`,
+      "url": `${siteConfig.url}/tutorials/`,
+      "name": `选购教程：从网络协议到底层线路的科学选型防坑大系 — ${siteConfig.title}`,
+      "description": "深入解析 IEPL/IPLC 物理架构、测速图真伪辨别、协议性能差异与真实 TCO 避坑指南。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/tutorials/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`选购教程：机场防坑标准、测速图识破与线路技术大系 (2026) — ${siteConfig.title}`}
+  description="测评指南权威选购教程大系：手把手教你读懂真实测速图、识破虚假专线与假大流量套路，彻底搞懂 IEPL/IPLC/BGP 与 Hysteria 2 协议的底层原理。"
+  keywords="机场教程, 机场选购教程, 如何选机场, 读懂测速图, IPLC原理, IEPL区别, Hysteria2教程, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="选购教程：从底层网络架构到防坑选型的科学大系"
+      description="授人以鱼不如授人以渔。测评指南通过通俗易懂的硬核工程原理解析，帮您穿透商业包装，建立独立自主的客观选型与鉴别能力。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心避坑铁律速查</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        选购机场牢记<strong>「四不原则」与「三必看」</strong>：① <strong>不买不知名小机场的年付与传家宝套餐</strong>（资金盘跑路概率 90%+）；② <strong>不盲信白天的千兆测速截图</strong>（必须看晚高峰 20:30~22:30 的单线程丢包）；③ <strong>不买仅标注“优质中继”却不敢承诺真实专线的品牌</strong>；④ <strong>不盲目追求节点数量</strong>（10 个稳如磐石的高 SLA 专线节点远胜 200 个频繁红灯的垃圾直连节点）。三必看：必看真实内网专线架构、必看住宅原生 IP 解锁纯净度、必看运营时间是否超过 2 年。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 线路拓扑全景图 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          主流跨境网络通信拓扑物理架构对照表
+        </span>
+        <span class="text-xs">物理层至链路层拆解</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+【模式一：廉价公网直连 (Direct Connection)】
+  [用户端] ──► [公网运营商 163 骨干] ──► [海关物理出口 GFW 审查点] ──► [海外公网 VPS]
+  * 特点: 晚高峰拥堵、单连接丢包率 20%~50%、极易被精准识别封锁
+
+【模式二：公网中继转发 (Relay Transit)】
+  [用户端] ──► [国内中继机房 (公网)] ──► [海关物理出口 GFW 审查点] ──► [海外落地机房]
+  * 特点: 国内入口体验好，但跨越国境时依然走公网，敏感期同样大面积中断
+
+【模式三：企业级内网专线 (IEPL / IPLC 专线)】
+  [用户端] ──► [多线 BGP 境内入口] ──► [封闭物理裸缆专线 (内网二层)] ──► [海外原生机房]
+  * 特点: 物理上不经过国际公网出口局，GFW 无法探测审查，365天 0 丢包极速！
+      </pre>
+    </section>
+
+    <!-- 4. 线路类型科普大表 -->
+    <section id="line-types" class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          从底层光缆到协议：主流线路类型深度科普横评
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          全面拆解 IEPL、IPLC、CN2 GIA、联通 9929 与普通 BGP 的本质区别。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
+        <table class="w-full text-left text-xs md:text-sm border-collapse bg-white dark:bg-bg-primary-dark">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold">线路类型</th>
+              <th class="p-3.5 font-semibold">物理连接方式</th>
+              <th class="p-3.5 font-semibold">是否过 GFW</th>
+              <th class="p-3.5 font-semibold">晚高峰稳定性</th>
+              <th class="p-3.5 font-semibold">平均成本</th>
+              <th class="p-3.5 font-semibold">典型代表</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">IPLC (私有租用线路)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">点对点国际物理专线通道</td>
+              <td class="p-3.5 text-emerald-600 font-bold">不过 GFW (完全内网)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">极高 (0 丢包)</td>
+              <td class="p-3.5 text-amber-500 font-bold">高 (成本每G约0.2~0.5元)</td>
+              <td class="p-3.5 font-medium text-primary">Nexitally 佩奇</td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">IEPL (以太网专线)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">二层跨境内网以太网互联</td>
+              <td class="p-3.5 text-emerald-600 font-bold">不过 GFW (完全内网)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">极高 (0 丢包)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">中高 (性价比专线主流)</td>
+              <td class="p-3.5 font-medium text-primary">TAG / FSCloud</td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">电信 CN2 GIA / 联通 9929</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">公网企业级 VIP 优先调度通道</td>
+              <td class="p-3.5 text-amber-500 font-semibold">过 GFW (走公网出口)</td>
+              <td class="p-3.5 text-emerald-600 font-semibold">良好 (偶尔轻度波动)</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">中等</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">自建 VPS / 高端直连</td>
+            </tr>
+            <tr class="hover:bg-primary/5 transition-colors">
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">普通公网 BGP 中继</td>
+              <td class="p-3.5 text-neutral-600 dark:text-neutral-300">国内多线入口 + 公网国际出口</td>
+              <td class="p-3.5 text-red-500 font-semibold">过 GFW (普通出口)</td>
+              <td class="p-3.5 text-amber-500 font-medium">一般 (敏感期丢包严重)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">极低 (几分钱每GB)</td>
+              <td class="p-3.5 font-medium text-primary">速鹰 666 / 大流量机场</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4.5. 全平台客户端大全与配置指南 (从第三方代理客户端资料库深度整合) -->
+    <section id="clients" class="space-y-8" data-aos="fade-up-xs">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-2">
+          <Terminal class="w-3.5 h-3.5" />
+          <span>客户端资料库</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          2026 全平台机场代理客户端选型与下载指南
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          按操作系统整理主流开源与商业代理工具，包含核心特点、协议支持与安全防坑要点。
+        </p>
+      </div>
+
+      <!-- 六大操作系统网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Windows -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-primary font-mono text-lg">🪟</span>
+              Windows 电脑客户端
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-primary/10 text-primary font-medium">首选 Mihomo</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://github.com/clash-verge-rev/clash-verge-rev/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Clash Verge Rev (首选推荐)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-emerald-600 font-normal bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded text-[10px]">Mihomo 内核</span>
+              </div>
+              <p class="text-neutral-500">规则分流、TUN 模式虚拟网卡、原生中文，适合新手与全场景主力。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载发布页 →</span>
+                <span class="text-neutral-400 font-normal">v1.7.7+</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/2dust/v2rayN/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  v2rayN
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">Xray / sing-box</span>
+              </div>
+              <p class="text-neutral-500">多协议极客首选，支持 VLESS、Hysteria 2，节点批量测速与路由自定义。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载发布页 →</span>
+                <span class="text-neutral-400 font-normal">开源免费</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/chen08209/FlClash/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  FlClash / Hiddify
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">轻量跨平台</span>
+              </div>
+              <p class="text-neutral-500">Flutter 打造的极简 UI，开箱即用，适合低配电脑与快速导入订阅。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往项目发布页 →</span>
+                <span class="text-neutral-400 font-normal">极简易用</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-neutral-400">
+            注：原 Clash for Windows (CFW) 项目已停更，请及时迁移至持续更新的 Clash Verge Rev。
+          </p>
+        </div>
+
+        <!-- macOS -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-neutral-800 dark:text-neutral-200 font-mono text-lg">🍏</span>
+              macOS 苹果电脑
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-medium">Apple Silicon</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://github.com/clash-verge-rev/clash-verge-rev/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Clash Verge Rev (Mac)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-emerald-600 font-normal bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded text-[10px]">免费开源</span>
+              </div>
+              <p class="text-neutral-500">分别提供 arm64 (M系列芯片) 与 x64 (Intel) 安装包，内存占用仅 80MB。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载 DMG →</span>
+                <span class="text-neutral-400 font-normal">适配 M1/M2/M3/M4</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://nssurge.com/"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Surge Mac
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-amber-500 font-normal bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded text-[10px]">商业旗舰</span>
+              </div>
+              <p class="text-neutral-500">Mac 端网络调试天花板，具备极细颗粒度 MitM 捕获与网关代理接管。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往官方网站下载 →</span>
+                <span class="text-neutral-400 font-normal">支持免费试用</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/SagerNet/sing-box/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  sing-box for macOS (SFM)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">原生独立</span>
+              </div>
+              <p class="text-neutral-500">基于官方 sing-box 原生渲染，无任何多余开销，运行稳定不发热。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往官方 Release 页面 →</span>
+                <span class="text-neutral-400 font-normal">超低功耗</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-neutral-400">
+            提示：Mac 用户安装后需在「系统设置 - 隐私与安全性」中授予帮助程序守护进程权限。
+          </p>
+        </div>
+
+        <!-- iOS / iPadOS -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-neutral-800 dark:text-neutral-200 font-mono text-lg">📱</span>
+              iPhone / iPad (iOS)
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 font-medium">海外 App Store</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://apps.apple.com/us/app/shadowrocket/id932747118"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Shadowrocket (小火箭)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-primary font-normal bg-primary/10 px-1.5 py-0.5 rounded text-[10px]">$2.99 必备</span>
+              </div>
+              <p class="text-neutral-500">装机量第一，全面支持 SS、Trojan、VLESS、Hysteria2，扫码即用。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 App Store 商店页 →</span>
+                <span class="text-neutral-400 font-normal">需美区/港区ID</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://apps.apple.com/us/app/stash-rule-based-proxy/id1596063718"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Stash / Loon
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">Clash 规则系</span>
+              </div>
+              <p class="text-neutral-500">Stash 完整兼容 Clash 配置文件与策略组；Loon 插件脚本生态极其繁荣。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 App Store 商店页 →</span>
+                <span class="text-neutral-400 font-normal">全能规则代理</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://apps.apple.com/us/app/quantumult-x/id1453926364"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Quantumult X / Surge 5
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-amber-500 font-normal bg-amber-50 dark:bg-amber-950/40 px-1.5 py-0.5 rounded text-[10px]">高级进阶</span>
+              </div>
+              <p class="text-neutral-500">圈 X 请求重写与去广告功能强大；Surge iOS 是企业级网络分析终极利器。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 App Store 商店页 →</span>
+                <span class="text-neutral-400 font-normal">深度自定义</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-neutral-400">
+            购买提示：国区 App Store 无法搜索上述工具，请使用美区或港区 Apple ID 登录下载。
+          </p>
+        </div>
+
+        <!-- Android -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-emerald-500 font-mono text-lg">🤖</span>
+              Android 安卓手机
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 font-medium">开源生态</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://github.com/2dust/v2rayNG/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  v2rayNG (经典主力)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-emerald-600 font-normal bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded text-[10px]">Xray 内核</span>
+              </div>
+              <p class="text-neutral-500">支持全协议订阅导入与节点单线程测速，运行省电，后台常驻极其稳定。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载 APK →</span>
+                <span class="text-neutral-400 font-normal">装机必备</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/chen08209/FlClash/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  FlClash / Clash Meta
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">Mihomo 规则</span>
+              </div>
+              <p class="text-neutral-500">分流策略组一键切换，UI 界面现代优雅，全面支持多订阅自动合并更新。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载 APK →</span>
+                <span class="text-neutral-400 font-normal">美观现代</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/hiddify/hiddify-app/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Hiddify / Karing
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">新手友好</span>
+              </div>
+              <p class="text-neutral-500">智能自动选择最低延迟节点，支持多语言与暗黑模式，零门槛上手。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 发布页 →</span>
+                <span class="text-neutral-400 font-normal">全协议支持</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-red-500 dark:text-red-400 font-medium">
+            防坑警示：严禁从 Google Play 下载第三方假冒的 NekoBox，存在注入恶意后门风险。
+          </p>
+        </div>
+
+        <!-- Linux -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-neutral-800 dark:text-neutral-200 font-mono text-lg">🐧</span>
+              Linux 桌面与服务器
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-medium">极客命令行</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://github.com/clash-verge-rev/clash-verge-rev/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Clash Verge Rev (Linux)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">AppImage / DEB</span>
+              </div>
+              <p class="text-neutral-500">适用于 Ubuntu、Debian、Arch、Fedora 桌面环境，提供完整 GUI 界面。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载 Linux 包 →</span>
+                <span class="text-neutral-400 font-normal">GUI 图形界面</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/v2rayA/v2rayA"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  v2rayA (Web 管理面板)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-emerald-600 font-normal bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded text-[10px]">无头服务器首选</span>
+              </div>
+              <p class="text-neutral-500">通过本地 2017 端口 Web 界面管理透明代理与全局网络，适合 Linux 服务器。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 v2rayA 项目主页 →</span>
+                <span class="text-neutral-400 font-normal">Web 面板直管</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/SagerNet/sing-box/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  sing-box CLI (服务模式)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">Systemd 守护</span>
+              </div>
+              <p class="text-neutral-500">极致精简的 Linux 后台代理守护进程，占用内存低于 30MB。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 sing-box 官方 Release →</span>
+                <span class="text-neutral-400 font-normal">极客命令行</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-neutral-400">
+            提示：Linux 环境推荐使用 Systemd 托管服务，确保开机自启并配置 iptables 透明重定向。
+          </p>
+        </div>
+
+        <!-- OpenWrt / 软路由 -->
+        <div class="p-5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-700">
+            <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+              <span class="text-primary font-mono text-lg">📡</span>
+              OpenWrt / 软路由网关
+            </h3>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 font-medium">全屋无感</span>
+          </div>
+          <div class="space-y-3 text-xs">
+            <a 
+              href="https://github.com/vernesong/OpenClash/releases"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  OpenClash (主流王牌)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-primary font-normal bg-primary/10 px-1.5 py-0.5 rounded text-[10px]">Mihomo 内核</span>
+              </div>
+              <p class="text-neutral-500">全屋设备无需单独配置代理，支持规则分流、Fake-IP 与游戏 UDP 转发。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 下载 IPK →</span>
+                <span class="text-neutral-400 font-normal">软路由第一选择</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/xiaorouji/openwrt-passwall"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  PassWall2 / HomeProxy
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">轻量级旁路路由</span>
+              </div>
+              <p class="text-neutral-500">支持节点健康检查与多节点分流，在低性能路由器上 CPU 占用更低。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往项目主页 →</span>
+                <span class="text-neutral-400 font-normal">低功耗低占用</span>
+              </div>
+            </a>
+
+            <a 
+              href="https://github.com/immortalwrt/homeproxy"
+              target="_blank"
+              rel="nofollow noopener noreferrer"
+              class="block p-3 rounded-xl bg-white dark:bg-bg-primary-dark border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:shadow-sm transition-all group"
+            >
+              <div class="flex justify-between items-center font-bold text-neutral-800 dark:text-neutral-200 mb-1">
+                <span class="group-hover:text-primary transition-colors flex items-center gap-1">
+                  Nikki (新一代方案)
+                  <ExternalLink class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
+                </span>
+                <span class="text-neutral-500 font-normal bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-[10px]">OpenWrt 24.10+</span>
+              </div>
+              <p class="text-neutral-500">采用现代 Luci 界面与最新安全规范，专为新版本 OpenWrt 固件设计。</p>
+              <div class="mt-2 text-[11px] text-primary font-medium flex items-center justify-between pt-1.5 border-t border-dashed border-neutral-100 dark:border-neutral-800">
+                <span>前往 GitHub 发布页 →</span>
+                <span class="text-neutral-400 font-normal">现代新架构</span>
+              </div>
+            </a>
+          </div>
+          <p class="text-[11px] text-neutral-400">
+            路由提示：刷入前务必核对 CPU 架构（x86_64、aarch64_cortex-a53 等）与防火墙 nftables 依赖。
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 客户端详细配置实战教程引导卡片 -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-primary/20 flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div class="flex items-center gap-4">
+          <div class="p-3 rounded-xl bg-primary text-white shadow-md">
+            <Sparkles class="w-6 h-6" />
+          </div>
+          <div>
+            <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100 mb-0.5">需要手把手的客户端导入与规则分流教程？</h4>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">我们准备了详尽的实战指南，手把手教您配置 Clash Verge Rev 与 sing-box，搞定 TUN 虚拟网卡与防 DNS 泄露。</p>
+          </div>
+        </div>
+        <a 
+          href="/blog/clash-verge-rev-sing-box-full-configuration-manual"
+          class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-strong text-white text-xs font-semibold whitespace-nowrap transition-all shadow-md shadow-primary/20 inline-flex items-center gap-1.5"
+        >
+          <span>阅读全平台配置指南</span>
+          <ExternalLink class="w-3.5 h-3.5" />
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={tutorialArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="tco" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        选购教程常见疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/tutorials" class="font-bold text-primary">选购教程</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/coupons" class="hover:text-primary">最新优惠码</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

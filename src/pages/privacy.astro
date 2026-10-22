@@ -1,0 +1,81 @@
+---
+import PageHeader from "@/components/elements/PageHeader.astro";
+import { siteConfig } from "@/config/site.js";
+import Layout from "@/layouts/Layout.astro";
+import { ShieldCheck, Lock, Eye, FileText, CheckCircle2 } from "@lucide/astro";
+
+const lastUpdated = "2026 年 10 月 22 日";
+---
+
+<Layout
+  title={`隐私政策 — ${siteConfig.title}`}
+  description="测评指南（cepingzhinan.fun）隐私保护政策：我们重视用户数据安全与隐私保护，详细说明信息的收集、使用及保护原则。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="隐私权保护政策"
+      description={`测评指南致力于为全球用户提供透明、客观的机场与网络加速选购证据库。本政策详细阐述我们如何尊重并保护您的个人信息。最后生效日期：${lastUpdated}`}
+    />
+  </section>
+
+  <main class="site-container max-w-4xl mx-auto pb-24 text-neutral-700 dark:text-neutral-300 space-y-12">
+    <!-- 1. 核心原则声明 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-xs">
+      <div class="flex items-center gap-3 mb-4 text-primary font-bold text-base">
+        <ShieldCheck class="w-5 h-5" />
+        <span>零知识日志与隐私优先承诺</span>
+      </div>
+      <p class="leading-relaxed text-sm md:text-base">
+        测评指南坚持<strong>最小化数据收集原则</strong>。作为一个公开的客观选购证据库与评测展示平台，您在浏览本站时<strong>无需注册任何账户</strong>，我们绝不会强行收集您的真实姓名、身份证件、手机号码、通讯录或任何银行财务信息。
+      </p>
+    </section>
+
+    <!-- 2. 信息收集与使用 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <Eye class="w-5 h-5 text-primary" />
+        一、我们收集哪些信息及使用目的
+      </h2>
+      <div class="space-y-3 text-sm leading-relaxed">
+        <p><strong>1. 基础访问技术日志</strong>：为了确保服务器安全防御（如防御 DDoS、CC 恶意刷流量攻击）并保障服务可用性，基础基础设施可能记录匿名的技术访问特征（包括匿名化的客户端 IP、浏览器 User-Agent、访问时间戳及所请求页面）。此类日志仅用于安全审计与流量统计，定期彻底销毁。</p>
+        <p><strong>2. 网站分析统计</strong>：我们可能使用轻量且合规的去中心化访问统计工具（如 Google Analytics），以完全匿名化的形式统计受访页面的浏览次数与跳出率，用于评估内容易读性与排版质量。我们绝不会将访问统计与任何个人的线下真实身份进行绑定关联。</p>
+        <p><strong>3. 用户主动联络信息</strong>：当您通过官方邮箱（<code>{siteConfig.mail}</code>）向我们提报纠错、测试数据或咨询时，我们仅将您发送的邮件地址用于一对一答复沟通，绝不出售或向任何商业第三方透露。</p>
+      </div>
+    </section>
+
+    <!-- 3. Cookie 与本地存储 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <Lock class="w-5 h-5 text-primary" />
+        二、Cookie 与本地浏览器存储
+      </h2>
+      <div class="space-y-3 text-sm leading-relaxed">
+        <p>为了给您提供舒适的阅读体验，我们在您的浏览器本地存储（LocalStorage）中仅保存以下非个人敏感设置：</p>
+        <ul class="list-disc pl-5 space-y-1.5 text-neutral-600 dark:text-neutral-400">
+          <li><strong>深色模式/浅色模式切换偏好</strong>（用于记住您选择的界面主题）；</li>
+          <li><strong>表格筛选与对比状态暂存</strong>（用于提升选型对比时的交互便利度）。</li>
+        </ul>
+        <p>您随时可以通过浏览器的清理缓存功能彻底清除这些本地存储数据，这不会影响您正常阅读本站的任何核心评测内容。</p>
+      </div>
+    </section>
+
+    <!-- 4. 第三方服务与外部链接 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <FileText class="w-5 h-5 text-primary" />
+        三、第三方服务商与外链说明
+      </h2>
+      <p class="text-sm leading-relaxed">
+        测评指南包含指向各大机场品牌官方注册站点的转跳通道（如 <code>/go/[brand]</code>）。当您点击这些外链离开测评指南并访问第三方站点时，您在该第三方站点上的行为将受其自身隐私政策的管辖。我们强烈建议您在向任何第三方提交个人隐私或进行交易前，仔细查阅其官方发布的隐私条款。
+      </p>
+    </section>
+
+    <!-- 5. 政策更新与联系 -->
+    <section class="p-6 rounded-2xl bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 text-xs md:text-sm space-y-2">
+      <p class="font-bold text-neutral-800 dark:text-neutral-200">四、隐私条款的修订与联络通道</p>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        我们可能会根据法律法规变化或评测平台功能升级适时更新本隐私政策。若您对本政策有任何疑问或改进建议，欢迎随时通过官方联系邮箱与我们取得联系：<a href={`mailto:${siteConfig.mail}`} class="text-primary hover:underline">{siteConfig.mail}</a>。
+      </p>
+    </section>
+  </main>
+</Layout>

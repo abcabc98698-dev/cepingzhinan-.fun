@@ -1,0 +1,102 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { ExternalLink, ShieldCheck, Zap, Copy, Check } from "@lucide/astro";
+
+export async function getStaticPaths() {
+  const brands = await getCollection("brands");
+  return brands.map((b) => ({
+    params: { id: b.data.id || b.data.slug || b.id },
+    props: { brand: b.data },
+  }));
+}
+
+const { brand } = Astro.props;
+const targetUrl = brand.affUrl || brand.officialUrl || "https://sahude.gsyvipaff.com/";
+const brandCode = brand.coupons?.[0]?.code || "AMM";
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="refresh" content={`1;url=${targetUrl}`} />
+  <title>正在安全前往 {brand.name} 官网 - 测评指南</title>
+  <style>
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    .animate-progress {
+      animation: progress 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+  </style>
+  <script define:vars={{ targetUrl }}>
+    // Immediate fallback redirect in JS
+    setTimeout(() => {
+      window.location.replace(targetUrl);
+    }, 1200);
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4 font-sans antialiased">
+  <div class="max-w-md w-full bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl text-center relative overflow-hidden backdrop-blur-xl">
+    <!-- Top Glowing Accent -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400"></div>
+
+    <!-- Brand Icon -->
+    <div class="w-20 h-20 mx-auto mb-6 bg-slate-800/80 rounded-2xl p-3 border border-slate-700/60 shadow-inner flex items-center justify-center">
+      {brand.logo ? (
+        <img src={brand.logo} alt={brand.name} class="w-full h-full object-contain" />
+      ) : (
+        <Zap class="w-10 h-10 text-blue-400" />
+      )}
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-xl font-bold text-white mb-2">
+      正在前往 {brand.name} 官网
+    </h1>
+    <p class="text-xs text-slate-400 mb-6 flex items-center justify-center gap-1.5">
+      <ShieldCheck class="w-4 h-4 text-emerald-400" />
+      <span>测评指南官方认证加密通道 · 防劫持安全跳转</span>
+    </p>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-6 p-0.5 border border-slate-700/40">
+      <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full animate-progress"></div>
+    </div>
+
+    <!-- Coupon Badge -->
+    {brandCode && (
+      <div class="bg-blue-950/40 border border-blue-800/40 rounded-xl p-3 mb-6 text-left flex items-center justify-between">
+        <div>
+          <span class="text-[10px] text-blue-400 font-bold uppercase tracking-wider block">结账专属优惠码</span>
+          <span class="text-sm font-mono font-bold text-white">{brandCode}</span>
+        </div>
+        <button 
+          type="button"
+          onclick={`navigator.clipboard.writeText('${brandCode}'); this.innerText='已复制'; setTimeout(() => this.innerText='复制', 2000)`}
+          class="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg transition"
+        >
+          复制
+        </button>
+      </div>
+    )}
+
+    <!-- Direct Action Button -->
+    <a
+      href={targetUrl}
+      rel="nofollow noopener noreferrer"
+      class="block w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl text-sm shadow-lg shadow-blue-500/25 transition transform active:scale-95"
+    >
+      若未自动跳转，点击此处直接进入官网 →
+    </a>
+
+    <p class="text-[11px] text-slate-400 mt-4">
+      您即将离开测评指南，进入第三方服务商官方网站
+    </p>
+  </div>
+</body>
+</html>

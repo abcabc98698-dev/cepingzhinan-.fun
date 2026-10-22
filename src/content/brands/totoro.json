@@ -1,0 +1,253 @@
+{
+  "id": "totoro",
+  "name": "龙猫云",
+  "slug": "totoro",
+  "rank": 33,
+  "tagline": "龙猫云 官方测速数据与资费套餐档案",
+  "description": "龙猫云 拥有丰富节点网络分布，支持主流协议与多地区流媒体解锁，经实测在亚太常用地区具备良好的可用性。",
+  "logo": "/assets/brands/logos/totoro.webp",
+  "rating": 4.6,
+  "tier": "高性价比",
+  "established": "2022年",
+  "lineTypes": [
+    "BGP多线入口",
+    "IEPL内网专线"
+  ],
+  "protocols": [
+    "Trojan",
+    "Shadowsocks"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 420,
+    "peakDownloadMbps": 504,
+    "avgLatencyMs": 32,
+    "packetLossRate": "0.2%",
+    "testDate": "2026-08-24",
+    "telecomGrade": "电信: A",
+    "unicomGrade": "联通: A",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 15,
+  "plans": [
+    {
+      "name": "VIP1",
+      "billingCycle": "月付",
+      "price": 15,
+      "traffic": "100G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP1",
+      "billingCycle": "季付",
+      "price": 41,
+      "traffic": "100G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP1",
+      "billingCycle": "半年付",
+      "price": 77,
+      "traffic": "100G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP1",
+      "billingCycle": "年付",
+      "price": 144,
+      "traffic": "100G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP2",
+      "billingCycle": "月付",
+      "price": 30,
+      "traffic": "200G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP2",
+      "billingCycle": "季付",
+      "price": 81,
+      "traffic": "200G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP2",
+      "billingCycle": "半年付",
+      "price": 153,
+      "traffic": "200G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP2",
+      "billingCycle": "年付",
+      "price": 288,
+      "traffic": "200G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP3",
+      "billingCycle": "月付",
+      "price": 60,
+      "traffic": "400G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP3",
+      "billingCycle": "季付",
+      "price": 162,
+      "traffic": "400G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP3",
+      "billingCycle": "半年付",
+      "price": 306,
+      "traffic": "400G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP3",
+      "billingCycle": "年付",
+      "price": 576,
+      "traffic": "400G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP4",
+      "billingCycle": "月付",
+      "price": 120,
+      "traffic": "1000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP4",
+      "billingCycle": "季付",
+      "price": 324,
+      "traffic": "1000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP4",
+      "billingCycle": "半年付",
+      "price": 697,
+      "traffic": "1000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "VIP4",
+      "billingCycle": "年付",
+      "price": 1152,
+      "traffic": "1000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "历史节点测速覆盖广，连接成功率高",
+    "支持多协议灵活适配不同客户端"
+  ],
+  "cons": [
+    "部分冷门套餐无月付选项需季付起购",
+    "高峰期建议优选延迟较低的香港与日本节点"
+  ],
+  "bestFor": "中重度流媒体用户与有多地区 IP 落地需求的用户",
+  "officialUrl": "https://totorocloud.com/",
+  "affUrl": "https://totorocloud.com/",
+  "lastVerified": "2026-08-24"
+}

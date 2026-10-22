@@ -1,0 +1,251 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import AffiliateDisclosure from "@/components/widgets/AffiliateDisclosure.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  ArrowRight, ExternalLink, 
+  Sparkles, BookOpen, Download
+} from "@lucide/astro";
+
+const allPosts = await getCollection("post");
+const clashRelatedPosts = allPosts.filter(p => 
+  p.data.tags?.some(t => ["客户端教程", "配置指南", "分流规则", "进阶调优"].includes(t)) ||
+  p.id.includes("clash") || p.id.includes("routing") || p.id.includes("proxy")
+).slice(0, 6);
+
+const clashClients = [
+  {
+    platform: "Windows",
+    recommended: "Clash Verge Rev",
+    core: "Mihomo (Clash.Meta)",
+    highlights: "现代化 UI、支持 TUN 虚拟网卡模式、内存占用低、自动更新订阅",
+    downloadUrl: "https://github.com/clash-verge-rev/clash-verge-rev"
+  },
+  {
+    platform: "macOS",
+    recommended: "Clash Verge Rev / Sing-box",
+    core: "Mihomo / Sing-box",
+    highlights: "完美原生适配 Apple Silicon (M1/M2/M3/M4) 芯片，支持深色模式与智能分流",
+    downloadUrl: "https://github.com/clash-verge-rev/clash-verge-rev"
+  },
+  {
+    platform: "Android (安卓)",
+    recommended: "Clash Meta for Android (CMFA)",
+    core: "Clash.Meta",
+    highlights: "开源无广告、支持多分流规则集、对分应用代理与游戏低延迟表现优异",
+    downloadUrl: "https://github.com/MetaCubeX/ClashMetaForAndroid"
+  },
+  {
+    platform: "iOS (苹果手机)",
+    recommended: "Shadowrocket (小火箭) / Sing-box / Loon",
+    core: "独立优化内核",
+    highlights: "需海外 Apple ID 下载，启动迅速、后台保活能力极佳、支持一键扫码导入",
+    downloadUrl: "/tutorials"
+  }
+];
+
+const clashFaqs = [
+  {
+    question: "Clash for Windows (CFW) 停更后，目前最主流稳定的替代方案是什么？",
+    answer: "目前业界公认的最佳替代是开源的 Clash Verge Rev。它基于活跃维护的 Mihomo (Clash.Meta) 内核，具备跨平台原生桌面 UI、内置强大的 TUN 虚拟网卡模式，全面支持 VLESS、Hysteria 2、TUIC 等新一代抗封锁协议，运行内存开销远低于原版 CFW。"
+  },
+  {
+    question: "为什么开启 Clash 以后，部分国内软件（如微信、网易云）会出现加载缓慢？",
+    answer: "这是因为客户端路由规则未设置「绕过大陆（GEOIP-CN）」分流所致。在 Clash Verge Rev 中将代理模式由「全局 (Global)」切换为「规则 (Rule)」，并在设置中启用国内直连，即可让国内流量直接走本地宽带，海外请求走专线节点。"
+  },
+  {
+    question: "订阅链接一键导入总是报错「网络超时或格式错误」怎么排查？",
+    answer: "首先检查订阅链接是否被浏览器插件或防火墙拦截；其次检查服务商提供的订阅格式是否为 Clash 标准 YAML；若机场提供的是原始多节点代码，可借助受信任的无日志自建订阅转换工具（Subconverter）转换为 Clash 订阅再行导入。"
+  }
+];
+
+const canonicalURL = `${siteConfig.url}/clash/`;
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${canonicalURL}#webpage`,
+      "url": canonicalURL,
+      "name": `Clash 客户端与订阅配置全能手册 (2026 Verge Rev / Meta 内核) — ${siteConfig.title}`,
+      "description": "全面汇总 Clash Verge Rev、Mihomo Meta 内核与 Sing-box 客户端下载、规则集分流、订阅转换及高阶防泄漏调优指南。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": siteConfig.url
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Clash 客户端专区",
+          "item": canonicalURL
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalURL}#faq`,
+      "mainEntity": clashFaqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`Clash 客户端与订阅配置全能手册 (2026 Verge Rev / Meta 内核) — ${siteConfig.title}`}
+  description="全面汇总 Clash Verge Rev、Mihomo Meta 内核与 Sing-box 客户端下载、规则集分流、订阅转换及高阶防泄漏调优指南。"
+  keywords="Clash教程, Clash Verge Rev, Clash配置, Clash下载, Mihomo, Clash Meta, 订阅转换, 测评指南"
+  url={canonicalURL}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="Clash 客户端生态与订阅分流全景手册"
+      description="汇聚 2026 最新主流开源代理客户端选型方案。从 Clash Verge Rev、Mihomo Meta 进阶内核到智能规则分流，助您告别断连与内存泄漏烦恼。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+    <!-- 推广合规与透明披露 -->
+    <AffiliateDisclosure />
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心结论速查 (2026 客户端选型准则)</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        原版 Clash for Windows 已彻底停止维护，请立即卸载并停用旧版安装包（防范供应链安全风险）。<strong>2026 年首选桌面端客户端为开源社区主力维护的 Clash Verge Rev</strong>，其集成 Mihomo 内核，内存占用低至 40MB，并完整支持 TUN 全局接管与智能 DNS 防泄漏；移动端安卓首推 <strong>CMFA (Clash Meta for Android)</strong>，苹果 iOS 推荐使用 <strong>Shadowrocket (小火箭)</strong>。
+      </p>
+    </section>
+
+    <!-- 3. 全平台主流客户端下载与选型大表 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-6" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
+          <Download class="w-4 h-4" />
+        </div>
+        <div>
+          <h2 class="text-xl font-brand font-bold text-neutral-900 dark:text-white">
+            2026 全平台 Clash 主流客户端下载矩阵
+          </h2>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400">
+            仅收录官方开源与安全校验通道，杜绝第三方修改版与恶意捆绑软件。
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {clashClients.map((client) => (
+          <div class="p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-primary/10 text-primary">
+                {client.platform}
+              </span>
+              <span class="text-[11px] font-mono text-neutral-400">
+                内核: {client.core}
+              </span>
+            </div>
+            <h3 class="text-base font-bold text-neutral-900 dark:text-white">
+              {client.recommended}
+            </h3>
+            <p class="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
+              {client.highlights}
+            </p>
+            <div class="pt-2">
+              <a 
+                href={client.downloadUrl}
+                target={client.downloadUrl.startsWith("http") ? "_blank" : "_self"}
+                rel={client.downloadUrl.startsWith("http") ? "nofollow noopener" : ""}
+                class="inline-flex items-center gap-1.5 text-xs text-primary font-semibold hover:underline"
+              >
+                <span>获取官方发布通道</span>
+                <ExternalLink class="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. 核心配置与分流长文精选 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+          <BookOpen class="w-6 h-6 text-primary" />
+          客户端精进调优与规则分流深度指南
+        </h2>
+        <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+          深入拆解 TUN 模式排障、订阅转换与低延迟分流规则实操。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {clashRelatedPosts.map((post) => (
+          <a 
+            href={`/blog/${post.id}/`}
+            class="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-bg-secondary dark:bg-bg-secondary-dark hover:border-primary/40 transition-colors flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center gap-2 text-[11px] text-neutral-400 mb-1.5">
+                <span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-medium">
+                  {post.data.tags && post.data.tags[0] ? post.data.tags[0] : "配置教程"}
+                </span>
+                <span>·</span>
+                <span>{post.data.read || 15} 分钟阅读</span>
+              </div>
+              <h3 class="text-sm md:text-base font-bold text-neutral-900 dark:text-white line-clamp-2 mb-2 leading-snug">
+                {post.data.title}
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+            <span class="text-xs text-primary font-semibold inline-flex items-center gap-1 mt-3">
+              阅读完整实操长文
+              <ArrowRight class="w-3.5 h-3.5" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5. 常见问答 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl font-brand font-bold text-neutral-900 dark:text-white">
+          Clash 客户端使用高频疑难解答 (FAQ)
+        </h2>
+        <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+          解决启动报错、节点无响应与 DNS 泄漏排障。
+        </p>
+      </div>
+      <div class="space-y-3">
+        {clashFaqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

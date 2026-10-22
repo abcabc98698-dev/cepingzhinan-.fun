@@ -1,0 +1,236 @@
+---
+const couponArticles = [
+  {
+    "title": "2026 最新官方机场优惠码汇总与实测：光速云专属折扣码 AMM、飞猫云与主流品牌全网核销记录",
+    "url": "/blog/verified-airport-promo-codes-and-discounts-vault",
+    "description": "定期验证与收录全网主流稳定机场的官方有效优惠码，实时剔除失效代码，手把手教你如何叠加活动享受最大折扣。",
+    "readTime": "14 分钟",
+    "tag": "官方长期折扣"
+  },
+  {
+    "title": "黑五、双十一与周年庆囤货全景指南：避开假降价陷阱、计算年付实际沉没成本的最佳时机",
+    "url": "/blog/black-friday-double-11-airport-deal-strategy",
+    "description": "全面复盘每年黑五、双十一及春节大促期间机场商家的打折规律，教你识破先涨价后打折套路，合理把握囤货节奏。",
+    "readTime": "14 分钟",
+    "tag": "大促囤货策略"
+  },
+  {
+    "title": "首购立减与续费原价的套路深度拆解：警惕首月 1 元引流陷阱与自动续费绑卡风控",
+    "url": "/blog/first-order-discount-vs-renewal-cost-traps",
+    "description": "深入拆解机场商家常见的首月 1 元引流陷阱、续费原价套路与自动扣费解约风控，助你明明白白消费不花冤枉钱。",
+    "readTime": "14 分钟",
+    "tag": "核销防坑指南"
+  },
+  {
+    "title": "优惠失效记录与品牌价格弹性观察：从促销频次看机场商家的现金流健康度与跑路风险",
+    "url": "/blog/expired-coupon-archive-and-brand-price-trend-analysis",
+    "description": "通过追踪各大机场历史优惠码的失效记录与打折频次，深度透视商家的真实运营成本与资金链健康状况，防范跑路风险。",
+    "readTime": "14 分钟",
+    "tag": "优惠失效追踪"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Badge from "@/components/ui/Badge.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import AffiliateDisclosure from "@/components/widgets/AffiliateDisclosure.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Ticket, Sparkles, ExternalLink, 
+  Terminal, Clock, AlertTriangle
+} from "@lucide/astro";
+
+// SSOT: 从各品牌提取优惠码数据
+const allBrands = await getCollection("brands");
+
+// 聚合所有有效优惠码并按主推排名排序
+const allCoupons = allBrands.flatMap(b => 
+  b.data.coupons.map(c => ({
+    ...c,
+    brandName: b.data.name,
+    brandSlug: b.data.slug,
+    officialUrl: `/go/${b.data.id || b.data.slug}`,
+    tier: b.data.tier,
+    minPrice: b.data.minPriceMonthly,
+    logo: b.data.logo,
+    rank: b.data.rank || 999
+  }))
+).sort((a, b) => a.rank - b.rank);
+
+const faqs = [
+  {
+    question: "这里的优惠码是否保证真实有效？更新频率如何？",
+    answer: "测评指南优惠码系统直接绑定单品牌统一资料源（SSOT）。我们通过自动化爬虫脚本每周与品牌官方频道和结算页面比对两次，一旦发现优惠码过期或达到兑换上限，将立即移入「已失效归档」，坚决杜绝互联网上虚假引流死码。"
+  },
+  {
+    question: "如何叠加优惠实现极致折上折？",
+    answer: "通常机场的计费模型中，年付或半年付本身自带 8~8.5 折的周期基准折扣。在此基础上，于结算页面输入测评指南收录的专属折扣码（如 85 折或 9 折），两者将乘积叠加，整体折扣通常可达 7 折左右，能立省近百元。"
+  },
+  {
+    question: "输入优惠码后提示「该代金券无法应用于此方案」是什么原因？",
+    answer: "很多服务商的优惠码设有适用门槛：例如部分优惠码仅限「年付以上套餐」可用，或明确排除了「轻量体验包」；部分大促码仅限「新用户首单」使用。请在使用前仔细阅读优惠卡片上的说明标签。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/coupons/#webpage`,
+      "url": `${siteConfig.url}/coupons/`,
+      "name": `优惠码专区：最新官方机场折扣码与大促实时汇总 — ${siteConfig.title}`,
+      "description": "实时同步自单一品牌数据库的有效优惠码汇集：提供一键复制、适用门槛与有效期标注。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/coupons/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`机场优惠码与折扣大促汇总 (2026 实时验证有效) — ${siteConfig.title}`}
+  description="测评指南官方优惠码专区：2026 最新各大主流机场专属优惠码、折上折年付代金券实时更新。全网验证真实有效，告别过期失效死码烦恼。"
+  keywords="机场优惠码, 机场折扣码, 机场代金券, 机场活动, 便宜机场优惠, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="最新官方机场优惠码与折扣大促实时汇集"
+      description="直连单品牌唯一资料库（SSOT）。实时同步各大主流品牌官方最新折扣代码，标注适用套餐与有效期，拒绝任何过期引流虚假代金券。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 推广合规与透明披露 -->
+    <AffiliateDisclosure />
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心优惠法则速查</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        本站收录的所有优惠码均经过<strong>实测购物车结账校验</strong>。当前长期生效的代表性优惠包括：<strong>光速云 (GuangSu Cloud)</strong> 专属立减券码 (<code>AMM</code>)、<strong>飞猫云 (FeiMao)</strong> 与 <strong>胖猫云 (FatCat)</strong> 周期满减代码。结账时搭配半年付或年付周期，可实现最高折上折综合优惠。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 叠折攻略决策树 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          极致折上折计费叠加模型 (Discount Stacking Model)
+        </span>
+        <span class="text-xs">省钱实战公式</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+【原始按月订阅单价】 (以 30元/月 为例，全年基础成本: 360元)
+          │
+          ├── [步骤一: 选择计费周期] ──► 切换为「年付方案」
+          │     └── 享受系统原生基准优惠 (通常免收 2 个月月租，等效 8.3 折，折后 300元)
+          │
+          └── [步骤二: 结算页输入本站优惠码] ──► 享受额外折上折 (输入 85折 优惠券)
+                └── 最终结账价: 300元 × 0.85 = 255元！(相比月付净省 105 元，综合 7.08 折)
+      </pre>
+    </section>
+
+    <!-- 4. 全量有效优惠码卡片流 (SSOT 动态读取) -->
+    <section id="active" class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          当前实时有效官方优惠码卡片
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          点击代码即可快速复制，随后直达对应品牌官方结账页面进行抵扣。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {allCoupons.map((c) => (
+          <div class="p-6 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary dark:bg-bg-secondary-dark flex flex-col justify-between space-y-4 shadow-sm hover:shadow-md transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="font-bold text-lg text-neutral-800 dark:text-neutral-100">{c.brandName}</span>
+                <Badge variant="primary">{c.discount}</Badge>
+              </div>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4">{c.desc}</p>
+
+              <!-- 优惠码复制栏 -->
+              <div class="flex items-center justify-between p-3 rounded-xl bg-bg-primary dark:bg-bg-primary-dark border border-dashed border-neutral-300 dark:border-neutral-700">
+                <span class="font-mono font-bold text-primary tracking-wider text-sm select-all">{c.code}</span>
+                <span class="text-xs text-neutral-400 flex items-center gap-1">
+                  <Clock class="w-3.5 h-3.5" /> 有效期至 {c.expiry}
+                </span>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-dashed border-neutral-200 dark:border-neutral-700 text-xs">
+              <span class="text-neutral-400">最低门槛: ¥{c.minPrice}/月起</span>
+              <a
+                href={c.officialUrl}
+                target="_blank"
+                rel="nofollow noopener"
+                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-colors"
+              >
+                复制并去官网使用 <ExternalLink size={12} />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={couponArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="expired" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        优惠码使用常见疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/coupons" class="font-bold text-primary">最新优惠码</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

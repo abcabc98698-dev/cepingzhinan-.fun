@@ -1,2 +1,38 @@
+# 测评指南 (cepingzhinan.fun) 官方爬虫访问规则
 User-agent: *
 Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+# Google 搜索爬虫 (Googlebot)
+User-agent: Googlebot
+Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+# 微软必应搜索爬虫 (bingbot)
+User-agent: bingbot
+Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+# 百度搜索爬虫 (Baiduspider)
+User-agent: Baiduspider
+Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+# 阿里神马 / UC / 夸克搜索爬虫 (YisouSpider)
+User-agent: YisouSpider
+Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+User-agent: yisouspider
+Allow: /
+Disallow: /go/
+Disallow: /elements/
+
+# 站点地图声明
+Sitemap: https://cepingzhinan.fun/sitemap-index.xml
+Sitemap: https://cepingzhinan.fun/sitemap.xml

@@ -1,7 +1,10 @@
 ---
 import { getCollection, render } from "astro:content";
+import Toc from "@/components/widgets/Toc.astro";
 import PostLayout from "@/layouts/PostLayout.astro";
-import Toc from '@/components/widgets/Toc.astro';
+import AffiliateDisclosure from "@/components/widgets/AffiliateDisclosure.astro";
+import { siteConfig } from "@/config/site.js";
+import { Award, ExternalLink, Zap, Copy, ShieldCheck, ChevronRight } from "@lucide/astro";
 
 // SSG 模式下的动态路由需要使用 getStaticPaths()
 // 来告诉 Astro 在构建时生成哪些页面
@@ -20,9 +23,6 @@ export async function getStaticPaths() {
 	});
 }
 
-// 使用 [...slug] 路由来处理包含斜杠的路径（官方推荐）
-// entry 由 getStaticPaths 通过 props 传入，无需再从 params 推导 slug
-
 // 从 props 获取 entry（在 SSG 模式下通过 getStaticPaths 传递）
 const { entry } = Astro.props;
 
@@ -32,10 +32,95 @@ if (!entry) {
 }
 
 const { Content, headings } = await render(entry);
-const filtered = headings.filter(h => h.depth <= 2);
+const filtered = headings.filter((h) => h.depth <= 2);
+
+const articleUrl = `${siteConfig.url}/blog/${entry.id}/`;
+const imageUrl = entry.data.img
+	? entry.data.img.startsWith("http")
+		? entry.data.img
+		: `${siteConfig.url}${entry.data.img}`
+	: `${siteConfig.url}/og.jpg`;
+
+const articleJsonLd = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "BlogPosting",
+			"@id": `${articleUrl}#article`,
+			isPartOf: {
+				"@id": `${siteConfig.url}/#website`,
+			},
+			headline: entry.data.title,
+			description: entry.data.description,
+			url: articleUrl,
+			image: imageUrl,
+			datePublished: entry.data.publishDate.toISOString(),
+			dateModified: entry.data.publishDate.toISOString(),
+			inLanguage: "zh-CN",
+			mainEntityOfPage: {
+				"@type": "WebPage",
+				"@id": articleUrl,
+			},
+			author: {
+				"@type": "Organization",
+				"@id": `${siteConfig.url}/#organization`,
+				name: siteConfig.author || "测评指南技术测评组",
+				url: siteConfig.url,
+			},
+			publisher: {
+				"@type": "Organization",
+				"@id": `${siteConfig.url}/#organization`,
+				name: siteConfig.title,
+				url: siteConfig.url,
+				logo: {
+					"@type": "ImageObject",
+					url: `${siteConfig.url}/assets/logo.png`,
+				},
+			},
+			keywords: entry.data.tags?.join(", "),
+		},
+		{
+			"@type": "BreadcrumbList",
+			"@id": `${articleUrl}#breadcrumb`,
+			itemListElement: [
+				{
+					"@type": "ListItem",
+					position: 1,
+					name: "首页",
+					item: siteConfig.url,
+				},
+				{
+					"@type": "ListItem",
+					position: 2,
+					name: "评测专栏",
+					item: `${siteConfig.url}/blog/`,
+				},
+				{
+					"@type": "ListItem",
+					position: 3,
+					name: entry.data.title,
+					item: articleUrl,
+				},
+			],
+		},
+	],
+};
 ---
 
-<PostLayout title={entry.data.title} description={entry.data.description}>
+<PostLayout
+	title={entry.data.title}
+	description={entry.data.description}
+	keywords={entry.data.tags?.join(', ')}
+	ogImage={entry.data.img}
+	publishedTime={entry.data.publishDate}
+	modifiedTime={entry.data.publishDate}
+	author={siteConfig.author || "测评指南技术测评组"}
+	category={entry.data.tags && entry.data.tags[0] ? entry.data.tags[0] : "评测专栏"}
+	tags={entry.data.tags}
+>
+	<!-- Structured Data (JSON-LD Article & BreadcrumbList) for SEO -->
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+
 	<!-- Reading progress bar -->
 	<div id="reading-progress" class="reading-progress" style="transform: scaleX(0);"></div>
 
@@ -43,6 +128,23 @@ const filtered = headings.filter(h => h.depth <= 2);
 		<main class="relative site-container mx-auto my-8 md:my-12">
 			<!-- Article header -->
 			<header class="article-header">
+				<!-- Hierarchical Breadcrumb Badge -->
+				<div class="mb-3 flex items-center gap-1.5 text-xs text-neutral-500 flex-wrap">
+					<a href="/" class="hover:text-primary">首页</a>
+					<span>›</span>
+					<span class="text-neutral-600 dark:text-neutral-300">
+						{entry.data.tags && entry.data.tags[0] ? `一级栏目: ${entry.data.tags[0]}` : "核心专题"}
+					</span>
+					<span>›</span>
+					<span class="text-primary font-medium">
+						{entry.data.tags && entry.data.tags[1] ? `二级专题: ${entry.data.tags[1]}` : "细分专题"}
+					</span>
+					<span>›</span>
+					<span class="px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-800/40">
+						三级落地长文
+					</span>
+				</div>
+
 				<!-- Tags -->
 				<div class="article-tags">
 					{entry.data.tags && entry.data.tags.length > 0 ? (
@@ -92,6 +194,88 @@ const filtered = headings.filter(h => h.depth <= 2);
 						<div class="article-content">
 							<Content />
 						</div>
+
+						<!-- Affiliate & Editorial Disclosure -->
+						<AffiliateDisclosure />
+
+						<!-- High Conversion Editor's Choice Box -->
+						<div class="my-10 p-6 md:p-8 rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/[0.04] via-transparent to-primary/[0.02] dark:border-primary-light/30 shadow-lg">
+							<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-primary/10 dark:border-primary-light/10">
+								<div class="flex items-center gap-3">
+									<div class="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-lg shadow-md shrink-0">
+										<Award class="w-6 h-6" />
+									</div>
+									<div>
+										<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary dark:bg-primary-light/10 dark:text-primary-light text-xs font-semibold mb-1">
+											<Zap class="w-3 h-3" /> 2026 年度编辑部精选一号位
+										</div>
+										<h4 class="text-lg md:text-xl font-bold text-neutral-900 dark:text-white">
+											光速云 (GuangSu Cloud) · IEPL企业双专线
+										</h4>
+									</div>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="text-xs text-neutral-500">专属立减券码:</span>
+									<button 
+										type="button" 
+										class="copy-btn px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-mono font-bold hover:bg-primary hover:text-white transition-all flex items-center gap-1.5 border border-dashed border-neutral-300 dark:border-neutral-700"
+										data-code="AMM"
+									>
+										<span>AMM</span>
+										<Copy class="w-3 h-3" />
+									</button>
+								</div>
+							</div>
+
+							<p class="text-xs md:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+								独家拥有企业级与 IEPL 双内网专线架构，晚高峰丢包率严格控制在 0.1% 以内。独家提供<strong>致敬斯诺克 147 不限时大包</strong>与起步折算约 <strong>¥8/月</strong> 的轻量版套餐，主流港日美新节点原生解锁 Netflix 4K 与 ChatGPT/Claude。
+							</p>
+
+							<div class="flex flex-wrap items-center justify-between gap-4">
+								<div class="flex flex-wrap items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+									<span class="inline-flex items-center gap-1"><ShieldCheck class="w-3.5 h-3.5 text-emerald-500" /> 晚高峰零丢包</span>
+									<span class="inline-flex items-center gap-1"><ShieldCheck class="w-3.5 h-3.5 text-emerald-500" /> 原生流媒体解锁</span>
+									<span class="inline-flex items-center gap-1"><ShieldCheck class="w-3.5 h-3.5 text-emerald-500" /> 3-5台设备并发</span>
+								</div>
+								<div class="flex items-center gap-3">
+									<a 
+										href="/reviews/guangsu" 
+										class="px-4 py-2 rounded-xl border border-primary/30 text-primary dark:text-primary-light text-xs font-semibold hover:bg-primary/5 transition-colors"
+									>
+										阅读测评专页
+									</a>
+									<a 
+										href="/go/guangsu" 
+										target="_blank" 
+										rel="nofollow sponsored noopener"
+										class="px-5 py-2 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-strong transition-colors inline-flex items-center gap-1.5 shadow-md"
+									>
+										<span>官网直达通道</span>
+										<ExternalLink class="w-3.5 h-3.5" />
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- Topic Navigation -->
+						<div class="mt-8 pt-6 border-t border-dashed border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-500">
+							<div class="flex items-center gap-1.5">
+								<a href="/" class="hover:text-primary">首页</a>
+								<ChevronRight class="w-3 h-3 text-neutral-400" />
+								<a href="/blog" class="hover:text-primary">评测专栏</a>
+								<ChevronRight class="w-3 h-3 text-neutral-400" />
+								<span class="text-neutral-700 dark:text-neutral-300 font-medium truncate max-w-[200px]">{entry.data.title}</span>
+							</div>
+							<div class="flex items-center gap-3">
+								<a href="/recommend" class="hover:text-primary">机场推荐</a>
+								<span class="text-neutral-300 dark:text-neutral-700">|</span>
+								<a href="/speedtest" class="hover:text-primary">测速实验室</a>
+								<span class="text-neutral-300 dark:text-neutral-700">|</span>
+								<a href="/compare" class="hover:text-primary">横向对比</a>
+								<span class="text-neutral-300 dark:text-neutral-700">|</span>
+								<a href="/coupons" class="hover:text-primary">优惠码</a>
+							</div>
+						</div>
 					</article>
 				</div>
 			</div>
@@ -124,7 +308,24 @@ function updateReadingProgress() {
 window.addEventListener('scroll', updateReadingProgress, { passive: true });
 
 // Initialize
-document.addEventListener('DOMContentLoaded', updateReadingProgress);
+document.addEventListener('DOMContentLoaded', () => {
+  updateReadingProgress();
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.getAttribute('data-code');
+      if (code) {
+        navigator.clipboard.writeText(code);
+        const span = btn.querySelector('span');
+        if (span) {
+          const oldText = span.textContent;
+          span.textContent = '已复制!';
+          setTimeout(() => { span.textContent = oldText; }, 2000);
+        }
+      }
+    });
+  });
+});
 updateReadingProgress();
 </script>
 

@@ -1,28 +1,13 @@
 ---
-title: "Design polish and motion tuning"
-publishDate: 2026-02-15
+title: "v0.2.0 SSOT 单品牌资料库与暗黑模式视觉优化"
+publishDate: 2026-02-20
 version: "v0.2.0"
-description: "Dark mode contrast, motion tuning, and the reusable BrowserFrame component."
+description: "上线单一事实源（SSOT）品牌数据架构，完成多端自适应对比表格与流媒体解锁状态徽章视觉打磨。"
 ---
 
-## Improvements
+## 核心更新
 
-- **Dark mode contrast pass** - lifted `--color-text-secondary-dark` from `#a8b5c8` to `#c5cedb` for better body-copy readability at 14-16px sizes
-- **Primary in dark mode** - brightened `--color-primary-dark` from `#3478d4` to `#3884eb` so links stay readable against the deep navy canvas
-- **Softer card edges** - dark-mode card borders moved from `neutral-800` to `neutral-700`
-- **AnimatedText tuning** - tightened the hero text entrance timing and reduced first-paint overhead
-- **AOS staggering** - standardized reveal sequences around predictable delay steps
-
-## New component
-
-- **`BrowserFrame.astro`** - the Mac-style window chrome around product previews, extracted into a reusable component with `url`, `variant`, and `className` props
-
-## Fixes
-
-- Header z-index conflict with FAQ accordion on mobile Safari
-- `prefers-reduced-motion` handling for text entrances
-- TOC sticky offset on wide article layouts
-
-## Release status
-
-`v0.2` made the template feel more coherent, but the content architecture and final SaaS story were still being shaped for `v1.0`.
+- **SSOT 单一事实源架构上线**：建立严格的品牌 JSON 数据模型，全站所有页面从统一数据源读取套餐价格、节点数量与实测指标，杜绝前后冲突
+- **横向对比参数大表**：支持按价格、测速、线路类型、解锁能力进行多维横向筛选
+- **深色模式视觉调优**：提升深色背景下的正文对比度与代码高亮可读性，优化 ASCII 决策树移动端横向滚动体验
+- **首批标杆品牌收录**：完成 TAG Internet、Nexitally 佩奇、IMMTelecom、FSCloud、速鹰 666、iKuuu 六大代表性品牌的基线测试

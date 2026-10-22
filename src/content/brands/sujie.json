@@ -1,0 +1,85 @@
+{
+  "id": "sujie",
+  "name": "速界",
+  "slug": "sujie",
+  "rank": 19,
+  "tagline": "速界 稳定加速与高性价比选型推荐",
+  "description": "速界 提供高速稳定的网络加速通道，覆盖香港、日本、新加坡、美国等多地优质原生节点。",
+  "logo": "/assets/brands/logos/sujie_logo.webp",
+  "rating": 4.7,
+  "tier": "大流量主力",
+  "established": "2024年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 68,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 450,
+    "peakDownloadMbps": 563,
+    "avgLatencyMs": 35,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/速界-节点测速实测.png",
+  "minPriceMonthly": 25,
+  "plans": [
+    {
+      "name": "速界·基础版",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "100GB/月",
+      "deviceLimit": "3台",
+      "features": [
+        "多线 BGP 入口",
+        "流媒体解锁"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "sss1111",
+      "discount": "立减/折扣",
+      "desc": "速界 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.speedworldaff.cc/",
+  "affUrl": "https://guangs.speedworldaff.cc/#/register?code=xgXzEfZB",
+  "lastVerified": "2026-10-19"
+}

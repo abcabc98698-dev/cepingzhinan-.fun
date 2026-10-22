@@ -1,0 +1,332 @@
+---
+const compareArticles = [
+  {
+    "title": "光速云 vs 飞猫云终极面对面对决：企业级双专线极致稳定度与超大流量性价比之间的深度取舍",
+    "url": "/blog/guangsu-vs-feimao-flagship-head-to-head",
+    "description": "2026 年度两大热门品牌光速云与飞猫云全维度横向对决，深度剖析网络架构、延迟抖动、套餐资费与适合人群取舍。",
+    "readTime": "15 分钟",
+    "tag": "旗舰面对面对决"
+  },
+  {
+    "title": "30 元月付主力档横向大乱斗：5 家相近预算机场晚高峰丢包、流媒体原生解锁与工单时效盲测对比",
+    "url": "/blog/30-yuan-monthly-budget-airport-showdown",
+    "description": "聚焦主流用户最关注的 30 元月付预算黄金档位，实测 5 家代表性品牌在晚高峰性能、节点解锁与售后服务的真实横向比对。",
+    "readTime": "15 分钟",
+    "tag": "同价位横向盲测"
+  },
+  {
+    "title": "500GB 大流量重度用户选型对决：长周期下载不限速、节点倍率暗坑与多设备共享防封测试",
+    "url": "/blog/500gb-monthly-heavy-users-head-to-head",
+    "description": "专为每月消耗 500GB 以上的大流量重度用户量身定制的选型对决，实测长时间满速下载稳定性、隐藏倍率规则与防封技巧。",
+    "readTime": "14 分钟",
+    "tag": "同流量档位对决"
+  },
+  {
+    "title": "外服游戏低延迟直连与流媒体原生解锁横向对比：UDP 转发质量、NAT 类型判定与家宽住宅 IP 鉴别",
+    "url": "/blog/gaming-low-latency-and-full-streaming-unlock-comparison",
+    "description": "针对外服联机对战与全流媒体极致观影两大苛刻场景，深度实测各品牌的 UDP 转发支持度、Full Cone NAT 类型与住宅 IP 纯净度。",
+    "readTime": "15 分钟",
+    "tag": "特殊场景对决"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Sparkles, Terminal, Scale, Layers
+} from "@lucide/astro";
+
+// SSOT: 获取全部品牌数据
+const allBrands = await getCollection("brands");
+
+// 获取特定对决品牌
+const guangsu = allBrands.find(b => b.data.slug === "guangsu") || allBrands[0];
+const wgetcloud = allBrands.find(b => b.data.slug === "wgetcloud") || allBrands[1];
+const feimao = allBrands.find(b => b.data.slug === "feimao") || allBrands[2];
+
+const faqs = [
+  {
+    question: "光速云与 WgetCloud 怎么选？谁才是真正的第一旗舰？",
+    answer: "两者同处高端专线梯队，但取向分明：光速云主打「自研企业级双专线与极致性价比」，晚高峰单线程下行破 500 Mbps，年付折合仅约 8.2 元/月，更有致敬斯诺克 147 永久不限时大包；WgetCloud 则是资深老牌高品质代表，节点 SLA 极高，适合预算充足的企业级深度用户。"
+  },
+  {
+    question: "同为 20 元月付预算，选「大流量中继」还是「小流量专线」？",
+    answer: "取决于核心使用场景。如果主要用于手机刷短视频、离线下载大文件、Steam游戏更新，选大流量主力（如飞猫云月付，月均数百 G 配额）；如果用于 ChatGPT 4o 高频对话、远程代码开发、4K 奈飞追剧，选纯 IEPL 专线（如光速云），晚高峰 0 丢包体验好上数倍。"
+  },
+  {
+    question: "为什么很多机场声称自己也是 IPLC，价格却只要别人三分之一？",
+    answer: "业内常见套路是「入口仅挂载少量 IPLC 专线噱头，其余全部混杂公网廉价直连中继」，甚至将普通国内 BGP 隧道虚假宣传为国际专线。测评指南通过全路由追踪（TraceRoute）与晚高峰持续丢包监控，可清晰鉴别出伪专线机场。"
+  },
+  {
+    question: "买机场可以几个人合租拼单吗？如何防范封号？",
+    answer: "不同机场对同时在线设备（IP）限制严格程度完全不同。部分高端品牌严格限制 2~3 台设备同时连接，多地异地登录极易触发风控封禁；而微风网络、飞猫云等明确提供充裕设备连接数，更适合家庭或办公室多人合用。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/compare/#webpage`,
+      "url": `${siteConfig.url}/compare/`,
+      "name": `机场对比中心：品牌 1v1 二选一与同价位横向评测 — ${siteConfig.title}`,
+      "description": "基于单品牌统一数据源（SSOT）的深度横向对比：包含顶峰对决、同价位性价比比拼与核心技术条件对比。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/compare/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`机场横向对比：品牌 1v1 二选一与同价位选型决战 (2026) — ${siteConfig.title}`}
+  description="测评指南机场对比中心：TAG vs Nexitally 巅峰专线横评、FSCloud vs 速鹰 性价比决战。基于统一参数资料库，从晚高峰丢包、流媒体解锁到每GB单价全景对比。"
+  keywords="机场对比, 机场二选一, TAG对比Nexitally, 机场横评, 同价位机场, 机场性价比, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="机场横向对比中心：品牌 1v1 二选一与全参数决战"
+      description="拒绝含糊其辞的推荐。测评指南基于统一品牌资料库，将核心竞争品牌置于同一技术尺度下，精准拆解各自的优势边界与不可替代性。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心对比决断速查</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        在高端旗舰对决中，<strong>Nexitally 佩奇胜在极致纯净的住宅 IP 解锁与自研 Smart Access 协议的极低抖动</strong>，是跨境严肃办公与金融交易天花板；<strong>TAG Internet 胜在无人能及的 90+ 全球多国节点覆盖与不限设备连接</strong>，是出海业务与流媒体玩家的首选。在 20 元主流档位，<strong>FSCloud（纯专线+不限设备）</strong>完胜同价位公网中继，而<strong>速鹰 666 则以 9.9 元/100GB 的低价</strong>在大流量追剧与备用场景中占据不可替代的优势。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 对比决策决策树 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          两强对决二选一决策树 (Comparison Decision Tree)
+        </span>
+        <span class="text-xs">场景权衡取舍</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+【核心对决 A: 顶级旗舰天花板之争】
+  ┌───────────────────────┐                  ┌───────────────────────┐
+  │   Nexitally 佩奇      │                  │     TAG Internet      │
+  │   ★ 4.9 分 / 62元起   │                  │     ★ 4.9 分 / 16元起 │
+  └──────────┬────────────┘                  └───────────┬───────────┘
+             │                                           │
+  - 核心优势: 自研 Smart Access / 抖动方差 0.00%    - 核心优势: 90+ 全球多国冷门节点全覆盖
+  - 劣势局限: 设备限 2-3 台 / 价格昂贵              - 劣势局限: 节点过多需要测速筛选
+  - 最佳匹配: 严苛外贸办公、金融交易、代码极客       - 最佳匹配: 出海跨国业务、多区流媒体跨区
+
+【核心对决 B: 20元主流高性价比之争】
+  ┌───────────────────────┐                  ┌───────────────────────┐
+  │   FSCloud 飞速云      │                  │       速鹰 666        │
+  │   ★ 4.7 分 / 18元起   │                  │     ★ 4.5 分 / 9.9元起│
+  └──────────┬────────────┘                  └───────────┬───────────┘
+             │                                           │
+  - 核心优势: 全 IEPL 专线 / 不限设备数              - 核心优势: 极致超低单价 / 海量 1TB 流量
+  - 劣势局限: 极冷门地区节点较少                     - 劣势局限: 晚高峰偶有波动 / 公网中继
+  - 最佳匹配: 家庭多设备共用、高质量追剧            - 最佳匹配: 大流量刷视频、学生党、应急备用
+      </pre>
+    </section>
+
+    <!-- 4. 深度 1v1 旗舰对决大表 (TAG vs Nexitally) -->
+    <section id="head-to-head" class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          对决一：光速云 (旗舰首选) VS WgetCloud (老牌专线) 巅峰横评
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          基于单品牌统一数据源深度提炼，逐项剖析高端专线服务商的技术细节与综合性价比。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-primary/20 bg-white dark:bg-bg-primary-dark">
+        <table class="w-full text-left text-xs md:text-sm border-collapse">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold w-1/4">对比维度</th>
+              <th class="p-3.5 font-semibold w-3/8 text-primary font-bold">{guangsu.data.name} (Top 1)</th>
+              <th class="p-3.5 font-semibold w-3/8 text-emerald-600 font-bold">{wgetcloud.data.name}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">梯队定位与评分</td>
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">★ {guangsu.data.rating} ({guangsu.data.tier})</td>
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">★ {wgetcloud.data.rating} ({wgetcloud.data.tier})</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">线路底层架构</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">自研 IEPL 双专线 + 企业级冗余陆缆通道</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">多线 BGP 优质入口 + 独立 IEPL 内网专线</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">节点规模与地区覆盖</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">88+ 核心节点，深度覆盖港、日、美、新等高频地区</td>
+              <td class="p-3.5 text-emerald-600 font-bold">65+ 专线节点，覆盖亚太及欧美主流地区</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">晚高峰单线程实测下行</td>
+              <td class="p-3.5 text-emerald-600 font-bold font-mono">529.4 Mbps / 丢包率 0.00%</td>
+              <td class="p-3.5 text-emerald-600 font-mono">431.2 Mbps / 丢包率 0.02%</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">特色方案优势</td>
+              <td class="p-3.5 text-emerald-600 font-bold">年付仅 99 元 (折合 8.2 元/月) / 147 斯诺克永久大包</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">资深老牌高稳定服务，知名技术团队持续维护</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">月均门槛资费</td>
+              <td class="p-3.5 text-emerald-600 font-bold">折合 ¥ 8.2 元起/月 (极致高性价比)</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">¥ 49.0 元起/月</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">综合决策建议</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300 font-medium">严谨远程办公、AI 开发、极度追求全天候稳定与资产保值</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300 font-medium">追求成熟老牌品牌保障、预算充裕的企业及深度用户</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">独立实测报告</td>
+              <td class="p-3.5"><a href={`/reviews/${guangsu.data.slug}`} class="text-primary hover:underline font-medium">查看光速云深度评测 →</a></td>
+              <td class="p-3.5"><a href={`/reviews/${wgetcloud.data.slug}`} class="text-primary hover:underline font-medium">查看 WgetCloud 深度评测 →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4.5. 对决二：光速云 (第一主推) VS 飞猫云 (新秀高性价比) -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-2">
+          <Scale class="w-3.5 h-3.5" />
+          <span>榜首双雄巅峰横评</span>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          对决二：光速云 (第一主推) VS 飞猫云 (轻快省事)
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          双线路 IEPL+企业专线技术流与一键开箱即用新手流的深度对决。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-primary/20 bg-white dark:bg-bg-primary-dark">
+        <table class="w-full text-left text-xs md:text-sm border-collapse">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold w-1/4">对比维度</th>
+              <th class="p-3.5 font-semibold w-3/8 text-primary font-bold">{guangsu.data.name} (Top 1)</th>
+              <th class="p-3.5 font-semibold w-3/8 text-emerald-600 font-bold">{feimao.data.name} (Top 2)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">综合排位与评分</td>
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">★ {guangsu.data.rating} (年度第一主推 · 旗舰专线)</td>
+              <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100">★ {feimao.data.rating} (年度第二主推 · 高性价比)</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">线路底层架构</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">IEPL 内网专线 + 企业级内网专线 (双架构)</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">IEPL 专线 + 专属优化中转通道</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">客户端支持生态</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">自研客户端 + 第三方通用订阅 (Clash / Shadowrocket)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">主打专属独立客户端，登录即用，免配置订阅</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">晚高峰单线程实测</td>
+              <td class="p-3.5 font-mono font-bold text-primary">{guangsu.data.speedTest.avgDownloadMbps} Mbps (时延 {guangsu.data.speedTest.avgLatencyMs}ms)</td>
+              <td class="p-3.5 font-mono font-bold text-emerald-600">{feimao.data.speedTest.avgDownloadMbps} Mbps (时延 {feimao.data.speedTest.avgLatencyMs}ms)</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">特色长效套餐</td>
+              <td class="p-3.5 text-primary font-bold">致敬斯诺克147永久套餐 (247GB 永久不过期)</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">不限时套餐 1000GB (一次性付费)</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">专属优惠代码</td>
+              <td class="p-3.5 font-mono font-bold text-primary">AMM</td>
+              <td class="p-3.5 font-mono font-bold text-emerald-600">flycat888</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">最低门槛月费</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300">约 ¥ 8.25 元起/月 (轻量版年付99元)</td>
+              <td class="p-3.5 text-emerald-600 font-bold">约 ¥ 7.0 元起/月 (学生版年付84元)</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">选购决策建议</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300 font-medium">追求极致稳定、高SLA、需定制化分流的极客与团队</td>
+              <td class="p-3.5 text-neutral-700 dark:text-neutral-300 font-medium">不想折腾客户端配置、希望一键登录即用的新手与小白</td>
+            </tr>
+            <tr>
+              <td class="p-3.5 font-medium text-neutral-500">实测报告与测速图</td>
+              <td class="p-3.5"><a href={`/reviews/${guangsu.data.slug}`} class="text-primary hover:underline font-bold">查阅光速云高清测速图与详评 →</a></td>
+              <td class="p-3.5"><a href={`/reviews/${feimao.data.slug}`} class="text-primary hover:underline font-bold">查阅飞猫云高清测速图与详评 →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={compareArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="protocols" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        机场对比常见疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="font-bold text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/coupons" class="hover:text-primary">最新优惠码</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

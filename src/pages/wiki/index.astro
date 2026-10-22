@@ -1,0 +1,257 @@
+---
+const wikiArticles = [
+  {
+    "title": "机场技术架构全景解密：从边界网关协议（BGP）入口分发、内网专线隧道到落地机房机柜架构",
+    "url": "/blog/bgp-cross-border-transit-and-tunnel-architecture",
+    "description": "全面拆解现代出海网络背后的技术架构，从 BGP 智能多线解析、跨国物理专线内网封装到落地机房的软硬件全景图谱。",
+    "readTime": "16 分钟",
+    "tag": "底层网络拓扑"
+  },
+  {
+    "title": "从 Shadowsocks、V2Ray 到 VLESS Reality 与 Hysteria2：翻墙技术演进史与猫鼠游戏技术博弈全景",
+    "url": "/blog/history-of-proxy-industry-protocols-evolution",
+    "description": "全面回顾出海代理技术十余年演进史，从早期的混淆加密、TLS 伪装到现代基于 UDP 的单边加速协议全景技术博弈复盘。",
+    "readTime": "16 分钟",
+    "tag": "翻墙协议演进史"
+  },
+  {
+    "title": "原生住宅 IP 与机房广播 IP 鉴别档案：如何避开流媒体风控黑名单与 ChatGPT 阻断检测",
+    "url": "/blog/residential-ip-vs-datacenter-ip-detection",
+    "description": "深度剖析数据中心广播 IP 与原生住宅家庭宽带 IP 的技术判定标准，教你利用专业数据库鉴别纯净度，彻底告别风控拦截。",
+    "readTime": "15 分钟",
+    "tag": "全球IP归属档案"
+  },
+  {
+    "title": "机场套餐涨价周期与行业通胀史：近三年专线机房带宽成本波动与用户权益变迁复盘",
+    "url": "/blog/airport-subscription-price-inflation-and-refund-rules",
+    "description": "全面复盘近三年跨国专线机房带宽成本上涨对机场行业定价带来的深远影响，分析价格涨跌周期与退款政策的收紧趋势。",
+    "readTime": "14 分钟",
+    "tag": "套餐通胀周期"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Sparkles, History, Globe, 
+  ExternalLink, Terminal, Tag
+} from "@lucide/astro";
+
+// SSOT: 获取全部品牌数据
+const allBrands = await getCollection("brands");
+const sortedByYear = [...allBrands].sort((a, b) => parseInt(a.data.established) - parseInt(b.data.established));
+
+const faqs = [
+  {
+    question: "为什么要为机场建立专门的「品牌百科」与历史档案？",
+    answer: "机场行业存在严重的「信息不对称」与「马甲跑路再开」乱象。很多看似新成立的低价机场，其实是跑路团队换皮卷土重来。通过建立长周期的运营背景记录、历史套餐变更时间线与节点机房归属档案，能有效帮助用户识别老牌信誉服务商，避开高风险马甲盘。"
+  },
+  {
+    question: "品牌百科里的「套餐历史变更」有什么参考价值？",
+    answer: "一家健康的机场在扩容专线带宽后，套餐单价通常保持稳定或随着技术普及小幅优化；相反，频繁发生「恶意砍老用户流量」、「突然强制年付大促」或「反复大幅涨价」的品牌，通常意味着其上游资金链断裂或正在准备收割跑路，是极其关键的预警信号。"
+  },
+  {
+    question: "收录的品牌基本资料是如何核实验证的？",
+    answer: "测评指南团队通过 BGP ASN 归属地查询、跨境入口 IP 历史反查、域名 Whois 历史快照以及长期的 Telegram 官方频道公告记录进行多方交叉核验，确保成立年份、线路拓扑及套餐演进具备确凿的事实证据支持。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/wiki/#webpage`,
+      "url": `${siteConfig.url}/wiki/`,
+      "name": `品牌百科：主流机场核心资料库与运营时间线 — ${siteConfig.title}`,
+      "description": "基于单一事实证据库（SSOT）的品牌百科：包含成立年份、技术架构、节点档案与套餐变更记录。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/wiki/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`品牌百科：机场核心资料库、运营时间线与节点档案 — ${siteConfig.title}`}
+  description="测评指南品牌百科：全网最权威的机场档案库，真实记录各品牌运营成立年份、骨干专线拓扑、全球节点分布与套餐历史演进，客观透明可追溯。"
+  keywords="机场百科, 机场资料库, 机场时间线, 机场跑路记录, 机场历史, 节点档案, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="品牌百科：主流机场核心资料库与历史档案"
+      description="构建中立可信的单一事实证据库（SSOT）。收录主流品牌的历史演进、成立时间线、底层节点档案与套餐变更轨迹，让虚假宣传无所遁形。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心百科档案价值速查</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        在机场行业中，<strong>运营生命周期（Established Timeline）是衡量跑路风险与基础设施成熟度的首要硬性指标</strong>。测评指南收录的代表性品牌中：<strong>ImmTelecom 魅影极速（2015）</strong>与 <strong>Nexitally 佩奇（2017）</strong>具备近十年稳定运营信誉，跑路风险趋近于零；<strong>TAG Internet（2018）</strong>深耕全球 90+ 地区专线；<strong>FSCloud 飞速云（2020）</strong>与<strong>速鹰 666（2019）</strong>则是经历过数轮网络洗礼的成熟代表。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 运营年表与行业发展史 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          主流品牌运营年份与行业技术演进年谱
+        </span>
+        <span class="text-xs">历经多轮技术跃迁</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+[2015 - 早期萌芽]
+  └── 【ImmTelecom 魅影极速】成立 (早期 Shadowsocks 自建隧道 / 十年常青树)
+
+[2017 - 专线革命]
+  └── 【Nexitally 佩奇】成立 (开启全线 IPLC 专线时代 / 自研 Smart Access 调度)
+
+[2018 - 全球多国扩张]
+  └── 【TAG Internet】成立 (建立全球 90+ 国家海量冷门节点原生解锁标杆)
+
+[2019 - 普及与普惠]
+  ├── 【速鹰 666】成立 (推动大流量 BGP 中继平民化 / 9.9 元极致低价)
+  └── 【iKuuu 机场】成立 (开启每日签到送流量公益模式 / 零门槛备用)
+
+[2020 - 协议多元化]
+  └── 【FSCloud 飞速云】成立 (普及 IEPL 不限设备连接 / 率先落地 Hysteria 2)
+      </pre>
+    </section>
+
+    <!-- 4. 品牌全量百科档案卡片 (SSOT) -->
+    <section id="profiles" class="space-y-8" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          收录品牌详细百科档案目录
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          包含基本资质、节点分布、套餐演化与核心技术参数。
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {sortedByYear.map((b) => (
+          <div id={b.data.slug} class="p-6 md:p-8 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary dark:bg-bg-secondary-dark space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-dashed border-neutral-300 dark:border-neutral-700">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-xl font-bold text-neutral-800 dark:text-neutral-100">{b.data.name} 百科档案</h3>
+                  <Badge variant="primary">{b.data.established} 年成立</Badge>
+                  <span class="text-xs text-neutral-500 font-mono">ID: {b.data.id}</span>
+                </div>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-1">{b.data.tagline}</p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <a href={`/reviews/${b.data.slug}`} class="text-xs text-primary font-medium hover:underline">
+                  查看深度评测与测速图 →
+                </a>
+                <a
+                  href={`/go/${b.data.id || b.data.slug}`}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                  class="inline-flex items-center gap-1 text-xs py-1.5 px-3 rounded-lg bg-primary text-white font-medium hover:bg-primary-strong transition-colors"
+                >
+                  官网直达 <ExternalLink size={12} />
+                </a>
+              </div>
+            </div>
+
+            <!-- 百科档案核心属性表格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-lg bg-bg-primary/60 dark:bg-bg-primary-dark/60">
+                <span class="text-neutral-400 block mb-0.5">节点规模与地区覆盖</span>
+                <span class="font-medium text-neutral-800 dark:text-neutral-200">{b.data.nodesCount} 个节点 ({b.data.regions.join("、")})</span>
+              </div>
+              <div class="p-3 rounded-lg bg-bg-primary/60 dark:bg-bg-primary-dark/60">
+                <span class="text-neutral-400 block mb-0.5">支持通信协议</span>
+                <span class="font-mono font-medium text-neutral-800 dark:text-neutral-200">{b.data.protocols.join(", ")}</span>
+              </div>
+              <div class="p-3 rounded-lg bg-bg-primary/60 dark:bg-bg-primary-dark/60">
+                <span class="text-neutral-400 block mb-0.5">流媒体与AI模型解锁</span>
+                <span class="font-medium text-emerald-600 dark:text-emerald-400">{b.data.unlocks.join(", ")}</span>
+              </div>
+            </div>
+
+            <!-- 套餐历史档案 -->
+            <div class="p-3.5 rounded-lg bg-neutral-100 dark:bg-neutral-800/50 text-xs space-y-1.5">
+              <span class="font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                <Tag class="w-3.5 h-3.5 text-primary" /> 套餐历史档位与价格记录 (SSOT 当前生效)：
+              </span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                {b.data.plans.map(p => (
+                  <div class="p-2 rounded border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-bg-primary-dark">
+                    <div class="font-bold text-neutral-800 dark:text-neutral-200">{p.name} ({p.billingCycle})</div>
+                    <div class="text-primary font-mono font-bold">¥{p.price} / {p.traffic}</div>
+                    <div class="text-[11px] text-neutral-400">设备: {p.deviceLimit}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={wikiArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="history" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        品牌百科常见疑问解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="font-bold text-primary">品牌百科</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/coupons" class="hover:text-primary">最新优惠码</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

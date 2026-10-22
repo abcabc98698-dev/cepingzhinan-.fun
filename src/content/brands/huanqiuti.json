@@ -1,0 +1,83 @@
+{
+  "id": "huanqiuti",
+  "name": "环球梯",
+  "slug": "huanqiuti",
+  "rank": 26,
+  "tagline": "环球梯 稳定加速与高性价比选型推荐",
+  "description": "环球梯 提供高速稳定的网络加速通道，覆盖香港、日本、新加坡、美国等多地优质原生节点。",
+  "rating": 4.6,
+  "tier": "精选中继",
+  "established": "2024年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 55,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 450,
+    "peakDownloadMbps": 563,
+    "avgLatencyMs": 35,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 6,
+  "plans": [
+    {
+      "name": "环球梯·基础版",
+      "billingCycle": "月付",
+      "price": 6,
+      "traffic": "100GB/月",
+      "deviceLimit": "3台",
+      "features": [
+        "多线 BGP 入口",
+        "流媒体解锁"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "HQ66",
+      "discount": "立减/折扣",
+      "desc": "环球梯 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://qwerty.huanqiutiaff.com/?code=9I4KRNPH",
+  "affUrl": "https://qwerty.huanqiutiaff.com/?code=9I4KRNPH",
+  "lastVerified": "2026-10-19"
+}

@@ -1,439 +1,446 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import HeroSection from "@/components/home/HeroSection.astro";
-import SectionHeader from "@/components/elements/SectionHeader.astro";
-import Pricing from "@/components/sections/Pricing.astro";
-import FAQ from "@/components/sections/FAQ.astro";
-import BlogSection from "@/components/sections/BlogSection.astro";
+import Badge from "@/components/ui/Badge.astro";
 import Button from "@/components/ui/Button.astro";
-import BrowserFrame from "@/components/ui/BrowserFrame.astro";
-import TechStackCard from "@/components/cards/TechStackCard.astro";
-import { siteConfig } from "@/config/site";
-import {
-  LayoutDashboard, Layers, FileText,
-  Bot, Code, PenTool, Rocket, GitFork, ChartNoAxesColumnIncreasing,
-  ArrowRight,
-  Compass, Triangle, Sun, CircleDot, Orbit, Anvil
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Award, ShieldCheck, Zap, ArrowRight, Gauge, Scale, 
+  BookOpen, GraduationCap, Ticket, ExternalLink, Terminal, 
+  Sparkles, Flame
 } from "@lucide/astro";
 
-// FAQ data
-const faqItems = [
-  { question: "Is this template free?", answer: "Yes. RicoFast is MIT-licensed and free for both personal and commercial use. Fork it, ship with it, sell what you build on top of it — no attribution required." },
-  { question: "Do I need to know Astro to use it?", answer: "Basic HTML/CSS familiarity is enough. The template is structured so the first 90% of customization happens in three places: site.js, global.css tokens, and content directories. Most users ship without writing any new Astro components." },
-  { question: "Can I customize the design system?", answer: "Yes. Colors, fonts, spacing, and border radii are all CSS custom properties defined in src/styles/global.css. The full token reference lives in docs/DESIGN.md so you always know what to change." },
-  { question: "Where can I deploy it?", answer: "Anywhere that hosts static sites — Vercel, Netlify, Cloudflare Pages, GitHub Pages, AWS S3, or your own server. The build outputs a plain dist/ directory. Vercel and Netlify have one-click setup." },
-  { question: "How fast is it really?", answer: "Lighthouse 95+ across Performance, Accessibility, Best Practices, and SEO on a fresh install. Astro ships zero JS by default — interactive bits load only where needed." },
-  { question: "Is there support?", answer: "Yes — open an issue on GitHub. The repo is actively maintained and community contributions are welcome. The Pro/Enterprise tiers shown on the Pricing page are demo content for the template itself, not a paid plan for RicoFast." },
+// SSOT: 从统一品牌数据源读取
+const allBrands = await getCollection("brands");
+const sortedBrands = allBrands.sort((a, b) => {
+  const rankA = a.data.rank || 999;
+  const rankB = b.data.rank || 999;
+  if (rankA !== rankB) return rankA - rankB;
+  return b.data.rating - a.data.rating;
+});
+
+const featuredGuangsu = allBrands.find(b => b.data.slug === "guangsu") || sortedBrands[0];
+
+// 9 大一级专题入口卡片数据
+const navHubs = [
+  {
+    title: "机场推荐",
+    url: "/recommend",
+    icon: Award,
+    badge: "综合精选",
+    desc: "2026 年度综合推荐榜单、按人群与使用场景精细选型、主力专线与高防备用梯队。",
+    tags: ["综合榜单", "场景推荐", "旗舰专线"]
+  },
+  {
+    title: "免费机场",
+    url: "/free",
+    icon: Zap,
+    badge: "零门槛",
+    desc: "正规永久每日签到免费资源、官方试用通道、免费节点与客户端，低价平替方案。",
+    tags: ["每日签到", "官方试用", "安全防坑"]
+  },
+  {
+    title: "深度评测",
+    url: "/reviews",
+    icon: ShieldCheck,
+    badge: "全维实测",
+    desc: "单品牌全维实测档案、真实丢包与带宽压测、套餐真实权益、客户端安全与售后观察。",
+    tags: ["单品牌档案", "晚高峰实测", "DNS防漏"]
+  },
+  {
+    title: "测速实验室",
+    url: "/speedtest",
+    icon: Gauge,
+    badge: "多探针",
+    desc: "华东、华南、华北分布式探针晚高峰实测日志，三大运营商差异与历史波动记录。",
+    tags: ["晚高峰21点", "三网横评", "抖动方差"]
+  },
+  {
+    title: "机场对比",
+    url: "/compare",
+    icon: Scale,
+    badge: "1v1决战",
+    desc: "TAG vs Nexitally 顶峰对决、同价位性价比比拼、同流量档位深度横评与协议取舍。",
+    tags: ["二选一", "同价位对比", "协议取舍"]
+  },
+  {
+    title: "品牌百科",
+    url: "/wiki",
+    icon: BookOpen,
+    badge: "单一事实源",
+    desc: "品牌基础资料库、历史运营时间线、全球节点地区档案、套餐历史调价记录追踪。",
+    tags: ["成立年份", "节点档案", "调价历史"]
+  },
+  {
+    title: "选购教程",
+    url: "/tutorials",
+    icon: GraduationCap,
+    badge: "知识大系",
+    desc: "科学评价标准、手把手教你读懂真实测速图、IEPL/IPLC 底层原理解析与防坑算力。",
+    tags: ["读懂测速图", "专线科普", "防坑指南"]
+  },
+  {
+    title: "优惠码",
+    url: "/coupons",
+    icon: Ticket,
+    badge: "实时有效",
+    desc: "各大主流品牌官方最新折扣代码汇总、适用套餐门槛说明、大促日历与失效归档。",
+    tags: ["专属折扣", "折上折", "实时验证"]
+  }
 ];
 
-// Features data
-const features = [
-  { icon: "/assets/icon/structure.png",  title: "Clean page structure", desc: "9 pre-built pages — Home, Features, Pricing, Blog, Changelog, About, Contact, Elements, 404 — wired and responsive out of the box." },
-  { icon: "/assets/icon/components.png", title: "Reusable sections", desc: "15+ modular section components — Hero, FeatureGrid, Pricing, FAQ, Steps, FinalCTA — composable with no layout conflicts." },
-  { icon: "/assets/icon/document.png",   title: "MDX-powered content", desc: "Blog and changelog driven by Astro 6 Content Layer. Import components inside Markdown. No CMS needed." },
-  { icon: "/assets/icon/fast.png",       title: "Lightweight and fast", desc: "Zero JS by default. Lighthouse 95+ on Performance, Accessibility, Best Practices, and SEO from a fresh install." },
-  { icon: "/assets/icon/motion.png",     title: "Built-in motion", desc: "Scroll reveals via AOS, orchestrated entrances via motion.js. Honors prefers-reduced-motion." },
-  { icon: "/assets/icon/customize.png",  title: "Easy to customize", desc: "~30 CSS custom properties drive every color and font. Rebrand in minutes by editing one file." },
+const faqs = [
+  {
+    question: "测评指南的定位是什么？与普通导航博客有何根本不同？",
+    answer: "测评指南坚持「单一数据源（SSOT）」与「证据库（Evidence Base）」定位。全站所有推荐榜单、单品牌评测、横向对比大表与百科档案均直接调用同一套结构化品牌数据库，价格、节点与测速数据实时同步，彻底杜绝普通推广博客常见的各页面信息自相矛盾、过时死链与虚假宣传。"
+  },
+  {
+    question: "为什么说主力机场必须认准「真实 IEPL/IPLC 内网专线」？",
+    answer: "公网中继和直连节点在晚高峰（20:00~23:00）必须经过海关国际出口审查点，受骨干网拥塞与 QOS 限制丢包率激增；而 IEPL/IPLC 走的是企业点对点物理裸缆内网，全程不过公网审查局，365天保持 0 丢包极速，是跨国会议、ChatGPT 与流媒体 4K 的核心保障。"
+  },
+  {
+    question: "普通用户如何构建最稳妥的网络防失联组合？",
+    answer: "强烈建议践行「主力专线 + 免费/超低价备用」双持策略：选择一家高 SLA 的 IEPL 专线机场（如 TAG、Nexitally、FSCloud）作为主力生产力工具；同时配置一个支持每日签到的免费账号（如 iKuuu）或月付 9.9 元的备用机场，即可实现全天候永不失联。"
+  }
 ];
 
-// Problem cards data
-const problems = [
-  { icon: "/assets/icon/clock.png",   title: "Starting fresh slows you down", desc: "Every SaaS needs the same 12 sections. Rebuilding them for every project costs weeks you should spend on the product." },
-  { icon: "/assets/icon/battery.png", title: "Generic templates devalue work", desc: "Most free templates look like templates. Your product deserves a site that feels deliberate, not stamped out." },
-  { icon: "/assets/icon/bell.png",    title: "Unstable systems break with growth", desc: "Ad-hoc colors, magic numbers, drift between pages — small inconsistencies compound until every change risks breaking something else." },
-];
-
-// Use cases
-const useCases = [
-  { icon: Bot, label: "AI tools", desc: "Credible launch site from day one" },
-  { icon: Code, label: "Developer tools", desc: "API docs, SDK landing, dev platforms" },
-  { icon: PenTool, label: "Design tools", desc: "Creative apps and design systems" },
-  { icon: Rocket, label: "Micro SaaS", desc: "Indie projects and side hustles" },
-  { icon: GitFork, label: "Open-source", desc: "Project sites and community hubs" },
-  { icon: ChartNoAxesColumnIncreasing, label: "Analytics", desc: "Dashboards and data tools" },
-];
-
-
-// Logos placeholder — fictional brand wordmarks for the social-proof strip.
-// Swap with real customer logos / SVGs when shipping.
-const logos = [
-  { name: "Northwind", icon: Compass },
-  { name: "Acme", icon: Triangle },
-  { name: "Lumen", icon: Sun },
-  { name: "Helio", icon: CircleDot },
-  { name: "Orbit", icon: Orbit },
-  { name: "Forge", icon: Anvil },
-];
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      "url": siteConfig.url,
+      "name": siteConfig.title,
+      "description": siteConfig.meta.description,
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
 ---
 
 <Layout
-  title="RicoFast — A design-led SaaS template for Astro"
-  description="Ship your SaaS site in days, not weeks. A clean, fast, and modular open-source template built with Astro and Tailwind CSS."
-  keywords="saas template, astro template, tailwind template, startup website, indie hacker"
+  title={`测评指南 (CepingZhinan) — 2026最新推荐42家机场品牌评测与横向选购证据库（持续更新......）`}
+  description="测评指南（cepingzhinan.fun）：用单品牌资料库、全维套餐对比、晚高峰多探针实测记录和品牌历史更新构建的客观选购证据库，全面覆盖机场推荐、对比、百科与优惠码。"
+  keywords="测评指南, 机场评测, 机场推荐, 稳定机场, IPLC专线, 免费机场, 机场对比, 机场优惠码, cepingzhinan"
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
 
-  <!-- 1. Hero -->
-  <HeroSection />
+  <!-- 1. Hero 区域 -->
+  <section class="site-container my-12 md:my-16">
+    <div class="text-center max-w-4xl mx-auto space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold" data-aos="fade-up-xs">
+        <Sparkles class="w-3.5 h-3.5" />
+        <span>基于单品牌统一数据源 (SSOT) 的客观选型证据库</span>
+      </div>
 
-  <!-- 2. Logo / Social Proof -->
-  <section class="py-12 md:py-16 lg:py-24 site-container" data-aos="fade-up-xs" data-aos-once="true"  data-aos-delay="650" >
-    <p class="text-center text-sm text-neutral-400 dark:text-neutral-500 mb-6">Drop in your customer logos when you launch</p>
-    <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 opacity-60">
-      {logos.map((logo) => (
-        <div class="flex items-center gap-2 px-4 py-2 border border-dashed border-neutral-300 dark:border-neutral-700 rounded-lg">
-          <logo.icon class="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
-          <span class="text-sm font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{logo.name}</span>
-        </div>
-      ))}
-    </div>
-  </section>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-brand font-bold text-neutral-900 dark:text-neutral-100 leading-tight" data-aos="fade-up-xs" data-aos-delay="100">
+        2026最新推荐42家机场品牌评测与横向选购证据库（持续更新......）
+      </h1>
 
-  <!-- 3. Problem -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Most SaaS sites start with the wrong problems" description="The hard part isn't building features. It's building a site that doesn't feel generic, doesn't drift apart over time, and doesn't take a month of weekends." />
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-      {problems.map((problem, i) => (
-        <div
-          class="p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-        >
-          <img
-            src={problem.icon}
-            alt={problem.title}
-            loading="lazy"
-            width="64"
-            height="64"
-            class="w-16 h-16 mb-4 object-contain"
-          />
-          <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">{problem.title}</h3>
-          <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{problem.desc}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 4. Solution -->
-  <section class="py-8 md:py-12 site-container" data-aos="fade-up-xs" data-aos-once="true">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4">A design system, not just a template</h2>
-      <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed">
-        RicoFast is built on a documented token system — colors, type scale, spacing, motion — so every page you add stays coherent with the ones already shipped. Less arbitration, fewer regressions, more time on the product.
+      <p class="text-base md:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed" data-aos="fade-up-xs" data-aos-delay="200">
+        拒绝软文营销与虚假跑分。测评指南用统一品牌资料库、全维套餐对比、晚高峰多探针实测日志与历史变更档案，为您构建真实、可验证、客观公正的科学选购决策支持。
       </p>
-    </div>
-    <div class="mt-10 md:mt-12 flex flex-wrap justify-center items-end gap-4 sm:gap-6 md:gap-8">
-      {[
-        { name: 'blue', file: 'folder-blue.webp' },
-        { name: 'yellow', file: 'folder-yellow.webp' },
-        { name: 'green', file: 'folder-greean.webp' },
-        { name: 'red', file: 'folder-red.webp' },
-        { name: 'gray', file: 'folder-gray.webp' },
-      ].map((folder, i) => (
-        <div
-          data-aos="fade-up-xs"
-          data-aos-delay={i * 120}
-          data-aos-once="true"
-          class="inline-block"
-        >
-          <img
-            src={`/assets/folder/${folder.file}`}
-            alt={`${folder.name} folder`}
-            width="128"
-            height="128"
-            class="w-20 sm:w-24 md:w-28 lg:w-32 h-auto drop-shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:drop-shadow-lg"
-          />
-        </div>
-      ))}
-    </div>
-  </section>
 
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 5. Features Grid -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Everything you need, nothing you don't" description="A focused set of features built for real SaaS sites. No bloat, no half-finished add-ons." />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-      {features.map((feature, i) => (
-        <div
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 100}
-          data-aos-once="true"
-          class="h-full"
-        >
-          <div
-            class="h-full p-6 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border transition-all duration-300 ease-in-out border-primary/10 dark:border-neutral-700 hover:shadow-md hover:-translate-y-1"
-          >
-            <img
-              src={feature.icon}
-              alt={feature.title}
-              loading="lazy"
-              width="64"
-              height="64"
-              class="w-16 h-16 mb-4 object-contain"
-            />
-            <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100 mb-2">{feature.title}</h3>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">{feature.desc}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- 6. Product Preview -->
-  <section class="py-16 md:py-24 site-container" data-aos="fade-up-sm" data-aos-once="true">
-    <SectionHeader title="A full layout system, not just sections" description="Hero, features, pricing, dashboards, settings — every page is composed from the same token system, so the whole product feels coherent." />
-    <div class="mt-8 max-w-4xl mx-auto" data-aos="fade-up-sm" data-aos-once="true" data-aos-delay="300">
-      <BrowserFrame url="app.ricoui.com/dashboard">
-        <div class="flex h-[300px] md:h-[400px]">
-          <!-- Sidebar -->
-          <aside class="hidden sm:flex flex-col w-14 md:w-16 border-r border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-900/40 py-4 px-2 md:px-3 gap-2">
-            <div class="w-7 h-7 mx-auto rounded-md bg-primary/15 border border-primary/30 flex items-center justify-center mb-2">
-              <div class="w-2.5 h-2.5 rounded-sm bg-primary"></div>
-            </div>
-            <div class="app-nav-active relative w-full h-8 rounded-md bg-primary/15 border border-primary/30 flex items-center justify-center">
-              <LayoutDashboard class="w-3.5 h-3.5 text-primary" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <Layers class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <FileText class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="w-full h-8 rounded-md flex items-center justify-center hover:bg-neutral-200/40 dark:hover:bg-neutral-700/40">
-              <ChartNoAxesColumnIncreasing class="w-3.5 h-3.5 text-neutral-400" />
-            </div>
-            <div class="flex-1"></div>
-            <div class="w-7 h-7 mx-auto rounded-full bg-accent/40 border border-accent/60"></div>
-          </aside>
-
-          <!-- Main -->
-          <div class="flex-1 p-4 md:p-6 flex flex-col gap-4 overflow-hidden">
-            <!-- Toolbar -->
-            <div class="flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
-                <div>
-                  <h3 class="text-sm font-semibold text-neutral-800 dark:text-neutral-100 leading-none">Overview</h3>
-                  <p class="text-[10px] text-neutral-400 mt-1">Last 30 days</p>
-                </div>
-                <span class="hidden md:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/5">
-                  <span class="app-live-dot relative w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  <span class="text-[9px] uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-medium">Live</span>
-                </span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="hidden md:block w-32 h-7 rounded-md border border-neutral-200 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40"></div>
-                <div class="w-7 h-7 rounded-full bg-primary/20 border border-primary/30"></div>
-              </div>
-            </div>
-
-            <!-- Stat row -->
-            <div class="grid grid-cols-3 gap-2 md:gap-3">
-              {[
-                { label: "Revenue", value: "$48.2k", delta: "+22.1%" },
-                { label: "New users", value: "1,284", delta: "+8.4%" },
-                { label: "MRR", value: "$12.6k", delta: "+5.2%" },
-              ].map((s, i) => (
-                <div
-                  class="app-stat-card relative overflow-hidden rounded-md border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 p-2 md:p-3"
-                  style={`--shimmer-delay: ${i * 1.2}s;`}
-                >
-                  <span class="block text-[9px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{s.label}</span>
-                  <span class="block text-sm md:text-base font-brand text-neutral-800 dark:text-neutral-100 mt-1">{s.value}</span>
-                  <span class="block text-[9px] text-emerald-600 dark:text-emerald-400 mt-1">{s.delta}</span>
-                </div>
-              ))}
-            </div>
-
-            <!-- Table mock -->
-            <div class="flex-1 rounded-md border border-primary/10 dark:border-neutral-700 bg-bg-primary/40 dark:bg-neutral-800/40 overflow-hidden">
-              <div class="grid grid-cols-12 gap-2 px-3 py-2 border-b border-primary/10 dark:border-neutral-700 text-[9px] uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-                <span class="col-span-5">Customer</span>
-                <span class="col-span-3">Plan</span>
-                <span class="col-span-2">Status</span>
-                <span class="col-span-2 text-right">MRR</span>
-              </div>
-              {[1, 2, 3, 4].map((i) => (
-                <div class:list={["grid grid-cols-12 gap-2 items-center px-3 py-2 border-b border-primary/5 dark:border-neutral-700/40 last:border-0", i === 1 && "app-row-cursor"]}>
-                  <div class="col-span-5 flex items-center gap-2">
-                    <div class={`w-5 h-5 rounded-full ${i % 2 === 0 ? 'bg-primary/30' : 'bg-accent/40'}`}></div>
-                    <div
-                      class="app-customer-bar h-1.5 rounded-full bg-neutral-300 dark:bg-neutral-600"
-                      style={`width: ${[60, 72, 50, 64][i - 1]}%; animation-delay: ${(i - 1) * 750}ms;`}
-                    ></div>
-                    {i === 1 && <span class="app-blink-cursor inline-block w-[2px] h-3 bg-primary"></span>}
-                  </div>
-                  <div class="col-span-3">
-                    <div class="inline-block px-1.5 py-0.5 rounded text-[9px] bg-primary/10 text-primary">{['Pro', 'Team', 'Pro', 'Enterprise'][i - 1]}</div>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="inline-flex items-center gap-1">
-                      <div class={`w-1.5 h-1.5 rounded-full ${i === 3 ? 'bg-amber-400' : 'bg-emerald-400'}`}></div>
-                      <span class="text-[9px] text-neutral-500 dark:text-neutral-400">{i === 3 ? 'Trial' : 'Active'}</span>
-                    </div>
-                  </div>
-                  <div class="col-span-2 text-right text-[10px] font-medium text-neutral-700 dark:text-neutral-200">${[148, 89, 49, 290][i - 1]}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </BrowserFrame>
-      <p class="text-center text-xs text-neutral-400 dark:text-neutral-500 mt-4">Replace this mock with your own product screenshot — see <code class="text-primary">src/pages/index.astro</code>.</p>
-    </div>
-  </section>
-
-  <!-- 7. Use Cases -->
-  <section class="py-16 md:py-24 site-container">
-    <SectionHeader title="Made for different kinds of SaaS" description="Whether you're shipping an AI tool, a developer platform, or an indie side project — the layout system adapts to your product." />
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-8" >
-      {useCases.map((uc, i) => (
-        <div
-          class="flex flex-col items-center p-4 rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10 dark:border-neutral-700 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-          data-aos="fade-up-sm"
-          data-aos-delay={i * 120}
-          data-aos-once="true"
-        >
-          <uc.icon class="w-6 h-6 text-primary mb-2" />
-          <span class="text-sm font-semibold text-neutral-800 dark:text-neutral-100">{uc.label}</span>
-          <span class="text-xs text-neutral-400 mt-1">{uc.desc}</span>
-        </div>
-      ))}
-    </div>
-  </section>
-
-
-
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 9. Tech Stack -->
-  <section class="py-16 md:py-24 site-container" data-aos="fade-up-sm" data-aos-once="true">
-    <SectionHeader title="Built with modern tools" />
-    <div class="mt-8" data-aos="fade-up-sm" data-aos-once="true" data-aos-delay="300">
-      <TechStackCard />
-    </div>
-  </section>
-
-  <!-- 10. Pricing -->
-  <Pricing
-    title="Free template, real pricing examples"
-    description="RicoFast itself is MIT-licensed and free. The 3-tier layout below is reference content — swap in your own plans when you launch."
-  />
-
-  <div class="w-full border-b border-dashed border-neutral-200 dark:border-neutral-700 my-4 site-container"></div>
-
-  <!-- 11. FAQ -->
-  <FAQ
-    title="Frequently asked questions"
-    items={faqItems}
-  />
-
-  <!-- 12. Latest Articles -->
-  <div class="py-16 md:py-24">
-    <BlogSection title="Latest articles" />
-  </div>
-
-  <!-- 13. Final CTA -->
-  <section class="py-12 md:py-20 site-container  rounded-xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/10" data-aos="fade-up-xs" data-aos-once="true">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-brand mb-4" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="200" >Start building your SaaS today</h2>
-      <p class="text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="300">
-        Clone the template, replace the content, ship to production. Three steps to a live site.
-      </p>
-      <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up-xs" data-aos-once="true" data-aos-delay="400">
-        <Button url={siteConfig.social.github} type="fill" className="text-lg px-8 py-3" target="_blank">
-          Get Template <ArrowRight size={18} />
+      <div class="flex flex-wrap justify-center gap-3 pt-2" data-aos="fade-up-xs" data-aos-delay="300">
+        <Button url="/recommend" type="fill" className="px-6 py-2.5">
+          查阅 2026 推荐榜单 <ArrowRight size={16} />
         </Button>
-        <Button url="/features" className="text-lg px-8 py-3">
-          View Features
+        <Button url="/speedtest" className="px-6 py-2.5">
+          晚高峰测速实验室
         </Button>
       </div>
     </div>
   </section>
 
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-20">
+
+    <!-- 2. 八大核心一级专题入口网格 -->
+    <section class="space-y-8" data-aos="fade-up-xs">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          八大核心一级专题知识图谱大系
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          全方位覆盖不同搜索意图与决策环节，构筑蜂巢式深度内链网络。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {navHubs.map((hub) => (
+          <a
+            href={hub.url}
+            class="group p-5 rounded-2xl border border-dashed border-primary/20 bg-bg-secondary dark:bg-bg-secondary-dark flex flex-col justify-between hover:border-primary hover:shadow-md transition-all duration-200"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                  <hub.icon class="w-5 h-5" />
+                </div>
+                <Badge variant="primary" size="sm">{hub.badge}</Badge>
+              </div>
+
+              <h3 class="text-lg font-bold text-neutral-800 dark:text-neutral-100 group-hover:text-primary transition-colors mb-2">
+                {hub.title}
+              </h3>
+
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-3 mb-4">
+                {hub.desc}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-dashed border-neutral-200 dark:border-neutral-700/60 flex items-center justify-between text-xs text-primary font-medium">
+              <span>进入专题大系</span>
+              <ArrowRight class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 2.5. 编辑部年度主推黄金展位：光速云 (第一主推) -->
+    {featuredGuangsu && (
+      <section class="p-6 md:p-8 rounded-3xl bg-gradient-to-br from-primary/10 via-bg-secondary to-bg-secondary dark:from-primary/15 dark:via-bg-secondary-dark dark:to-bg-secondary-dark border-2 border-primary/30 shadow-lg relative overflow-hidden" data-aos="fade-up-xs">
+        <div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+          <div class="space-y-4 max-w-2xl">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-white text-xs font-bold shadow-sm">
+                <Flame class="w-3.5 h-3.5 fill-current" />
+                2026 编辑部年度第一主推
+              </span>
+              <Badge variant="primary">{featuredGuangsu.data.tier}</Badge>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                ★ {featuredGuangsu.data.rating} 满贯首选
+              </span>
+            </div>
+
+            <div class="flex items-start gap-4">
+              {featuredGuangsu.data.logo && (
+                <img 
+                  src={featuredGuangsu.data.logo} 
+                  alt="光速云 Logo" 
+                  width="64"
+                  height="64"
+                  loading="lazy"
+                  class="w-16 h-16 rounded-2xl bg-white p-1 shadow-sm border border-neutral-200 dark:border-neutral-700 shrink-0" 
+                />
+              )}
+              <div>
+                <h3 class="text-2xl md:text-3xl font-brand font-bold text-neutral-900 dark:text-neutral-50 flex items-center gap-2">
+                  {featuredGuangsu.data.name}
+                  <span class="text-xs font-normal text-neutral-400">（2020年稳定运营 · IEPL+企业内网双专线）</span>
+                </h3>
+                <p class="text-sm text-neutral-600 dark:text-neutral-300 mt-1 leading-relaxed">
+                  {featuredGuangsu.data.tagline}。节点覆盖香港×20、台湾×5、日本×10、新加坡×10、美英法德等全球 88+ 地区。支持自研客户端与第三方订阅无缝导入。
+                </p>
+              </div>
+            </div>
+
+            <!-- 核心特色亮点 -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 text-xs">
+              <div class="p-2.5 rounded-xl bg-white/80 dark:bg-bg-primary-dark/80 border border-neutral-200 dark:border-neutral-700">
+                <span class="text-neutral-400 block text-[11px]">实测单线程</span>
+                <span class="font-bold font-mono text-primary text-sm">{featuredGuangsu.data.speedTest.avgDownloadMbps} Mbps</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-white/80 dark:bg-bg-primary-dark/80 border border-neutral-200 dark:border-neutral-700">
+                <span class="text-neutral-400 block text-[11px]">斯诺克147不限时</span>
+                <span class="font-bold text-neutral-800 dark:text-neutral-200 text-sm">247GB 永久不过期</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-white/80 dark:bg-bg-primary-dark/80 border border-neutral-200 dark:border-neutral-700">
+                <span class="text-neutral-400 block text-[11px]">轻量年付门槛</span>
+                <span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">约 ¥8 起/月</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-white/80 dark:bg-bg-primary-dark/80 border border-neutral-200 dark:border-neutral-700">
+                <span class="text-neutral-400 block text-[11px]">专属优惠码</span>
+                <span class="font-bold font-mono text-primary text-sm">AMM (立减折算)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+            <a 
+              href="/go/guangsu"
+              target="_blank"
+              rel="nofollow sponsored noopener"
+              class="px-6 py-3.5 rounded-xl bg-primary text-white font-bold text-center shadow-md hover:bg-primary-strong transition-all inline-flex items-center justify-center gap-2"
+            >
+              前往光速云官网直达
+              <ExternalLink class="w-4 h-4" />
+            </a>
+            <a 
+              href={`/reviews/${featuredGuangsu.data.slug}`}
+              class="px-6 py-2.5 rounded-xl border border-primary/30 hover:border-primary text-primary dark:text-primary-light font-medium text-center transition-colors text-xs"
+            >
+              查看光速云完整测速图与解锁评测 →
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- 3. SSOT 核心品牌实时对比矩阵大表 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+            核心收录品牌技术参数全景横向大表 (SSOT)
+          </h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            全站数据唯一来源。推荐页、对比页、评测页从同一份数据读取价格和测速，杜绝矛盾。
+          </p>
+        </div>
+        <a href="/compare" class="text-xs text-primary font-semibold hover:underline flex items-center gap-1 whitespace-nowrap">
+          查看完整 1v1 对比中心 →
+        </a>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
+        <table class="w-full text-left text-xs md:text-sm border-collapse bg-white dark:bg-bg-primary-dark">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold">排名与品牌</th>
+              <th class="p-3.5 font-semibold">定位梯队</th>
+              <th class="p-3.5 font-semibold">核心线路架构</th>
+              <th class="p-3.5 font-semibold">晚高峰单线程实测</th>
+              <th class="p-3.5 font-semibold">流媒体与AI解锁</th>
+              <th class="p-3.5 font-semibold">最低门槛</th>
+              <th class="p-3.5 font-semibold">综合评级</th>
+              <th class="p-3.5 font-semibold text-center">测评与直达</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            {sortedBrands.map((b, idx) => (
+              <tr class="hover:bg-primary/5 transition-colors">
+                <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100 whitespace-nowrap">
+                  <div class="flex items-center gap-2.5">
+                    <span class={`w-5 text-center font-mono text-xs ${idx < 3 ? "text-primary font-bold" : "text-neutral-400"}`}>
+                      {b.data.rank ? `#${b.data.rank}` : idx + 1}
+                    </span>
+                    {b.data.logo && (
+                      <img src={b.data.logo} alt={b.data.name} width="24" height="24" loading="lazy" class="w-6 h-6 rounded-md object-cover bg-white p-0.5 border border-neutral-200 dark:border-neutral-700 shrink-0" />
+                    )}
+                    <a href={`/reviews/${b.data.slug}`} class="hover:text-primary transition-colors flex items-center gap-1.5">
+                      <span>{b.data.name}</span>
+                      {b.data.hasSpeedtest && (
+                        <span class="text-[10px] px-1 rounded bg-emerald-500/10 text-emerald-600 font-normal">有测速图</span>
+                      )}
+                    </a>
+                  </div>
+                </td>
+                <td class="p-3.5 whitespace-nowrap">
+                  <Badge variant={b.data.tier.includes("旗舰") ? "primary" : b.data.tier.includes("性价比") ? "accent" : "neutral"}>
+                    {b.data.tier}
+                  </Badge>
+                </td>
+                <td class="p-3.5 text-neutral-600 dark:text-neutral-300 whitespace-nowrap">
+                  {b.data.lineTypes[0]}
+                </td>
+                <td class="p-3.5 font-mono text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap">
+                  {b.data.speedTest.avgDownloadMbps} Mbps
+                </td>
+                <td class="p-3.5 text-neutral-600 dark:text-neutral-300 whitespace-nowrap">
+                  {b.data.unlocks.slice(0, 3).join(", ")}
+                </td>
+                <td class="p-3.5 font-mono font-bold text-neutral-900 dark:text-neutral-100 whitespace-nowrap">
+                  ¥{b.data.minPriceMonthly} 起/月
+                </td>
+                <td class="p-3.5 text-amber-500 font-bold whitespace-nowrap">
+                  ★ {b.data.rating}
+                </td>
+                <td class="p-3.5 text-center whitespace-nowrap">
+                  <div class="flex items-center justify-center gap-1.5">
+                    <a
+                      href={`/reviews/${b.data.slug}`}
+                      class="px-2.5 py-1 rounded border border-neutral-300 dark:border-neutral-600 hover:border-primary text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-primary transition-colors"
+                    >
+                      实测
+                    </a>
+                    <a
+                      href={`/go/${b.data.id || b.data.slug}`}
+                      target="_blank"
+                      rel="nofollow sponsored noopener"
+                      class="inline-flex items-center gap-1 px-3 py-1 rounded bg-primary text-white text-xs font-medium hover:bg-primary-strong transition-colors"
+                    >
+                      官网 <ExternalLink size={11} />
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. 内链主线闭环流程图 (Topic Cluster Pipeline) -->
+    <section class="p-6 md:p-8 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          全站内链主线闭环决策流 (Internal Linking Pipeline)
+        </span>
+        <span class="text-xs">闭环转化证据链</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+【第一站: 机场推荐】──► 筛选符合场景的 2~3 个候选品牌 (旗舰 / 性价比 / 备用)
+          │
+          ▼
+【第二站: 机场对比】──► 进入 1v1 深度参数对决，权衡晚高峰丢包、设备限制与每GB成本
+          │
+          ▼
+【第三站: 单品牌评测】──► 查阅真实多探针测速图、全平台客户端体验与 DNS 防泄漏日志
+          │
+          ▼
+【第四站: 品牌百科】──► 调取成立年份、运营时间线与历史套餐调价记录，排除跑路风险
+          │
+          ▼
+【第五站: 套餐与优惠码】─► 获取实时有效专属折扣码，结账叠折省钱直达官网完成选购！
+      </pre>
+    </section>
+
+    <!-- 5. FAQ 常见问题 -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        测评指南平台选型常见问题 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 6. 底部行动呼吁 -->
+    <section class="text-center p-8 md:p-12 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-dashed border-primary/20 space-y-4" data-aos="fade-up-xs">
+      <h3 class="text-2xl font-bold font-brand text-neutral-800 dark:text-neutral-100">
+        立即开启科学、透明的数字化选购决策
+      </h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400 max-w-xl mx-auto leading-relaxed">
+        告别主观营销软文与不实测评，从统一参数库与真实测速日志开始，选出真正适合您业务的主力节点。
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <Button url="/recommend" type="fill">
+          开始浏览推荐榜单 <ArrowRight size={16} />
+        </Button>
+        <Button url="/tutorials">
+          学习防坑选购教程
+        </Button>
+      </div>
+    </section>
+
+  </main>
 </Layout>
-
-<style>
-  /* ─── App preview — Live ping dot ─────────────────── */
-  .app-live-dot::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 9999px;
-    background: rgb(16, 185, 129);
-    animation: app-live-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  @keyframes app-live-ping {
-    0%   { transform: scale(1);   opacity: 0.7; }
-    80%, 100% { transform: scale(2.8); opacity: 0; }
-  }
-
-  /* ─── Active sidebar item — focus ring pulse ─────── */
-  .app-nav-active::after {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 10px;
-    border: 1px solid var(--color-primary);
-    opacity: 0;
-    animation: app-nav-ring 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    pointer-events: none;
-  }
-  @keyframes app-nav-ring {
-    0%        { opacity: 0;    transform: scale(0.96); }
-    50%       { opacity: 0.65; transform: scale(1.05); }
-    100%      { opacity: 0;    transform: scale(1.12); }
-  }
-
-  /* ─── Stat cards — staggered shimmer sweep ────────── */
-  .app-stat-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 0%,
-      transparent 35%,
-      rgba(45, 109, 195, 0.18) 50%,
-      transparent 65%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    animation: app-stat-shimmer 4.5s ease-in-out infinite;
-    animation-delay: var(--shimmer-delay, 0s);
-    pointer-events: none;
-  }
-  @keyframes app-stat-shimmer {
-    0%        { transform: translateX(-100%); }
-    35%, 100% { transform: translateX(100%);  }
-  }
-
-  /* ─── Table — typing cursor on first row ─────────── */
-  .app-blink-cursor {
-    animation: app-blink 1.05s steps(2, start) infinite;
-  }
-  @keyframes app-blink {
-    to { visibility: hidden; }
-  }
-
-  /* ─── Customer bars — staggered "live data" flux ── */
-  .app-customer-bar {
-    transform-origin: left center;
-    animation: app-bar-flux 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-  @keyframes app-bar-flux {
-    0%, 100% { transform: scaleX(1);    opacity: 1; }
-    35%      { transform: scaleX(0.72); opacity: 0.78; }
-    70%      { transform: scaleX(1.06); opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .app-live-dot::before,
-    .app-nav-active::after,
-    .app-stat-card::before,
-    .app-blink-cursor,
-    .app-customer-bar {
-      animation: none !important;
-    }
-  }
-</style>

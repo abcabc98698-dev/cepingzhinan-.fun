@@ -1,36 +1,59 @@
 ---
-import Meta from './Meta.astro';
-import TopBg from "@/components/ui/TopBg.astro";
 import Footer from "@/components/sections/Footer.astro";
 import Header from "@/components/sections/Header.astro";
+import TopBg from "@/components/ui/TopBg.astro";
 import TrackGa from "@/components/widgets/TrackGa.astro";
+import Meta from "./Meta.astro";
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	keywords?: string | undefined;
+	url?: string | undefined;
+	ogImage?: string | undefined;
+	ogType?: string | undefined;
+	publishedTime?: string | Date | undefined;
+	modifiedTime?: string | Date | undefined;
+	author?: string | undefined;
+	category?: string | undefined;
+	tags?: string[] | undefined;
 }
 
 const {
 	title,
 	description,
-	keywords
+	keywords,
+	url,
+	ogImage,
+	ogType,
+	publishedTime,
+	modifiedTime,
+	author,
+	category,
+	tags,
 } = Astro.props;
-
 
 import "../styles/global.css";
 import "aos/dist/aos.css";
 import "../styles/aos-custom.css";
-import '../styles/article.css';
-import '../styles/article-enhancements.css';
+import "../styles/article.css";
+import "../styles/article-enhancements.css";
 ---
 
-<html lang="">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <Meta
       title = {title}
       description = {description}
       keywords = {keywords}
+      url = {url}
+      ogImage = {ogImage}
+      ogType = {ogType}
+      publishedTime = {publishedTime}
+      modifiedTime = {modifiedTime}
+      author = {author}
+      category = {category}
+      tags = {tags}
     />
     <TrackGa />
     <!-- Used to add dark mode right away, adding here prevents any flicker -->
@@ -45,7 +68,7 @@ import '../styles/article-enhancements.css';
       }
     </script>
 
-    <link rel="icon" type="image/x-icon" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="antialiased bg-bg-primary dark:bg-bg-primary-dark max-w-full overflow-x-hidden">
     <TopBg />

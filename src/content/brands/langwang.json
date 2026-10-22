@@ -1,0 +1,384 @@
+{
+  "id": "langwang",
+  "name": "浪网",
+  "slug": "langwang",
+  "rank": 39,
+  "tagline": "浪网 官方测速数据与资费套餐档案",
+  "description": "浪网 拥有丰富节点网络分布，支持主流协议与多地区流媒体解锁，经实测在亚太常用地区具备良好的可用性。",
+  "rating": 4.6,
+  "tier": "高性价比",
+  "established": "2022年",
+  "lineTypes": [
+    "BGP多线入口",
+    "IEPL内网专线"
+  ],
+  "protocols": [
+    "Trojan",
+    "Shadowsocks"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 420,
+    "peakDownloadMbps": 504,
+    "avgLatencyMs": 32,
+    "packetLossRate": "0.2%",
+    "testDate": "2026-08-24",
+    "telecomGrade": "电信: A",
+    "unicomGrade": "联通: A",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 120,
+  "plans": [
+    {
+      "name": "浪网 高端",
+      "billingCycle": "月付",
+      "price": 120,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 高端",
+      "billingCycle": "季付",
+      "price": 342,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 高端",
+      "billingCycle": "半年付",
+      "price": 648,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 高端",
+      "billingCycle": "年付",
+      "price": 1224,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 高端",
+      "billingCycle": "两年付",
+      "price": 2304,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 高端",
+      "billingCycle": "三年付",
+      "price": 3240,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "月付",
+      "price": 200,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "季付",
+      "price": 570,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "半年付",
+      "price": 1080,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "年付",
+      "price": 2040,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "两年付",
+      "price": 3840,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 商业",
+      "billingCycle": "三年付",
+      "price": 5400,
+      "traffic": "2000G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 年付标准",
+      "billingCycle": "年付",
+      "price": 119,
+      "traffic": "80G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 小流量包",
+      "billingCycle": "一次性付费",
+      "price": 239,
+      "traffic": "180G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 标准流量包",
+      "billingCycle": "一次性付费",
+      "price": 569,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 定制线路包",
+      "billingCycle": "月付",
+      "price": 640,
+      "traffic": "500G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 精英流量包",
+      "billingCycle": "一次性付费",
+      "price": 1099,
+      "traffic": "900G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 进阶",
+      "billingCycle": "月付",
+      "price": 70,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 进阶",
+      "billingCycle": "半年付",
+      "price": 378,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 进阶",
+      "billingCycle": "年付",
+      "price": 714,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 进阶",
+      "billingCycle": "两年付",
+      "price": 1344,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 进阶",
+      "billingCycle": "三年付",
+      "price": 1890,
+      "traffic": "450G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 入门",
+      "billingCycle": "月付",
+      "price": 30,
+      "traffic": "截150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 入门",
+      "billingCycle": "半年付",
+      "price": 162,
+      "traffic": "截150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 入门",
+      "billingCycle": "年付",
+      "price": 306,
+      "traffic": "截150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 入门",
+      "billingCycle": "两年付",
+      "price": 576,
+      "traffic": "截150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "浪网 入门",
+      "billingCycle": "三年付",
+      "price": 810,
+      "traffic": "截150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "历史节点测速覆盖广，连接成功率高",
+    "支持多协议灵活适配不同客户端"
+  ],
+  "cons": [
+    "部分冷门套餐无月付选项需季付起购",
+    "高峰期建议优选延迟较低的香港与日本节点"
+  ],
+  "bestFor": "中重度流媒体用户与有多地区 IP 落地需求的用户",
+  "officialUrl": "https://varnexa.wavenetaff.com/",
+  "affUrl": "https://varnexa.wavenetaff.com/#/?code=xwAM4tTd",
+  "lastVerified": "2026-08-24"
+}

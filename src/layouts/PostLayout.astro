@@ -1,15 +1,44 @@
 ---
-import Layout from  "@/layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
 
 interface Props {
 	title?: string | undefined;
 	keywords?: string | undefined;
 	description?: string | undefined;
+	ogImage?: string | undefined;
+	ogType?: string | undefined;
+	publishedTime?: string | Date | undefined;
+	modifiedTime?: string | Date | undefined;
+	author?: string | undefined;
+	category?: string | undefined;
+	tags?: string[] | undefined;
 }
-const { title, description,keywords} = Astro.props;
+const {
+	title,
+	description,
+	keywords,
+	ogImage,
+	ogType = "article",
+	publishedTime,
+	modifiedTime,
+	author,
+	category,
+	tags,
+} = Astro.props;
 ---
 
-<Layout title={title} description={description} keywords={keywords}>
+<Layout
+  title={title}
+  description={description}
+  keywords={keywords}
+  ogImage={ogImage}
+  ogType={ogType}
+  publishedTime={publishedTime}
+  modifiedTime={modifiedTime}
+  author={author}
+  category={category}
+  tags={tags}
+>
   <main class="post-wrapper">
       <slot />
   </main>

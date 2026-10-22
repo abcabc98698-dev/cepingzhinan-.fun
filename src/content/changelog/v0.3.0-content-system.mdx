@@ -1,44 +1,20 @@
 ---
-title: "Content Layer and faster builds"
-publishDate: 2026-03-18
+title: "v0.3.0 晚高峰测速实验室与八大一级专题图谱"
+publishDate: 2026-03-25
 version: "v0.3.0"
-description: "Astro Content Layer migration, unified metadata, and a 30% faster cold build."
+description: "推出 20:30~22:30 晚高峰多探针自动化压测体系，上线覆盖推荐、免费、评测、测速、对比、百科、教程、优惠码的八大一级专题大系。"
 ---
 
-## Migration to Content Layer
+## 核心更新
 
-Blog and changelog content moved to Astro's `glob` loader and Content Layer API. The migration removed older content patterns and made the site easier to extend later with external Markdown, a CMS, or another content source.
-
-Key changes from the earlier preview:
-
-- `entry.slug` became `entry.id`
-- `entry.render()` became `render(entry)` from `astro:content`
-- `Astro.glob()` usage moved to `import.meta.glob()` where static imports were still needed
-- `getStaticPaths()` params were normalized for Astro v6 readiness
-
-## Schema unification
-
-Blog and changelog frontmatter now follow a shared shape:
-
-```yaml
-title: string
-description: string
-publishDate: date
-version?: string     # changelog only
-tags?: string[]      # blog only
-read?: number        # blog only
-img?: string
-img_alt?: string
-featured?: boolean
-```
-
-## Performance wins
-
-- Cold build time: **21s -> 14s** on CI (Vercel hobby runner, 8 routes)
-- First-load JS on Home: **31KB -> 24KB** gzipped after splitting AnimatedText into a dynamic chunk
-- Blog cards now use `loading="lazy"` by default
-- Lighthouse on a fresh install: **95+** across Performance, Accessibility, Best Practices, and SEO on Home, Features, and Pricing
-
-## Release status
-
-`v0.3` locked the content and performance baseline. The remaining work before `v1.0` was product-story polish, route coverage, and final template cleanup.
+- **测速实验室正式上线**：聚焦晚高峰 20:30~22:30 网络拥堵时段，自动输出三大运营商实测速率矩阵与丢包率对比
+- **八大一级专题大系发布**：
+  - 机场推荐（/recommend）：综合推荐、按场景人群精细选型
+  - 免费机场（/free）：每日签到资源、官方试用通道与中间人安全警示
+  - 深度评测（/reviews）：单品牌全维档案与长期运维观察
+  - 测速实验室（/speedtest）：多物理探针丢包与抖动实测
+  - 机场对比（/compare）：1v1 旗舰二选一与性价比横评
+  - 品牌百科（/wiki）：运营时间线与套餐变更追溯
+  - 选购教程（/tutorials）：防坑指南与网络底层协议原理解析
+  - 优惠码（/coupons）：官方有效折扣码实时验证汇集
+- **蜂巢式 Topic Cluster 内链网络构建**：打通首页、各大专题与深度长尾文章之间的网状链接

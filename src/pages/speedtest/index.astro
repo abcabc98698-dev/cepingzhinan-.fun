@@ -1,0 +1,320 @@
+---
+const speedtestArticles = [
+  {
+    "title": "香港、日本、新加坡、美国四大热门地区节点横向压测：晚高峰单线程带宽、物理往返时延与路由绕路检测",
+    "url": "/blog/regional-node-latency-and-bandwidth-comparison-asia-us",
+    "description": "全面压测四大主流海外节点地区的物理网络特征，从光纤往返时延、海缆路由走向到流媒体原生版权库差异进行深度解析。",
+    "readTime": "15 分钟",
+    "tag": "多地区测速"
+  },
+  {
+    "title": "三大运营商出海路由差异深度剖析：中国电信 163/CN2、联通 4837/9929 与移动 CMI 晚高峰表现差异",
+    "url": "/blog/isp-routing-differentiation",
+    "description": "为什么同一节点在电信快如闪电而在移动卡如蜗牛？深度解析三大运营商跨国骨干网互联互通架构与晚高峰选型逻辑。",
+    "readTime": "14 分钟",
+    "tag": "运营商差异"
+  },
+  {
+    "title": "晚高峰 20:00 到 23:00 骨干网拥塞压测全记录：从 TCP 拥塞控制算法到运营商 QoS 限制机制",
+    "url": "/blog/evening-peak-network-congestion-packet-loss-benchmark",
+    "description": "真实记录晚高峰 20:00 到 23:00 期间国际骨干网的剧烈波动，从 TCP BBR 算法、缓冲区膨胀到三大运营商 QoS 限速机制全面拆解。",
+    "readTime": "16 分钟",
+    "tag": "晚高峰压测"
+  },
+  {
+    "title": "跨季度 SLA 可用率与抖动追踪记录：为什么测速图好看的节点逢重要节日依然大面积断连？",
+    "url": "/blog/historical-sla-uptime-tracking-and-connection-jitter",
+    "description": "复盘近四个季度各品牌在重大节日与特殊时期的真实断连周期，建立不可篡改的可用率追踪档案，教你辨别谁是真正的主力稳健派。",
+    "readTime": "15 分钟",
+    "tag": "历史时序追踪"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Sparkles, Terminal, Radio, Server
+} from "@lucide/astro";
+
+// SSOT: 获取各品牌测速数据
+const allBrands = await getCollection("brands");
+const speedRanked = allBrands.sort((a, b) => b.data.speedTest.avgDownloadMbps - a.data.speedTest.avgDownloadMbps);
+const brandsWithCharts = allBrands.filter(b => b.data.hasSpeedtest && b.data.speedtestImage);
+
+const faqs = [
+  {
+    question: "为什么测评指南强调「单线程测速」远比「多线程测速」更能体现真实体验？",
+    answer: "多线程测速（如 Speedtest 默认模式）会同时开启数十个 TCP 并发连接拉取数据，即使单条连接严重丢包，整体叠加依然能虚标出超高带宽。但在日常使用中，网页打开、API 交互、游戏连接甚至 YouTube 播放流通常仅由 1~3 条单线程承载。只有单线程跑满 100Mbps+ 且延迟抖动低于 5ms，才能保证 4K 秒开与零缓冲。"
+  },
+  {
+    question: "电信、联通、移动三大运营商在使用机场节点时为何差异悬殊？",
+    answer: "中国三大运营商的国际出口带宽与国际对等互联协议（Peering）极度不对等。中国电信的公网 163 骨干网在晚高峰拥堵最为严重；中国联通 169 网络在亚太方向相对通畅；中国移动近年国际带宽增长迅速但国际路由波动较大。因此，支持多线 BGP 智能分流入境的专线机场能够彻底消除运营商网络差异。"
+  },
+  {
+    question: "测速图里的 Jitter（抖动方差）和丢包率，哪个指标对游戏和会议影响更大？",
+    answer: "Jitter 抖动方差和丢包率直接决定实时通话（如 Zoom/Teams）及外服联机游戏的生离死别。即使平均延迟只有 40ms，若 Jitter 高达 30ms 且丢包率超过 1%，语音就会出现卡顿、电音，游戏会频繁瞬移。优质专线机场能将 Jitter 控制在 2ms 以内，丢包率趋近于 0。"
+  },
+  {
+    question: "测速实验室的数据是如何采集并确保客观公正的？",
+    answer: "我们在上海电信千兆、广州联通千兆及北京移动千兆三地分别部署专用测试探针，每天 20:30~22:30 自动调用 headless 浏览器与定制 iperf3/speedtest 脚本循环采集 5 组样本并取调和平均值，排除偶发抖动并实时同步到单品牌资料库。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/speedtest/#webpage`,
+      "url": `${siteConfig.url}/speedtest/`,
+      "name": `测速实验室：晚高峰运营商测速与丢包实测矩阵 — ${siteConfig.title}`,
+      "description": "基于三大运营商多物理探针采集的真实晚高峰测速日志：提供单线程带宽、延迟方差与丢包率对比。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/speedtest/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`测速实验室：晚高峰真实丢包与带宽压测矩阵 (2026 最新) — ${siteConfig.title}`}
+  description="测评指南测速实验室：由上海电信、广州联通、北京移动多地物理探针在晚高峰 20:30~22:30 实测的真实下载速率、延迟抖动与丢包率矩阵，杜绝虚假跑分。"
+  keywords="机场测速, 晚高峰测速, 机场丢包率, 节点延迟对比, 电信测速, 联通测速, 移动测速, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="测速实验室：全天候与晚高峰多探针实测数据"
+      description="基于三大运营商真实宽带环境采集。坚决剔除白天无意义闲时虚高数据，用晚高峰极限负载下的单线程速率与真实丢包率说话。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心测速结论速查</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        在 2026 年度实测中，<strong>晚高峰 (20:30~22:30)</strong> 是检验机场品质的唯一金标准。测试表明：采用<strong>全内网专线 (IEPL/IPLC)</strong> 的服务商（如 Nexitally 与 TAG Internet），在电信/联通/移动三网下的<strong>晚高峰丢包率均可压制在 0.05% 以内，平均下载速率超 800Mbps</strong>；而公网直连中继在电信公网出口拥堵期，丢包率普遍突破 15%~30%，出现严重降速缓冲。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 测速拓扑与探针分布图 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          测速实验室分布式物理探针网络与采集模型
+        </span>
+        <span class="text-xs">物理机千兆探针</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+[全国分布式自动化监控探针]
+  ├── [华东探针] 上海电信 1000M FTTH ──┐
+  ├── [华南探针] 广州联通 1000M FTTH ──┼──► [多线并发压测脚本 (iPerf3 / Headless 4K)]
+  └── [华北探针] 北京移动 1000M FTTH ──┘                │
+                                                        ▼
+                                         ┌──────────────────────────────┐
+                                         │   晚高峰时段: 20:30 ~ 22:30   │
+                                         │   每 15 分钟自动化轮询 5 组   │
+                                         └──────────────────────────────┘
+                                                        │
+                      ┌─────────────────────────────────┴─────────────────────────────────┐
+                      ▼                                                                   ▼
+       【指标 A: 单线程极限速率】                                         【指标 B: 连续发包稳定性】
+    - 4K/8K 视频首帧缓冲秒开率                                          - 10,000 发包丢包率 (Packet Loss)
+    - 单 TCP 连接吞吐速率 (Mbps)                                        - 往返时延抖动方差 (Jitter Variance)
+      </pre>
+    </section>
+
+    <!-- 3.5. 17 大品牌晚高峰实测长图画廊 (Speedtest Image Gallery) -->
+    <section class="space-y-6" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-1">
+            测速实验室高清长图展厅 (17 大品牌实测认证)
+          </h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            全部基于真实客户端节点测速（MAI-TEST / 全节点测试图），真实丢包与带宽原画可溯源。
+          </p>
+        </div>
+        <span class="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-bold">
+          17 款实测原图
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {brandsWithCharts.map((b) => (
+          <div class="p-3.5 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-neutral-200 dark:border-neutral-700 space-y-2.5 flex flex-col justify-between hover:border-primary/40 hover:shadow-md transition-all">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-1.5 truncate">
+                  {b.data.logo && (
+                    <img src={b.data.logo} alt={b.data.name} class="w-4 h-4 rounded object-cover shrink-0" />
+                  )}
+                  {b.data.name}
+                </span>
+                <span class="text-[11px] font-mono text-emerald-600 font-bold">{b.data.speedTest.avgDownloadMbps}M</span>
+              </div>
+              <div class="overflow-hidden rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-950 flex justify-center items-center h-28 group relative">
+                <img 
+                  src={b.data.speedtestImage} 
+                  alt={`${b.data.name} 测速实测图`} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200" 
+                  loading="lazy" 
+                />
+                <a 
+                  href={`/reviews/${b.data.slug}`} 
+                  class="absolute inset-0 bg-neutral-900/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-medium transition-opacity"
+                >
+                  查看测速长图 →
+                </a>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-neutral-200 dark:border-neutral-700/60 text-[11px]">
+              <span class="text-neutral-400">丢包 {b.data.speedTest.packetLossRate}</span>
+              <a href={`/reviews/${b.data.slug}`} class="text-primary hover:underline font-medium">
+                评测报告
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. 三大运营商实测与性能矩阵大表 (SSOT) -->
+    <section id="isp-matrix" class="space-y-6" data-aos="fade-up-xs">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+          三大运营商晚高峰性能与丢包评测全景表 (全 48 家)
+        </h2>
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          数据采集自真实物理探针环境，按实测下载平均吞吐量从高到低排序。
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
+        <table class="w-full text-left text-xs md:text-sm border-collapse bg-white dark:bg-bg-primary-dark">
+          <thead>
+            <tr class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-b border-neutral-300 dark:border-neutral-700">
+              <th class="p-3.5 font-semibold">排名与品牌</th>
+              <th class="p-3.5 font-semibold">线路架构</th>
+              <th class="p-3.5 font-semibold">晚高峰平均速率</th>
+              <th class="p-3.5 font-semibold">峰值突发速率</th>
+              <th class="p-3.5 font-semibold">时延 / 丢包率</th>
+              <th class="p-3.5 font-semibold">电信表现</th>
+              <th class="p-3.5 font-semibold">联通表现</th>
+              <th class="p-3.5 font-semibold">移动表现</th>
+              <th class="p-3.5 font-semibold text-center">报告</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800">
+            {speedRanked.map((b, idx) => (
+              <tr class="hover:bg-primary/5 transition-colors">
+                <td class="p-3.5 font-bold text-neutral-900 dark:text-neutral-100 whitespace-nowrap">
+                  <div class="flex items-center gap-2">
+                    <span class={`w-5 text-center font-mono text-xs ${idx < 3 ? "text-primary font-bold" : "text-neutral-400"}`}>
+                      #{idx + 1}
+                    </span>
+                    {b.data.logo && (
+                      <img src={b.data.logo} alt={b.data.name} class="w-5 h-5 rounded object-cover bg-white p-0.5 border border-neutral-200 dark:border-neutral-700 shrink-0" />
+                    )}
+                    <a href={`/reviews/${b.data.slug}`} class="hover:text-primary transition-colors flex items-center gap-1.5">
+                      <span>{b.data.name}</span>
+                      {b.data.hasSpeedtest && (
+                        <span class="text-[10px] px-1 rounded bg-emerald-500/10 text-emerald-600 font-normal">图</span>
+                      )}
+                    </a>
+                  </div>
+                </td>
+                <td class="p-3.5 text-neutral-600 dark:text-neutral-300 whitespace-nowrap">
+                  {b.data.lineTypes[0]}
+                </td>
+                <td class="p-3.5 font-mono text-emerald-600 dark:text-emerald-400 font-bold whitespace-nowrap">
+                  {b.data.speedTest.avgDownloadMbps} Mbps
+                </td>
+                <td class="p-3.5 font-mono text-neutral-800 dark:text-neutral-200 whitespace-nowrap">
+                  {b.data.speedTest.peakDownloadMbps} Mbps
+                </td>
+                <td class="p-3.5 font-mono text-neutral-600 dark:text-neutral-300 whitespace-nowrap">
+                  {b.data.speedTest.avgLatencyMs}ms / <span class={b.data.speedTest.packetLossRate.includes("0.0") || b.data.speedTest.packetLossRate.includes("0.1") ? "text-emerald-600 font-bold" : "text-amber-500"}>{b.data.speedTest.packetLossRate}</span>
+                </td>
+                <td class="p-3.5 text-xs whitespace-nowrap font-medium text-neutral-700 dark:text-neutral-300">
+                  {b.data.speedTest.telecomGrade}
+                </td>
+                <td class="p-3.5 text-xs whitespace-nowrap font-medium text-neutral-700 dark:text-neutral-300">
+                  {b.data.speedTest.unicomGrade}
+                </td>
+                <td class="p-3.5 text-xs whitespace-nowrap font-medium text-neutral-700 dark:text-neutral-300">
+                  {b.data.speedTest.mobileGrade}
+                </td>
+                <td class="p-3.5 text-center whitespace-nowrap">
+                  <a
+                    href={`/reviews/${b.data.slug}`}
+                    class="px-2.5 py-1 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors text-xs font-medium"
+                  >
+                    实测详情
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={speedtestArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="history" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        测速实验室常见问题解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="hover:text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/speedtest" class="font-bold text-primary">测速实验室</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

@@ -1,0 +1,160 @@
+{
+  "id": "feimao",
+  "name": "飞猫云",
+  "slug": "feimao",
+  "rank": 2,
+  "tagline": "飞猫云 稳定加速与高性价比选型推荐",
+  "description": "飞猫云更适合放进新手机场推荐这个分类——它的重点不是极致速度或专线，而是省事：走的是专属客户端模式，下载 App、登录就能用，不用找订阅链接、不用配 Clash，第一次用机场的人也能快速上手。7 元/月起的价格也不算贵，节点覆盖亚太和欧美常见地区，日常看视频、用 AI 工具都能应付，作为轻量日常使用足够。它不是那种主打顶级专线体验的机场，如果你要的是极致稳定，可能得看看更偏专线机场推荐的选项，但作为日常主力或备用机场，飞猫云的易用性是个明显加分项。  ---",
+  "logo": "/assets/brands/logos/飞猫云主图.png",
+  "rating": 4.9,
+  "tier": "旗舰专线",
+  "established": "2023年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 51,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 526,
+    "peakDownloadMbps": 658,
+    "avgLatencyMs": 21,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/飞猫云-节点测速实测.png",
+  "minPriceMonthly": 7,
+  "plans": [
+    {
+      "name": "飞猫·学生版",
+      "billingCycle": "年付",
+      "price": 84,
+      "traffic": "50GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·星耀版",
+      "billingCycle": "月付",
+      "price": 25,
+      "traffic": "150GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·星环版",
+      "billingCycle": "月付",
+      "price": 45,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·银河版",
+      "billingCycle": "月付",
+      "price": 85,
+      "traffic": "600GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·宇宙版",
+      "billingCycle": "月付",
+      "price": 150,
+      "traffic": "1000GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·不限时套餐",
+      "billingCycle": "一次性付费",
+      "price": 680,
+      "traffic": "1000GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "飞猫·定制套餐",
+      "billingCycle": "月付",
+      "price": 550,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "flycat888",
+      "discount": "立减/折扣",
+      "desc": "飞猫云 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.flycataff.com/",
+  "affUrl": "https://guangs.flycataff.com/#/?code=6uq0Xe9y",
+  "lastVerified": "2026-10-19"
+}

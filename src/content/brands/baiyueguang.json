@@ -1,0 +1,134 @@
+{
+  "id": "baiyueguang",
+  "name": "白月光",
+  "slug": "baiyueguang",
+  "rank": 30,
+  "tagline": "白月光 官方测速数据与资费套餐档案",
+  "description": "白月光 拥有丰富节点网络分布，支持主流协议与多地区流媒体解锁，经实测在亚太常用地区具备良好的可用性。",
+  "rating": 4.6,
+  "tier": "高性价比",
+  "established": "2022年",
+  "lineTypes": [
+    "BGP多线入口",
+    "IEPL内网专线"
+  ],
+  "protocols": [
+    "Shadowsocks"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "美国",
+    "日本",
+    "台湾",
+    "新加坡",
+    "加拿大",
+    "韩国",
+    "越南"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 115,
+    "peakDownloadMbps": 138,
+    "avgLatencyMs": 161,
+    "packetLossRate": "0.2%",
+    "testDate": "2026-08-24",
+    "telecomGrade": "电信: A",
+    "unicomGrade": "联通: A",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 22,
+  "plans": [
+    {
+      "name": "小包",
+      "billingCycle": "季付",
+      "price": 66,
+      "traffic": "每月100GB高速流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "中包",
+      "billingCycle": "季付",
+      "price": 126,
+      "traffic": "每月250GB高速流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "大包",
+      "billingCycle": "季付",
+      "price": 156,
+      "traffic": "每月400GB高速流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "超大包",
+      "billingCycle": "季付",
+      "price": 216,
+      "traffic": "每月750GB高速流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "不差钱",
+      "billingCycle": "季付",
+      "price": 231,
+      "traffic": "每月900GB高速流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "旗舰包",
+      "billingCycle": "年付",
+      "price": 2500,
+      "traffic": "每月2500GB超大流量",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "历史节点测速覆盖广，连接成功率高",
+    "支持多协议灵活适配不同客户端"
+  ],
+  "cons": [
+    "部分冷门套餐无月付选项需季付起购",
+    "高峰期建议优选延迟较低的香港与日本节点"
+  ],
+  "bestFor": "中重度流媒体用户与有多地区 IP 落地需求的用户",
+  "officialUrl": "https://www.sibker.com/register?invite_code=gg6puAId",
+  "affUrl": "https://www.sibker.com/register?invite_code=gg6puAId",
+  "lastVerified": "2026-08-24"
+}

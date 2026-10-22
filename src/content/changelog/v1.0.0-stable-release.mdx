@@ -1,51 +1,16 @@
 ---
-title: "Stable release"
-publishDate: 2026-05-18
+title: "v1.0.0 测评指南选购证据库正式稳定版"
+publishDate: 2026-04-10
 version: "v1.0.0"
-description: "The final stable RicoFast release: SaaS polish, auth templates, refreshed utility pages, and production-ready content."
+description: "测评指南正式发布：纯净自托管资产体系、全网最透明的机场选购证据库与 100% 原创深度内容集群上线。"
 ---
 
-## Why v1.0
+## 核心里程碑
 
-The `v0.x` line proved the foundation: layout, content, design tokens, dark mode, and performance. `v1.0` is the point where RicoFast becomes a stable SaaS website template instead of a moving preview.
-
-This release focuses on consistency. The demo brand, page copy, content model, navigation, and utility pages now tell the same story.
-
-## What changed
-
-### Brand and story
-
-- Unified the demo brand as **RicoFast** across pages, metadata, blog posts, and changelog entries
-- Reworked page copy around a single audience: English-speaking SaaS teams, indie hackers, AI tool builders, and open-source maintainers
-- Replaced hard-coded early-preview language with stable `v1.0` release language
-
-### Page and route coverage
-
-- Added static auth templates for `/sign-in` and `/sign-up`
-- Refreshed the 404 page with clearer recovery actions and a stronger visual state
-- Completed Header and Footer links for Sign in, Sign up, and 404
-- Kept core marketing pages, auth templates, content pages, and utility pages wired through the same layout system
-
-### Content polish
-
-- Reframed the release history as `v0.1`, `v0.2`, `v0.3`, and final `v1.0`
-- Reworked sample blog posts so they read like production-ready English content, not placeholder copy
-- Preserved the verified Lighthouse 95+ claim across Performance, Accessibility, Best Practices, and SEO
-- Removed stale roadmap language that implied newer post-1.0 versions already existed
-
-### Compatibility
-
-- No new runtime dependency is required for the stable content set
-- Existing forks can keep their page structure and update content incrementally
-- Teams upgrading from an earlier preview should review `src/config/site.js`, `src/styles/global.css`, and `src/content/`
-
-## Upgrade notes
-
-If you forked a `v0.x` preview:
-
-1. Run `pnpm install`
-2. Review `src/content/post/` and `src/content/changelog/` for the new release story
-3. Update any custom links pointing to `/blog/launching-v1-2`; the stable release article now lives at `/blog/launching-v1-0`
-4. Re-check your own copy against the final `v1.0` page set
-
-RicoFast `v1.0` is the version to build from.
+- **独立品牌确立**：确立「测评指南（cepingzhinan.fun）」独立品牌定位，彻底清除所有上游模板残留与无用路由
+- **URL 与 SEO 深度纯净化**：
+  - 彻底清理 `/features`, `/pricing`, `/sign-in`, `/sign-up` 等残留模板页面，确保搜索引擎索引 100% 聚焦有效内容
+  - 完善全站 JSON-LD 结构化数据（WebSite、Organization、FAQPage、Dataset）
+  - 生成规范的静态站点地图（sitemap-index.xml）与防抓取规约（robots.txt）
+- **原创深度评测专栏上线**：推出首批覆盖单品牌深度压测、1v1 旗舰二选一、运营商骨干网路由分析与测速避坑指南的权威技术长文
+- **全站极致性能**：基于 Astro 零 JS 运行时开销，保持全站 Lighthouse 评分 95+ 的秒开体验

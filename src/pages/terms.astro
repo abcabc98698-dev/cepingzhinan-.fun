@@ -1,0 +1,80 @@
+---
+import PageHeader from "@/components/elements/PageHeader.astro";
+import { siteConfig } from "@/config/site.js";
+import Layout from "@/layouts/Layout.astro";
+import { Scale, AlertTriangle, ShieldCheck, ExternalLink, HelpCircle } from "@lucide/astro";
+
+const lastUpdated = "2026 年 10 月 22 日";
+---
+
+<Layout
+  title={`服务条款与免责声明 — ${siteConfig.title}`}
+  description="测评指南（cepingzhinan.fun）服务条款、客观免责声明及商业透明度规范细则。"
+>
+  <section class="site-container my-12">
+    <PageHeader
+      title="服务条款与免责声明"
+      description={`阅读并访问测评指南（cepingzhinan.fun）即表明您已充分理解并同意本声明与服务条款。最后生效日期：${lastUpdated}`}
+    />
+  </section>
+
+  <main class="site-container max-w-4xl mx-auto pb-24 text-neutral-700 dark:text-neutral-300 space-y-12">
+    <!-- 1. 核心定位 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-xs">
+      <div class="flex items-center gap-3 mb-4 text-primary font-bold text-base">
+        <Scale class="w-5 h-5" />
+        <span>客观证据库与知识普及定位</span>
+      </div>
+      <p class="leading-relaxed text-sm md:text-base">
+        <strong>测评指南（cepingzhinan.fun）</strong> 是一个专注于跨境网络加速架构解析、测速工具日志对比与选购防坑的纯技术评测与信息汇总平台。我们<strong>不自主运营、架设、销售或分销任何 VPN、SSR、V2Ray、Clash 代理服务器节点与网络线路产品</strong>。
+      </p>
+    </section>
+
+    <!-- 2. 客观中立免责 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <ShieldCheck class="w-5 h-5 text-primary" />
+        一、测试数据客观性与时效性免责
+      </h2>
+      <div class="space-y-3 text-sm leading-relaxed">
+        <p><strong>1. 测试样本条件限制</strong>：全站展示的所有单线程/多线程下载带宽、丢包率、延迟数据及流媒体解锁判定，均基于测评指南测试团队在特定物理网络环境（如特定时间段、特定运营商骨干网入口、特定客户端版本）下的实测记录。网络表现受电信运营商路由调整、国际海缆震荡、目标机房上游网络变动及网络高峰期拥堵等客观不可抗力影响，<strong>测试结果仅代表测试发生时的当时状态，绝不构成对任何商家未来服务质量的绝对保证</strong>。</p>
+        <p><strong>2. 资费与套餐变动</strong>：虽然我们通过「单一数据源（SSOT）」机制对入库的 42 家品牌保持高频参数复核，但第三方商家的资费计划、优惠券有效期限、退款政策与节点拓扑可能随时调整。用户在做出购买决策前，请务必以目标服务商官方结算页面的最终公示为准。</p>
+      </div>
+    </section>
+
+    <!-- 3. 商业推广与返利透明披露 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <ExternalLink class="w-5 h-5 text-primary" />
+        二、商业推广与返利透明度披露 (Affiliate Disclosure)
+      </h2>
+      <div class="space-y-3 text-sm leading-relaxed">
+        <p>依据美国联邦贸易委员会（FTC）及主流搜索引擎的反作弊与透明度指南，我们在此做出明确声明：</p>
+        <ul class="list-disc pl-5 space-y-1.5 text-neutral-600 dark:text-neutral-400">
+          <li>本站部分外链包含受控的商业推荐通道（标记有 <code>rel="sponsored"</code> 或通过内部 <code>/go/[brand]</code> 安全中转）。当您点击此类链接并在服务商处完成注册或订阅时，我们可能会从商家处获得少量的推广分成佣金。</li>
+          <li><strong>零成本承诺</strong>：上述分成佣金由商家市场预算支出，<strong>绝对不会增加您的任何实际购买成本</strong>。在多数情况下，通过本站提供的专属优惠码，您甚至能享受到更优惠的折扣减免。</li>
+          <li><strong>独立中立原则</strong>：商业返利合作<strong>绝不会影响测评指南对任何品牌的客观技术评级与劣势揭露</strong>。对于掉线频繁、虚标专线或售后恶劣的商家，我们始终坚持在评测中如实列明其缺陷。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. 用户守法合规使用 -->
+    <section class="space-y-4">
+      <h2 class="text-xl md:text-2xl font-brand font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+        <AlertTriangle class="w-5 h-5 text-amber-500" />
+        三、用户合规与合法使用承诺
+      </h2>
+      <p class="text-sm leading-relaxed">
+        用户访问本站发布的技术百科、选型横评与网络协议教程，必须严格遵守所在国家与地区的法律法规。本站所载技术文章仅用于跨境学术研究、外贸合法合规业务拓展及海外软件开发调试之目的。严禁任何个人利用本站技术资讯从事任何危害国家安全、侵犯他人合法权益或违背公序良俗的非法网络活动。若因用户违反法律法规而引发的任何纠纷或后果，由使用者自行承担，本站概不承担任何连带责任。
+      </p>
+    </section>
+
+    <!-- 5. 知识产权与联络 -->
+    <section class="p-6 rounded-2xl bg-neutral-100 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700 text-xs md:text-sm space-y-2">
+      <p class="font-bold text-neutral-800 dark:text-neutral-200">四、版权与纠错通道</p>
+      <p class="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        本站发表的所有原创评测文章、架构拓扑分析模型及对比大表均享有著作权保护，未经书面许可禁止任何形式的自动化爬取与洗稿转抄。若您发现本站任何品牌参数存在误差，欢迎发送邮件至 <a href={`mailto:${siteConfig.mail}`} class="text-primary hover:underline">{siteConfig.mail}</a> 提报纠错。
+      </p>
+    </section>
+  </main>
+</Layout>

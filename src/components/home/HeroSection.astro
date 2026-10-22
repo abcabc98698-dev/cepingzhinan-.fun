@@ -1,24 +1,43 @@
 ---
-import Button from "@/components/ui/Button.astro";
-import Badge from "@/components/ui/Badge.astro";
 import AnimatedText from "@/components/ui/AnimatedText.astro";
+import Badge from "@/components/ui/Badge.astro";
 import BrowserFrame from "@/components/ui/BrowserFrame.astro";
-import { siteConfig } from "@/config/site";
+import Button from "@/components/ui/Button.astro";
 import { ArrowRight, ChartColumn } from "@lucide/astro";
 
 const stats = [
-  { label: "Active users", value: "12,438", delta: "+24.5%", cycle: ["12,438", "12,441", "12,447", "12,453"] },
-  { label: "Sessions",     value: "8,291",  delta: "+12.1%", cycle: ["8,291", "8,296", "8,302", "8,309"] },
-  { label: "Revenue",      value: "$24.5k", delta: "+18.2%", cycle: ["$24.5k", "$24.6k", "$24.7k", "$24.8k"] },
-  { label: "Conversion",   value: "4.8%",   delta: "+0.6%",  cycle: ["4.8%", "4.9%", "5.0%", "4.9%"] },
+	{
+		label: "Active users",
+		value: "12,438",
+		delta: "+24.5%",
+		cycle: ["12,438", "12,441", "12,447", "12,453"],
+	},
+	{
+		label: "Sessions",
+		value: "8,291",
+		delta: "+12.1%",
+		cycle: ["8,291", "8,296", "8,302", "8,309"],
+	},
+	{
+		label: "Revenue",
+		value: "$24.5k",
+		delta: "+18.2%",
+		cycle: ["$24.5k", "$24.6k", "$24.7k", "$24.8k"],
+	},
+	{
+		label: "Conversion",
+		value: "4.8%",
+		delta: "+0.6%",
+		cycle: ["4.8%", "4.9%", "5.0%", "4.9%"],
+	},
 ];
 
 const bars = [32, 48, 40, 64, 56, 80, 72];
 const barCycles = JSON.stringify([
-  [32, 48, 40, 64, 56, 80, 72],
-  [38, 42, 50, 58, 64, 72, 86],
-  [28, 54, 44, 68, 50, 76, 80],
-  [42, 46, 38, 60, 62, 84, 70],
+	[32, 48, 40, 64, 56, 80, 72],
+	[38, 42, 50, 58, 64, 72, 86],
+	[28, 54, 44, 68, 50, 76, 80],
+	[42, 46, 38, 60, 62, 84, 70],
 ]);
 ---
 
@@ -34,25 +53,25 @@ const barCycles = JSON.stringify([
         data-aos-duration="500"
         data-aos-once="true"
       >
-        <Badge variant="primary">Open-source</Badge>
-        <Badge variant="accent">Astro + Tailwind</Badge>
+        <Badge variant="primary">专业深度评测</Badge>
+        <Badge variant="accent">软件与SaaS选型指南</Badge>
       </div>
 
       <!-- Title -->
       <h1 class="mb-4">
         <AnimatedText
-          content="Ship your SaaS site in days, not weeks"
+          content="专业中立的数字工具与 SaaS 选型指南"
           delay={0.1}
           duration={0.5}
           stagger={0.08}
-          class="text-4xl text-pri leading-tight md:text-4xl lg:text-6xl font-brand"
+          class="text-4xl text-pri leading-tight md:text-4xl lg:text-5xl font-brand"
         />
       </h1>
 
       <!-- Subtitle -->
       <div class="mb-6">
         <AnimatedText
-          content="A design-led, open-source SaaS template with 15+ modular sections, built-in dark mode, and Lighthouse 95+ out of the box. Astro + Tailwind by default."
+          content="帮助企业与开发者穿透营销迷雾，提供多维度真实对比数据、深度功能拆解与客观选型测评，让每一次数字化决策更加精准高效。"
           delay={0.3}
           duration={0.5}
           stagger={0.015}
@@ -68,12 +87,11 @@ const barCycles = JSON.stringify([
         data-aos-duration="500"
         data-aos-once="true"
       >
-        <Button url={siteConfig.social.github} type="fill" target="_blank">
-
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-gfykqide="true" class="lucide lucide-github"> <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path>  </svg>  View on GitHub
+        <Button url="/recommend" type="fill">
+          选型推荐总榜
         </Button>
-        <Button url={siteConfig.social.github} target="_blank">
-            Twitter <ArrowRight size={16} />
+        <Button url="/speedtest">
+          实测数据实验室 <ArrowRight size={16} />
         </Button>
       </div>
     </div>
@@ -86,7 +104,7 @@ const barCycles = JSON.stringify([
       data-aos-duration="800"
       data-aos-once="true"
     >
-      <BrowserFrame url="ricoui.com" className="w-full">
+      <BrowserFrame url="cepingzhinan.fun/dashboard" className="w-full">
         <div class="p-5 md:p-6 h-[300px] md:h-[350px] flex flex-col gap-4">
           <!-- Mock toolbar -->
           <div class="flex items-center justify-between">

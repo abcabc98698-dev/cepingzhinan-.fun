@@ -1,0 +1,397 @@
+{
+  "id": "lingdongyun",
+  "name": "灵动云",
+  "slug": "lingdongyun",
+  "rank": 38,
+  "tagline": "灵动云 官方测速数据与资费套餐档案",
+  "description": "灵动云 拥有丰富节点网络分布，支持主流协议与多地区流媒体解锁，经实测在亚太常用地区具备良好的可用性。",
+  "logo": "/assets/brands/logos/灵动云256x256.png",
+  "rating": 4.6,
+  "tier": "高性价比",
+  "established": "2022年",
+  "lineTypes": [
+    "BGP多线入口",
+    "IEPL内网专线"
+  ],
+  "protocols": [
+    "Trojan",
+    "Shadowsocks"
+  ],
+  "nodesCount": 65,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 420,
+    "peakDownloadMbps": 504,
+    "avgLatencyMs": 32,
+    "packetLossRate": "0.2%",
+    "testDate": "2026-08-24",
+    "telecomGrade": "电信: A",
+    "unicomGrade": "联通: A",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 20,
+  "plans": [
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "月付",
+      "price": 20,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "季付",
+      "price": 57,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "半年付",
+      "price": 108,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "年付",
+      "price": 204,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "两年付",
+      "price": 384,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·拂风",
+      "billingCycle": "三年付",
+      "price": 540,
+      "traffic": "100G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·驭浪",
+      "billingCycle": "月付",
+      "price": 50,
+      "traffic": "300G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·驭浪",
+      "billingCycle": "半年付",
+      "price": 270,
+      "traffic": "300G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·驭浪",
+      "billingCycle": "年付",
+      "price": 510,
+      "traffic": "300G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·驭浪",
+      "billingCycle": "两年付",
+      "price": 960,
+      "traffic": "300G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·驭浪",
+      "billingCycle": "三年付",
+      "price": 1350,
+      "traffic": "300G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "月付",
+      "price": 100,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "季付",
+      "price": 285,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "半年付",
+      "price": 540,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "年付",
+      "price": 1020,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "两年付",
+      "price": 1920,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·破晓",
+      "billingCycle": "三年付",
+      "price": 2700,
+      "traffic": "700G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "月付",
+      "price": 180,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "季付",
+      "price": 513,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "半年付",
+      "price": 972,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "年付",
+      "price": 1836,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "两年付",
+      "price": 3456,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·凌霄",
+      "billingCycle": "三年付",
+      "price": 4860,
+      "traffic": "1.5T/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·穿云",
+      "billingCycle": "年付",
+      "price": 99,
+      "traffic": "70G/月",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·闲云（小流量包）",
+      "billingCycle": "一次性付费",
+      "price": 199,
+      "traffic": "150G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·惊云（标准流量包）",
+      "billingCycle": "一次性付费",
+      "price": 499,
+      "traffic": "400G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动·飞云（精英流量包）",
+      "billingCycle": "一次性付费",
+      "price": 899,
+      "traffic": "800G",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    },
+    {
+      "name": "灵动云·至尊私人定制",
+      "billingCycle": "月付",
+      "price": 620,
+      "traffic": "截图遮挡",
+      "deviceLimit": "3-5台",
+      "features": [
+        "全球专线节点",
+        "流媒体解锁",
+        "全天候维护"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "历史节点测速覆盖广，连接成功率高",
+    "支持多协议灵活适配不同客户端"
+  ],
+  "cons": [
+    "部分冷门套餐无月付选项需季付起购",
+    "高峰期建议优选延迟较低的香港与日本节点"
+  ],
+  "bestFor": "中重度流媒体用户与有多地区 IP 落地需求的用户",
+  "officialUrl": "https://varnexa.lingdongaff.com/",
+  "affUrl": "https://varnexa.lingdongaff.com/#/?code=wZvEhEoI",
+  "lastVerified": "2026-08-24"
+}

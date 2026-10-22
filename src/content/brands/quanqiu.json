@@ -1,0 +1,176 @@
+{
+  "id": "quanqiu",
+  "name": "全球云",
+  "slug": "quanqiu",
+  "rank": 21,
+  "tagline": "全球云 稳定加速与高性价比选型推荐",
+  "description": "全球云号称覆盖全球 60 多个节点，采用 Trojan 和 Shadowsocks 双协议，专线中转搭配 2Gbps+ 带宽资源，是这份榜单里节点规模比较大的一个，走的是专属客户端模式，下载 App 登录就能用，具体覆盖哪些平台以官网说明为准。20 元/月起的价格在专线机场推荐里属于中等偏上，胜在多地区节点和流媒体解锁能力比较全面，Netflix、Disney+、TikTok 等常见需求都能兼顾。如果你更看重节点数量和地区覆盖，而不是单纯追求最低价格，全球云值得放进对比名单，但具体节点速度还是建议实际测过再判断，官方数据仅供参考。  ---",
+  "logo": "/assets/brands/logos/全球云主图.png",
+  "rating": 4.6,
+  "tier": "精选中继",
+  "established": "2023年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 50,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 489,
+    "peakDownloadMbps": 611,
+    "avgLatencyMs": 25,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": true,
+  "speedtestImage": "/assets/brands/speedtests/全球云-节点测速实测.png",
+  "minPriceMonthly": 15,
+  "plans": [
+    {
+      "name": "BGP 智能优化·不限时轻量包",
+      "billingCycle": "一次性付费",
+      "price": 100,
+      "traffic": "100GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·不限时标准包",
+      "billingCycle": "一次性付费",
+      "price": 360,
+      "traffic": "400GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·不限时大容量包",
+      "billingCycle": "一次性付费",
+      "price": 700,
+      "traffic": "800GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "轻量版",
+      "billingCycle": "年付",
+      "price": 99,
+      "traffic": "59GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·入门方案",
+      "billingCycle": "月付",
+      "price": 20,
+      "traffic": "120GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·进阶方案",
+      "billingCycle": "月付",
+      "price": 40,
+      "traffic": "300GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·高端方案",
+      "billingCycle": "月付",
+      "price": 100,
+      "traffic": "700GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "BGP 智能优化·商业方案",
+      "billingCycle": "月付",
+      "price": 180,
+      "traffic": "1500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "独享私人专线节点",
+      "billingCycle": "月付",
+      "price": 680,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://guangs.gcvipaff.com/",
+  "affUrl": "https://guangs.gcvipaff.com/#/?code=Ov2nvU9C",
+  "lastVerified": "2026-10-19"
+}

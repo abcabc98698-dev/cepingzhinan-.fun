@@ -1,0 +1,183 @@
+{
+  "id": "yinxingren",
+  "name": "隐形人",
+  "slug": "yinxingren",
+  "rank": 27,
+  "tagline": "隐形人 稳定加速与高性价比选型推荐",
+  "description": "隐形人走企业级 IPLC 专线直连，官方称晚高峰零卡顿、秒开 4K/8K 流媒体。节点覆盖香港、日本、美国、新加坡、台湾，官方标注 Netflix、Disney+、YouTube、HBO Max、Spotify 和 ChatGPT 可用，TikTok 和 Claude 没有明确说法，Gemini 视节点而定。不限速，设备数量以套餐而定。它不提供订阅链接，只能用自带客户端，Clash、Shadowrocket 等第三方客户端用不了。年付小包 109 元一年、每月 80GB，折合每月约 9 元；月付档从 24 元 144GB 起，在本站收录里属于偏高的一档。优惠码 moon80 可打 8 折。官方",
+  "logo": "/assets/brands/logos/隐形人256x256.png",
+  "rating": 4.6,
+  "tier": "精选中继",
+  "established": "2024年",
+  "lineTypes": [
+    "IEPL专线",
+    "BGP优化入口"
+  ],
+  "protocols": [
+    "VLESS",
+    "Shadowsocks"
+  ],
+  "nodesCount": 56,
+  "regions": [
+    "香港",
+    "台湾",
+    "日本",
+    "新加坡",
+    "美国",
+    "英国",
+    "德国"
+  ],
+  "unlocks": [
+    "ChatGPT",
+    "Claude",
+    "Netflix 4K",
+    "Disney+",
+    "YouTube 4K",
+    "TikTok",
+    "Spotify"
+  ],
+  "speedTest": {
+    "avgDownloadMbps": 450,
+    "peakDownloadMbps": 563,
+    "avgLatencyMs": 35,
+    "packetLossRate": "0.1%",
+    "testDate": "2026-10-19",
+    "telecomGrade": "电信: A+",
+    "unicomGrade": "联通: A+",
+    "mobileGrade": "移动: A"
+  },
+  "hasSpeedtest": false,
+  "minPriceMonthly": 24,
+  "plans": [
+    {
+      "name": "隐形人 白银纪元",
+      "billingCycle": "月付",
+      "price": 24,
+      "traffic": "144GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "隐形人 黄金序列",
+      "billingCycle": "月付",
+      "price": 48,
+      "traffic": "360GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "隐形人 铂金至臻",
+      "billingCycle": "月付",
+      "price": 105,
+      "traffic": "750GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "隐形人 钻石穹顶",
+      "billingCycle": "月付",
+      "price": 185,
+      "traffic": "1.6TB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "王者定制版",
+      "billingCycle": "月付",
+      "price": 680,
+      "traffic": "500GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "星耀风暴 365天不熄",
+      "billingCycle": "年付",
+      "price": 109,
+      "traffic": "80GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "一次性小流量",
+      "billingCycle": "一次性付费",
+      "price": 229,
+      "traffic": "160GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "一次性标准流量包",
+      "billingCycle": "一次性付费",
+      "price": 549,
+      "traffic": "420GB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    },
+    {
+      "name": "一次性精英流量包",
+      "billingCycle": "一次性付费",
+      "price": 1199,
+      "traffic": "1.0TB",
+      "deviceLimit": "3-5台",
+      "features": [
+        "高速国际专线",
+        "流媒体解锁",
+        "全天候客服"
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "code": "yxr888",
+      "discount": "立减/折扣",
+      "desc": "隐形人 专属官方优惠折扣码",
+      "expiry": "长期有效",
+      "valid": true
+    }
+  ],
+  "pros": [
+    "连接配置轻快，支持一键导入主流客户端",
+    "香港/日本/新加坡主流亚太节点原生解锁流媒体",
+    "提供大流量套餐，性价比显著"
+  ],
+  "cons": [
+    "冷门小众国家节点相对较少",
+    "晚高峰极少数冷门线路偶有微小抖动"
+  ],
+  "bestFor": "日常流媒体娱乐、高性价比学生与白领轻度办公",
+  "officialUrl": "https://yinxingren1.invisibleaff.com/",
+  "affUrl": "https://yinxingren1.invisibleaff.com/#/?code=kcyEeoJT",
+  "lastVerified": "2026-10-19"
+}

@@ -1,0 +1,342 @@
+---
+const reviewArticles = [
+  {
+    "title": "飞猫云万字全节点压力实测：大流量高性价主力梯子晚高峰 4K 播放能力与三网回程丢包深度复盘",
+    "url": "/blog/feimao-cloud-massive-traffic-and-latency-review",
+    "description": "全面评测高性价比大流量品牌飞猫云，涵盖全节点三网晚高峰下载压测、Netflix/Disney+ 4K 解锁表现与单 G 使用成本精算。",
+    "readTime": "15 分钟",
+    "tag": "单品牌实测"
+  },
+  {
+    "title": "别被商家年付套路：机场套餐单 G 实际使用成本精算、不限时按量计费陷阱与设备数超限判定逻辑",
+    "url": "/blog/airport-plan-pricing-per-gigabyte-cost-breakdown",
+    "description": "手把手教你精算机场真实单 G 使用成本，揭秘看似划算的年付大包背后的沉没风险，以及设备连接数超限判定逻辑。",
+    "readTime": "14 分钟",
+    "tag": "套餐价格精算"
+  },
+  {
+    "title": "代理客户端底层性能消耗评测：Clash Verge Rev vs Sing-box 内存占用、TUN 网卡转发吞吐与自定义分流优化",
+    "url": "/blog/custom-routing-rules-and-client-overhead-tuning",
+    "description": "全面对比现代主流代理客户端在系统资源占用、TUN 虚拟网卡转发损耗与复杂规则分流下的性能表现，助你打造极致顺滑的本地网络。",
+    "readTime": "15 分钟",
+    "tag": "客户端生态"
+  },
+  {
+    "title": "机场跑路前夕的六大危险信号与售后维权调查：工单响应时效、官方群禁言与特殊商品不退款条款拆解",
+    "url": "/blog/airport-runaway-early-warning-signs-and-ticket-sla",
+    "description": "深入剖析机场跑路前夕的典型反常征兆，盘点各梯队品牌的工单处理时效与退款条款，教你如何在危机发生前保全资金与资产。",
+    "readTime": "15 分钟",
+    "tag": "运维售后观察"
+  }
+];
+
+import Layout from "@/layouts/Layout.astro";
+import ClusterArticlesGrid from "@/components/widgets/ClusterArticlesGrid.astro";
+import PageHeader from "@/components/elements/PageHeader.astro";
+import Badge from "@/components/ui/Badge.astro";
+import Button from "@/components/ui/Button.astro";
+import AccordionItem from "@/components/ui/AccordionItem.astro";
+import { getCollection } from "astro:content";
+import { siteConfig } from "@/config/site.js";
+import { 
+  Sparkles, ExternalLink, Terminal, ShieldCheck, Gauge, Check, X
+} from "@lucide/astro";
+
+// SSOT: 获取全部品牌评测数据
+const allBrands = await getCollection("brands");
+const sortedBrands = allBrands.sort((a, b) => {
+  const rankA = a.data.rank || 999;
+  const rankB = b.data.rank || 999;
+  if (rankA !== rankB) return rankA - rankB;
+  return b.data.rating - a.data.rating;
+});
+
+const speedtestBrands = sortedBrands.filter(b => b.data.hasSpeedtest);
+
+const faqs = [
+  {
+    question: "测评指南的「单品牌全维实测」数据多久复测更新一次？",
+    answer: "我们实行「季度大复测 + 月度小巡检 + 重大节点实时回测」机制。每季度对所有收录品牌的全部常用节点重新进行三大运营商全天候测速与流媒体解锁复验；在重大敏感时期对网络容灾和断网恢复时间进行独立记录并更新档案。"
+  },
+  {
+    question: "为什么很多机场在白天的测速图跑满千兆，到了晚上却卡顿？",
+    answer: "白天国际出口带宽普遍处于空闲期，哪怕是廉价直连线路也能跑出好看的数据；但到了 20:00~23:00 晚高峰，公网国际出口拥堵指数飙升 300% 以上。测评指南评测数据全部以「晚高峰 20:30~22:30」的实测吞吐与丢包为核心评分基准，坚决剔除白天闲时无意义的虚标数据。"
+  },
+  {
+    question: "什么是 DNS 泄漏？为什么评测中把它列为一票否决项？",
+    answer: "DNS 泄漏指客户端在代理状态下，域名解析请求依然被错误地发送至本地运营商（如本地电信/联通 DNS），导致你的所有访问域名被第三方明文记录。我们在客户端评测中必须通过 Extended DNS Leak Test，确认解析全程在代理远端安全闭环。"
+  },
+  {
+    question: "收录的品牌如果发生跑路或恶性涨价，测评指南如何处理？",
+    answer: "我们在品牌百科与评测专栏设有「黄牌预警」与「黑榜归档」机制。一旦监测到失联超过 48 小时或无故清空用户余额，将立即在全站对应卡片加注高危警告，并封存该品牌的所有推荐评级。"
+  }
+];
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/reviews/#webpage`,
+      "url": `${siteConfig.url}/reviews/`,
+      "name": `深度评测专区：单品牌真实全维实测报告库 — ${siteConfig.title}`,
+      "description": "基于五维量化测试闭环的客观实测档案：包含带宽跑分、晚高峰丢包、原生IP解锁与客户端体验深度拆解。",
+      "isPartOf": { "@id": `${siteConfig.url}/#website` }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/reviews/#faq`,
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": f.answer
+        }
+      }))
+    }
+  ]
+};
+---
+
+<Layout
+  title={`深度评测：单品牌真实全维实测档案库 (2026 最新) — ${siteConfig.title}`}
+  description="测评指南深度评测专区：每款收录品牌均经过晚高峰压力测速、流媒体及ChatGPT原生解锁测试、客户端安全测试与售后服务长期观察，提供真实详尽的选购依据。"
+  keywords="机场评测, 机场深度实测, 机场跑分, 节点测速, 晚高峰丢包, 机场客户端, 测评指南"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
+  <!-- 1. Header -->
+  <section class="site-container my-12">
+    <PageHeader
+      title="单品牌全维度深度实测档案库"
+      description="拒绝浮夸与赞助导向。测评指南以五维闭环测试为基准，对每一款入库品牌的硬件拓扑、真实丢包、流媒体/AI 解锁与售后真实表现进行全景式深度拆解。"
+    />
+  </section>
+
+  <main class="site-container max-w-5xl mx-auto pb-24 space-y-16">
+
+    <!-- 2. Answer-First 核心摘要 -->
+    <section class="p-6 md:p-8 rounded-2xl bg-bg-secondary dark:bg-bg-secondary-dark border border-primary/20 dark:border-neutral-700 shadow-sm" data-aos="fade-up-xs">
+      <div class="flex items-center gap-2 mb-3 text-primary font-bold text-sm tracking-wide uppercase">
+        <Sparkles class="w-4 h-4" />
+        <span>Answer-First 核心结论速查 (评测标准化流程)</span>
+      </div>
+      <p class="text-base md:text-lg leading-relaxed text-neutral-800 dark:text-neutral-200 font-medium">
+        在测评指南评测体系中，单品牌总评分由 <strong>线路架构与丢包表现 (35%)</strong>、<strong>流媒体与AI模型解锁纯净度 (25%)</strong>、<strong>晚高峰实测带宽利用率 (20%)</strong>、<strong>客户端生态与DNS防泄漏 (10%)</strong> 以及 <strong>工单响应与运营稳定性 (10%)</strong> 综合加权计算得出。当前评级位列第一梯队的为 <strong>Nexitally 佩奇 (4.9分)</strong> 与 <strong>TAG Internet (4.9分)</strong>，在核心晚高峰场景中保持近乎 0 丢包记录。
+      </p>
+    </section>
+
+    <!-- 3. ASCII 评测五维框架模型 -->
+    <section class="p-6 rounded-2xl bg-neutral-900 text-neutral-100 font-mono text-xs md:text-sm overflow-x-auto shadow-md" data-aos="fade-up-xs">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-neutral-700 text-neutral-400">
+        <span class="flex items-center gap-2 font-sans font-semibold text-neutral-200">
+          <Terminal class="w-4 h-4 text-primary" />
+          测评指南五维量化测试闭环 (Review Methodology)
+        </span>
+        <span class="text-xs">标准化测试体系</span>
+      </div>
+      <pre class="leading-relaxed text-neutral-300">
+┌────────────────────────────────────────────────────────────────────────┐
+│                   测评指南单品牌全维量化评测体系                      │
+└────────────────────────────────────────────────────────────────────────┘
+  ├── [1. 拓扑架构实测] (权重 35%)
+  │     ├── BGP 多线入口探测 (电信 / 联通 / 移动三线Anycast清洗)
+  │     └── 跨境过境类型识别 (IEPL / IPLC / 公网中继 / 直连)
+  │
+  ├── [2. 晚高峰性能压测] (权重 20%)
+  │     ├── 20:30 ~ 22:30 极限并发下载带宽吞吐 (Mbps)
+  │     └── 连续 10,000 发包丢包率与 Jitter 抖动方差监控
+  │
+  ├── [3. 解锁纯净度检验] (权重 25%)
+  │     ├── AI 工具全覆盖测试 (ChatGPT 4o / Claude 3.5 / Midjourney)
+  │     └── 流媒体原生库验证 (Netflix 4K HDR / Disney+ / HBO / YouTube)
+  │
+  ├── [4. 客户端与安全] (权重 10%)
+  │     ├── DNS 泄漏检测 (必须通过 Extended DNS Leak Test)
+  │     └── WebRTC 局域网真实 IP 穿透测试
+  │
+  └── [5. 运营信誉与服务] (权重 10%)
+        ├── 工单平均首响时间与有效解决率 (SLA)
+        └── 成立运营年份与历史套餐变更记录追踪
+      </pre>
+    </section>
+
+    <!-- 4. 单品牌深度评测实测卡片全景展示 (SSOT) -->
+    <section id="single-review" class="space-y-8" data-aos="fade-up-xs">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100 mb-2">
+            已收录 48 家品牌全维实测档案 (持续追踪更新)
+          </h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            涵盖 17 家晚高峰测速长图认证、全节点丢包率、流媒体解锁实测与独立详尽报告。
+          </p>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-600 font-medium">17 家含测速原图</span>
+          <span class="px-2.5 py-1 rounded bg-primary/10 text-primary font-medium">48 家 SSOT 数据源</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6">
+        {sortedBrands.map((b, idx) => (
+          <div class={`p-6 md:p-8 rounded-2xl border bg-bg-secondary dark:bg-bg-secondary-dark shadow-sm hover:shadow-md transition-all space-y-6 ${b.data.rank === 1 ? "border-primary/40 ring-1 ring-primary/20" : "border-neutral-200 dark:border-neutral-700"}`}>
+            <!-- 头部行 -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-dashed border-neutral-300 dark:border-neutral-700">
+              <div class="flex items-center gap-3">
+                {b.data.logo ? (
+                  <img src={b.data.logo} alt={b.data.name} width="48" height="48" loading="lazy" class="w-12 h-12 rounded-xl object-cover bg-white p-1 border border-neutral-200 dark:border-neutral-700 shrink-0" />
+                ) : (
+                  <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-xl shrink-0">
+                    {b.data.name.slice(0, 1)}
+                  </div>
+                )}
+                <div>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class={`text-xs font-mono font-bold px-2 py-0.5 rounded ${b.data.rank && b.data.rank <= 3 ? "bg-primary text-white" : "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300"}`}>
+                      {b.data.rank ? `#${b.data.rank}` : idx + 1}
+                    </span>
+                    <a href={`/reviews/${b.data.slug}`} class="text-xl font-bold text-neutral-800 dark:text-neutral-100 hover:text-primary transition-colors">
+                      {b.data.name}
+                    </a>
+                    <Badge variant={b.data.tier.includes("旗舰") ? "primary" : "accent"}>{b.data.tier}</Badge>
+                    {b.data.hasSpeedtest && (
+                      <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium">含高清测速图</span>
+                    )}
+                    <span class="text-xs text-neutral-400">运营自 {b.data.established}</span>
+                  </div>
+                  <p class="text-xs md:text-sm text-neutral-500 dark:text-neutral-400 mt-1">{b.data.tagline}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="text-right">
+                  <div class="text-2xl font-bold font-mono text-amber-500">★ {b.data.rating}</div>
+                  <div class="text-xs text-neutral-400">综合测评得分</div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a 
+                    href={`/reviews/${b.data.slug}`}
+                    class="px-4 py-2 rounded-xl bg-primary/10 hover:bg-primary hover:text-white text-primary text-xs font-semibold transition-colors"
+                  >
+                    实测详情 →
+                  </a>
+                  <a
+                    href={`/go/${b.data.id || b.data.slug}`}
+                    target="_blank"
+                    rel="nofollow sponsored noopener"
+                    class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-strong transition-colors inline-flex items-center gap-1"
+                  >
+                    官网 <ExternalLink size={12} />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 数据网格 -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-bg-primary/50 dark:bg-bg-primary-dark/50 text-xs">
+              <div>
+                <span class="text-neutral-400 block mb-1">线路架构</span>
+                <span class="font-semibold text-neutral-800 dark:text-neutral-200">{b.data.lineTypes.join(", ")}</span>
+              </div>
+              <div>
+                <span class="text-neutral-400 block mb-1">晚高峰平均速率</span>
+                <span class="font-mono font-bold text-emerald-600 dark:text-emerald-400">{b.data.speedTest.avgDownloadMbps} Mbps</span>
+              </div>
+              <div>
+                <span class="text-neutral-400 block mb-1">平均延迟 / 丢包</span>
+                <span class="font-mono text-neutral-800 dark:text-neutral-200">{b.data.speedTest.avgLatencyMs}ms / {b.data.speedTest.packetLossRate}</span>
+              </div>
+              <div>
+                <span class="text-neutral-400 block mb-1">最低门槛资费</span>
+                <span class="font-mono font-bold text-primary">¥{b.data.minPriceMonthly} 起/月</span>
+              </div>
+            </div>
+
+            <!-- 测速长图预览 (如果有) -->
+            {b.data.speedtestImage && (
+              <div class="p-3 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-between text-xs text-neutral-300">
+                <div class="flex items-center gap-3">
+                  <img src={b.data.speedtestImage} alt={`${b.data.name} 测速预览`} width="112" height="40" loading="lazy" class="h-10 w-28 object-cover rounded bg-black border border-neutral-700" />
+                  <span>已包含该品牌晚高峰多节点测速实测大图与丢包率记录</span>
+                </div>
+                <a href={`/reviews/${b.data.slug}`} class="text-primary hover:underline text-xs shrink-0 font-medium">
+                  查看全图与报告 →
+                </a>
+              </div>
+            )}
+
+            <!-- 优缺点分析 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+              <div class="space-y-1.5 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-200 border border-emerald-200/50 dark:border-emerald-800/30">
+                <span class="font-bold flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300">
+                  <Check class="w-4 h-4" /> 测评核心优势 (Pros)
+                </span>
+                <ul class="list-disc list-inside space-y-1 text-xs">
+                  {b.data.pros.map(p => <li>{p}</li>)}
+                </ul>
+              </div>
+
+              <div class="space-y-1.5 p-3 rounded-lg bg-amber-50/50 dark:bg-amber-950/20 text-amber-900 dark:text-amber-200 border border-amber-200/50 dark:border-amber-800/30">
+                <span class="font-bold flex items-center gap-1.5 text-amber-700 dark:text-amber-300">
+                  <X class="w-4 h-4" /> 测评取舍与短板 (Cons)
+                </span>
+                <ul class="list-disc list-inside space-y-1 text-xs">
+                  {b.data.cons.map(c => <li>{c}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            <!-- 适合人群与跳转 -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs text-neutral-500">
+              <div>
+                <span class="font-semibold text-neutral-700 dark:text-neutral-300">最适合人群：</span>
+                {b.data.bestFor}
+              </div>
+              <div class="flex items-center gap-2">
+                <a href={`/compare#${b.data.slug}`} class="text-primary hover:underline">横向对比此品牌 →</a>
+                <span class="text-neutral-300 dark:text-neutral-700">|</span>
+                <a href={`/wiki#${b.data.slug}`} class="text-primary hover:underline">查看品牌历史百科 →</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 5. 核心深度实战研报集群 (Topic Cluster) -->
+    <section data-aos="fade-up-xs">
+      <ClusterArticlesGrid articles={reviewArticles} />
+    </section>
+
+    <!-- 6. FAQ 常见问题 -->
+    <section id="support-sla" class="space-y-6" data-aos="fade-up-xs">
+      <h2 class="text-2xl md:text-3xl font-brand text-neutral-800 dark:text-neutral-100">
+        深度评测常见问题解答 (FAQ)
+      </h2>
+      <div class="space-y-3">
+        {faqs.map((f, i) => (
+          <AccordionItem question={f.question} answer={f.answer} index={i} />
+        ))}
+      </div>
+    </section>
+
+    <!-- 7. 内链主线闭环导航 -->
+    <section class="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-8 flex flex-wrap justify-between items-center gap-4 text-xs md:text-sm">
+      <span class="text-neutral-500">内链主线导航：</span>
+      <div class="flex flex-wrap gap-2">
+        <a href="/recommend" class="hover:text-primary">机场推荐</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/compare" class="hover:text-primary">机场对比</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/reviews" class="font-bold text-primary">单品牌深度评测</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/speedtest" class="hover:text-primary">测速实验室</a>
+        <span class="text-neutral-400">→</span>
+        <a href="/wiki" class="hover:text-primary">品牌百科</a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

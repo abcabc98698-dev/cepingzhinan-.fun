@@ -1,27 +1,89 @@
 [
 	{
-		"name": "Home",
+		"name": "首页",
 		"url": "/"
 	},
 	{
-		"name": "Pages",
+		"name": "机场推荐",
+		"url": "/recommend",
 		"children": [
-			{ "name": "Features", "url": "/features" },
-			{ "name": "Pricing", "url": "/pricing" },
-			{ "name": "About", "url": "/about" },
-			{ "name": "Blog", "url": "/blog" },
-			{ "name": "Changelog", "url": "/changelog" },
-			{ "name": "Sign in", "url": "/sign-in" },
-			{ "name": "Sign up", "url": "/sign-up" },
-			{ "name": "404", "url": "/404" }
+			{ "name": "综合推荐榜单", "url": "/recommend#comprehensive" },
+			{ "name": "按人群与场景推荐", "url": "/recommend#audiences" },
+			{ "name": "旗舰专线精选", "url": "/recommend#iplc" },
+			{ "name": "主力与高防备用", "url": "/recommend#backup" }
 		]
 	},
 	{
-		"name": "Elements",
-		"url": "/elements"
+		"name": "免费机场",
+		"url": "/free",
+		"children": [
+			{ "name": "永久免费签到资源", "url": "/free#daily-free" },
+			{ "name": "新用户试用渠道", "url": "/free#trials" },
+			{ "name": "免费节点与客户端", "url": "/free#clients" },
+			{ "name": "超低价平替方案", "url": "/free#budget" }
+		]
 	},
 	{
-		"name": "Contact",
-		"url": "/contact"
+		"name": "深度评测",
+		"url": "/reviews",
+		"children": [
+			{ "name": "单品牌全维实测", "url": "/reviews#single-review" },
+			{ "name": "套餐资费与真实权益", "url": "/reviews#pricing-rights" },
+			{ "name": "客户端体验拆解", "url": "/reviews#clients-ui" },
+			{ "name": "服务售后与运维观察", "url": "/reviews#support-sla" }
+		]
+	},
+	{
+		"name": "测速实验室",
+		"url": "/speedtest",
+		"children": [
+			{ "name": "晚高峰丢包与速率", "url": "/speedtest#peak-hours" },
+			{ "name": "三大运营商实测差异", "url": "/speedtest#isp-matrix" },
+			{ "name": "多地区节点延迟表现", "url": "/speedtest#latency" },
+			{ "name": "历史测速波动对比", "url": "/speedtest#history" }
+		]
+	},
+	{
+		"name": "机场对比",
+		"url": "/compare",
+		"children": [
+			{ "name": "核心品牌 1v1 二选一", "url": "/compare#head-to-head" },
+			{ "name": "同价位横向性价比对比", "url": "/compare#price-tiers" },
+			{ "name": "同流量档位深度比较", "url": "/compare#traffic-tiers" },
+			{ "name": "技术条件与协议支持对比", "url": "/compare#protocols" }
+		]
+	},
+	{
+		"name": "品牌百科",
+		"url": "/wiki",
+		"children": [
+			{ "name": "品牌基本资料库", "url": "/wiki#profiles" },
+			{ "name": "运营历史与背景时间线", "url": "/wiki#timeline" },
+			{ "name": "节点与地区分布档案", "url": "/wiki#nodes" },
+			{ "name": "套餐价格历史变更记录", "url": "/wiki#history" }
+		]
+	},
+	{
+		"name": "选购教程",
+		"url": "/tutorials",
+		"children": [
+			{ "name": "全平台客户端大全", "url": "/tutorials#clients" },
+			{ "name": "VPN 选型全景指南", "url": "/vpn" },
+			{ "name": "Clash 客户端手册", "url": "/clash" },
+			{ "name": "梯子推荐选型专区", "url": "/tizi" },
+			{ "name": "防坑选购核心标准", "url": "/tutorials#standards" },
+			{ "name": "如何读懂真实测速图", "url": "/tutorials#speedtest-guide" },
+			{ "name": "IEPL与IPLC线路解析", "url": "/tutorials#line-types" },
+			{ "name": "套餐真实性价比算账", "url": "/tutorials#tco" }
+		]
+	},
+	{
+		"name": "优惠码",
+		"url": "/coupons",
+		"children": [
+			{ "name": "有效折扣码汇总", "url": "/coupons#active" },
+			{ "name": "节庆大促实时动态", "url": "/coupons#promos" },
+			{ "name": "历史优惠失效归档", "url": "/coupons#expired" }
+		]
 	}
 ]

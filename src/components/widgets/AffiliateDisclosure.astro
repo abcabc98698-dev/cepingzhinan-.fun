@@ -1,0 +1,23 @@
+---
+import { Info } from "@lucide/astro";
+
+interface Props {
+	className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<div class={`affiliate-disclosure my-6 p-4 rounded-xl border border-dashed border-primary/25 bg-gradient-to-r from-primary/[0.03] to-neutral-50 dark:from-primary/[0.05] dark:to-neutral-900/40 text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed flex items-start gap-3 shadow-xs ${className}`}>
+  <div class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
+    <Info class="w-3.5 h-3.5" />
+  </div>
+  <div class="flex-1">
+    <p class="font-medium text-neutral-800 dark:text-neutral-200 mb-1">
+      客观中立测试与商业推广透明披露声明
+    </p>
+    <p class="text-neutral-500 dark:text-neutral-400 text-[11px] leading-normal">
+      测评指南坚持「单一数据源（SSOT）」与「证据库（Evidence Base）」定位。部分链接包含受控商业推广转跳（rel="sponsored"），若您通过本站通道购买服务，我们可能会自服务商处获得适度服务器与探针维护分成，但这<strong>绝不会增加您的实际支付价格</strong>，亦不影响客观丢包率与测速评级。本站与各机场品牌无任何排他性隶属关系。
+    </p>
+  </div>
+</div>

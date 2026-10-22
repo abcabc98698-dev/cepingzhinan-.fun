@@ -1,7 +1,12 @@
+---
+import { siteConfig } from "@/config/site.js";
+---
+
 <a
   href="/"
-  class="h-10 text-base group relative z-30 flex items-center aspect-square"
+  class="h-10 text-base group relative z-30 flex items-center gap-2.5 font-bold tracking-tight text-neutral-900 dark:text-neutral-100"
+  title={siteConfig.title}
 >
-  <img src="/assets/logo.png" alt="Logo" class="w-10 h-10 rounded-full" />
+  <img src="/assets/logo.png" alt={siteConfig.title} class="w-9 h-9 rounded-full object-cover" width="36" height="36" />
+  <span class="font-bold text-lg tracking-tight hidden sm:inline-block">{siteConfig.title}</span>
 </a>
-
